@@ -1,0 +1,25 @@
+{
+  "name": "CharityPlatform",
+  "description": "Online charity platform",
+  "main": "index.js",
+  "authors": [
+    "Denis Beliakov",
+    "Dmitry Zrayev",
+    "Volodymyr Kravchuk"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/PulsarV/CharityPlatform",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

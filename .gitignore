@@ -11,3 +11,9 @@
 /app/logs/*
 !app/logs/.gitkeep
 /app/phpunit.xml
+/node_modules/
+/bower_components/
+/web/css/
+/web/fonts/
+/web/images/
+/web/js/
