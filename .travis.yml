@@ -1,0 +1,13 @@
+language: php
+php:
+  - 5.5
+
+services:
+  - mysql
+
+before_script:
+  - composer self-update
+  - composer install
+
+script:
+  - phpunit -c app
