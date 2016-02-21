@@ -4,16 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Entity\Category;
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
  */
-class User extends BaseUser
+class User
 {
     use TimestampableEntity;
 
@@ -56,6 +58,14 @@ class User extends BaseUser
 
     /* TODO: add file upload; check VichUploaderBundle */
     /**
+     * @Assert\Image(
+     *     minWidth = 100,
+     *     maxWidth = 100,
+     *     minHeight = 100,
+     *     maxHeight = 100,
+     *     allowLandscape = false,
+     *     allowPortrait = false
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $avatar;
@@ -150,8 +160,6 @@ class User extends BaseUser
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->categories = new ArrayCollection();
         $this->followCategories = new ArrayCollection();
         $this->charities = new ArrayCollection();
