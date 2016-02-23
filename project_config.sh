@@ -18,7 +18,9 @@ case "$Keypress" in
     echo
     echo INSTALLING BACKEND ...
     echo ======================
-    composer install
+    curl -sS https://getcomposer.org/installer | php
+    php composer.phar install
+    rm composer.phar
     rm -rf app/cache/*
     rm -rf app/logs/*
     setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
@@ -43,7 +45,9 @@ case "$Keypress" in
     echo
     echo REINSTALLING BACKEND ...
     echo ========================
-    composer install
+    curl -sS https://getcomposer.org/installer | php
+    php composer.phar install
+    rm composer.phar
     rm -rf app/cache/*
     rm -rf app/logs/*
     setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
