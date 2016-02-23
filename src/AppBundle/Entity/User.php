@@ -124,8 +124,9 @@ class User
      */
     private $showOtherCategories;
 
+    /* TODO: make correct followCategories */
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", mappedBy="followedByUsers", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="followedByUsers", cascade={"persist"}, orphanRemoval=true)
      */
     private $followCategories;
 
@@ -142,10 +143,7 @@ class User
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Type(
-     *     type="bool",
-     *     message="The value {{ value }} is not a valid {{ type }}."
-     * )
+     * @Assert\Type(type="bool")
      * @ORM\Column(type="boolean")
      */
     private $isActive;

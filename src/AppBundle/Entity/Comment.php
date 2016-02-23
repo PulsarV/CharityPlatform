@@ -35,7 +35,7 @@ class Comment
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Charity", inversedBy="comments", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Charity", inversedBy="comments", cascade={"persist"})
      */
     private $charity;
 
@@ -54,12 +54,13 @@ class Comment
     private $rating;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="comments", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="comments", cascade={"persist"})
      */
     private $user;
 
+    /* TODO: check slug length */
     /**
-     * @Gedmo\Slug(fields={"username"})
+     * @Gedmo\Slug(fields={"content"})
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;

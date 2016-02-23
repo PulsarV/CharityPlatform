@@ -30,8 +30,8 @@ class Category
      * @Assert\Length(
      *      min = 4,
      *      max = 60,
-     *      minMessage = "Username can not be less than {{ limit }}!",
-     *      maxMessage = "Username can not be more than {{ limit }}!"
+     *      minMessage = "Category title can not be less than {{ limit }}!",
+     *      maxMessage = "Category title can not be more than {{ limit }}!"
      * )
      * @ORM\Column(type="string", length=60, unique=true)
      */
@@ -61,8 +61,9 @@ class Category
      */
     private $users;
 
+    /* TODO: make correct followedByUsers */
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="followCategories", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="followCategories", cascade={"persist"}, orphanRemoval=true)
      */
     private $followedByUsers;
 
