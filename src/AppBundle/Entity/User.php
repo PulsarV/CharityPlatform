@@ -170,6 +170,8 @@ class User
         $this->followCategories = new ArrayCollection();
         $this->charities = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->isActive = false;
+        $this->cautionCount = 0;
     }
 
     /**

@@ -77,6 +77,7 @@ class Category
         $this->users = new ArrayCollection();
         $this->followedByUsers = new ArrayCollection();
         $this->charities = new ArrayCollection();
+        $this->importance = 0;
     }
 
     /**
