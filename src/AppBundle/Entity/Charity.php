@@ -64,9 +64,8 @@ class Charity
      */
     private $user;
 
-    /* TODO: make correct primaryUser */
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="primaryCharities", cascade={"persist"})
      */
     private $primaryUser;
 
@@ -109,9 +108,11 @@ class Charity
      */
     private $images;
 
-    /* TODO: add correct video field */
     /**
-     * @Assert\Url()
+     * @Assert\Url(
+     *    checkDNS = true,
+     *    dnsMessage = "The host '{{ value }}' could not be resolved. Use the existing one."
+     * )
      * @ORM\Column(type="string", length=120)
      */
     private $video;

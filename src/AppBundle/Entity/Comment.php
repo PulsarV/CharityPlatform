@@ -58,7 +58,6 @@ class Comment
      */
     private $user;
 
-    /* TODO: check slug length */
     /**
      * @Gedmo\Slug(fields={"content"})
      * @ORM\Column(length=64, unique=true)
