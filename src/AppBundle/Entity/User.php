@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Entity\Category;
+use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      message="This email is already registered."
  * )
  */
-class User
+abstract class User
 {
     use TimestampableEntity;
 
@@ -96,7 +96,7 @@ class User
 
 
     /**
-     * @Assert\Type(type="integer")
+     * @Assert\Type(type="string")
      * @Assert\Length(
      *      min = 10,
      *      max = 20,
@@ -104,7 +104,7 @@ class User
      *      maxMessage = "Phone number can not be more than {{ limit }}!"
      * )
      * @Assert\NotBlank()
-     * @ORM\Column(type="integer", length=20)
+     * @ORM\Column(type="string", length=20)
      */
     private $phone;
 

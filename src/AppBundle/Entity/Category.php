@@ -45,7 +45,7 @@ class Category
 
     /**
      * @Assert\Type(type="integer")
-     * @Assert\Length(
+     * @Assert\Range(
      *      min = 0,
      *      max = 10,
      *      minMessage = "Importance can not be less than {{ limit }}!",

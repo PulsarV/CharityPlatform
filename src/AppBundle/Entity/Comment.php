@@ -42,7 +42,7 @@ class Comment
 
     /**
      * @Assert\Type(type="integer")
-     * @Assert\Length(
+     * @Assert\Range(
      *      min = 0,
      *      max = 10,
      *      minMessage = "Rating can not be less than {{ limit }}!",

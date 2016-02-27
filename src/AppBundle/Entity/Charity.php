@@ -29,9 +29,9 @@ class Charity
     /**
      * @Assert\Image(
      *     minWidth = 400,
-     *     maxWidth = 200,
-     *     minHeight = 400,
-     *     maxHeight = 1000
+     *     maxWidth = 1000,
+     *     minHeight = 200,
+     *     maxHeight = 400
      * )
      * @ORM\Column(type="string", length=255)
      */
@@ -41,11 +41,11 @@ class Charity
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 10,
-     *      max = 120,
+     *      max = 200,
      *      minMessage = "Title can not be less than {{ limit }}!",
      *      maxMessage = "Title can not be more than {{ limit }}!"
      * )
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=200, unique=true)
      */
     private $title;
 
