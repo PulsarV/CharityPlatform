@@ -29,9 +29,9 @@ class Charity
     /**
      * @Assert\Image(
      *     minWidth = 400,
-     *     maxWidth = 200,
-     *     minHeight = 400,
-     *     maxHeight = 1000
+     *     maxWidth = 1000,
+     *     minHeight = 200,
+     *     maxHeight = 400
      * )
      * @ORM\Column(type="string", length=255)
      */
@@ -41,11 +41,11 @@ class Charity
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 10,
-     *      max = 120,
+     *      max = 200,
      *      minMessage = "Title can not be less than {{ limit }}!",
      *      maxMessage = "Title can not be more than {{ limit }}!"
      * )
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=200, unique=true)
      */
     private $title;
 
@@ -64,9 +64,8 @@ class Charity
      */
     private $user;
 
-    /* TODO: make correct primaryUser */
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="primaryCharities", cascade={"persist"})
      */
     private $primaryUser;
 
@@ -109,9 +108,11 @@ class Charity
      */
     private $images;
 
-    /* TODO: add correct video field */
     /**
-     * @Assert\Url()
+     * @Assert\Url(
+     *    checkDNS = true,
+     *    dnsMessage = "The host '{{ value }}' could not be resolved. Use the existing one."
+     * )
      * @ORM\Column(type="string", length=120)
      */
     private $video;

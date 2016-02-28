@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Entity\Category;
+use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      message="This email is already registered."
  * )
  */
-class User
+abstract class User
 {
     use TimestampableEntity;
 
@@ -96,7 +96,7 @@ class User
 
 
     /**
-     * @Assert\Type(type="integer")
+     * @Assert\Type(type="string")
      * @Assert\Length(
      *      min = 10,
      *      max = 20,
@@ -104,7 +104,7 @@ class User
      *      maxMessage = "Phone number can not be more than {{ limit }}!"
      * )
      * @Assert\NotBlank()
-     * @ORM\Column(type="integer", length=20)
+     * @ORM\Column(type="string", length=20)
      */
     private $phone;
 
@@ -124,9 +124,8 @@ class User
      */
     private $showOtherCategories;
 
-    /* TODO: make correct followCategories */
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="followedByUsers", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", mappedBy="followedByUsers", cascade={"persist"}, orphanRemoval=true)
      */
     private $followCategories;
 
@@ -134,6 +133,11 @@ class User
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Charity", mappedBy="user", cascade={"persist"}, orphanRemoval=true)
      */
     private $charities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Charity", mappedBy="primaryUser", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $primaryCharities;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="user", cascade={"persist"}, orphanRemoval=true)
@@ -168,6 +172,7 @@ class User
         $this->followCategories = new ArrayCollection();
         $this->charities = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
     }
@@ -442,6 +447,30 @@ class User
     public function removeCharity(Charity $charity)
     {
         $this->charities->removeElement($charity);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrimaryCharities()
+    {
+        return $this->primaryCharities;
+    }
+
+    /**
+     * @param Charity $charity
+     */
+    public function addPrimaryCharity(Charity $charity)
+    {
+        $this->primaryCharities->add($charity);
+    }
+
+    /**
+     * @param Charity $charity
+     */
+    public function removePrimaryCharity(Charity $charity)
+    {
+        $this->primaryCharities->removeElement($charity);
     }
 
     /**

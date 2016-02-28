@@ -15,11 +15,11 @@ class Organization extends User
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 4,
-     *      max = 16,
+     *      max = 40,
      *      minMessage = "Organization name can not be less than {{ limit }}!",
      *      maxMessage = "Organization name can not be more than {{ limit }}!"
      * )
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=40, unique=true)
      */
     private $organizationName;
 
@@ -37,6 +37,10 @@ class Organization extends User
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Url(
+     *    checkDNS = true,
+     *    dnsMessage = "The host '{{ value }}' could not be resolved. Use the existing one."
+     * )
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $website;

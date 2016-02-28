@@ -45,7 +45,7 @@ class Category
 
     /**
      * @Assert\Type(type="integer")
-     * @Assert\Length(
+     * @Assert\Range(
      *      min = 0,
      *      max = 10,
      *      minMessage = "Importance can not be less than {{ limit }}!",
@@ -58,12 +58,13 @@ class Category
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="categories", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinTable(name="categories_users")
      */
     private $users;
 
-    /* TODO: make correct followedByUsers */
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="followCategories", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="followCategories", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinTable(name="followCategories_followedByUsers")
      */
     private $followedByUsers;
 

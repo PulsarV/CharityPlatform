@@ -42,7 +42,7 @@ class Comment
 
     /**
      * @Assert\Type(type="integer")
-     * @Assert\Length(
+     * @Assert\Range(
      *      min = 0,
      *      max = 10,
      *      minMessage = "Rating can not be less than {{ limit }}!",
@@ -58,7 +58,6 @@ class Comment
      */
     private $user;
 
-    /* TODO: check slug length */
     /**
      * @Gedmo\Slug(fields={"content"})
      * @ORM\Column(length=64, unique=true)
