@@ -16,25 +16,27 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
-//        $posts = "post";
+        $em = $this->getDoctrine()->getManager();
+        $charities = $em->getRepository('AppBundle:Charity')->findAll();
 
-        return [];
-
+        return [
+            'title' => 'Hello world',
+            'page' => 1,
+            'pages_count' => 5,
+            'charities' => $charities,
+        ];
     }
 
-//
-//    /**
-//     * @Route("/charities/{slug}", name="show_charity")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function showCharityAction(Request $request)
-//    {
-//
-//        return $this->render('@App/charity/show_charity.html.twig', [
-//
-//        ]);
-//    }
+    /**
+     * @Route("/charities/{slug}", name="charity_show")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function showCharityAction($slug)
+    {
+
+        return [];
+    }
 //
 //
 //    /**

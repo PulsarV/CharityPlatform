@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Online платформа благодійності</title>
+    <title>Online платформа благодійності - {{ title }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/icomoon-social.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -22,436 +22,176 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/ico/apple-touch-icon-114-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/ico/apple-touch-icon-72-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset('images/ico/apple-touch-icon-57-precomposed.png') }}">
-</head><!--/head-->
+</head>
 <body>
-<header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Головна</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Категорії <i class="fa fa-angle-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Категорія 1</a></li>
-                        <li><a href="#">Категорія 2</a></li>
-                        <li><a href="#">Категорія 3</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Користувачі</a></li>
-                <li><a href="#">Організації</a></li>
-                <li><a href="#">Контакти</a></li>
-                <li><a href="#"><b>Створити запит</b></a></li>
-            </ul>
-        </div>
-    </div>
-</header><!--/header-->
-
-<section id="title" class="emerald">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h1>Головна</h1>
-                <ul class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li class="active">Blog</li>
+    {# begin menu #}
+    <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
+        <div class="container">
+            {# begin logo #}
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
+            </div>
+            {# end logo #}
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Головна</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Категорії <i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Категорія 1</a></li>
+                            <li><a href="#">Категорія 2</a></li>
+                            <li><a href="#">Категорія 3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Користувачі</a></li>
+                    <li><a href="#">Організації</a></li>
+                    <li><a href="#">Контакти</a></li>
+                    <li><a href="#"><b>Створити запит</b></a></li>
                 </ul>
             </div>
-            <div class="col-sm-4">
-                <div class="lng-menu">
-                    <span class="menu-title">Вибрана мова інтерфейсу:</span>
-                    <span class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Українська</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Русский</a></li>
-                            <li><a href="#">English</a></li>
-                        </ul>
-                    </span>
+        </div>
+    </header>
+    {# end menu #}
+
+    {# begin submenu #}
+    <section id="title" class="emerald">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h1>{{ title }}</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Blog</li>
+                    </ul>
                 </div>
-                <div class="country-menu">
-                    <span class="menu-title">Ваше місто:</span>
-                    <span class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Черкаси</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Київ</a></li>
-                            <li><a href="#">Харків</a></li>
-                        </ul>
-                    </span>
+                <div class="col-sm-4">
+                    <div class="lng-menu">
+                        <span class="menu-title">Вибрана мова інтерфейсу:</span>
+                        <span class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Українська</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Русский</a></li>
+                                <li><a href="#">English</a></li>
+                            </ul>
+                        </span>
+                    </div>
+                    <div class="country-menu">
+                        <span class="menu-title">Ваше місто:</span>
+                        <span class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Черкаси</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Київ</a></li>
+                                <li><a href="#">Харків</a></li>
+                            </ul>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="container col-sm-4">
-                <div class="row">
-                    <form role="form">
-                        <fieldset class="login-form">
-                            <div class="form-group col-sm-5">
-                                <input type="text" id="username" name="username" placeholder="Користувач / E-Mail" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-sm-5">
-                                <input type="password" id="password" name="password" placeholder="Пароль" class="form-control input-sm">
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <button class="btn btn-success btn-sm btn-block">Ввійти</button>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-inline"><input type="checkbox" class="checkbox"> Запам'ятати мене</label>&nbsp;&nbsp;&nbsp;
-                                <a class="" href="#">Нагадати пароль</a>
-                                <button type="button" class="btn btn-success btn-sm pull-right">Реєстрація</button>
-                            </div>
-                            <div class="form-group">
-                                <label>Ввійдіть за допомогою:</label>&nbsp;&nbsp;
-                                <a class="btn btn-social-icon btn-twitter btn-sm">
-                                    <span class="fa fa-twitter"></span>
-                                </a>
-                                <a class="btn btn-social-icon btn-facebook btn-sm">
-                                    <span class="fa fa-facebook"></span>
-                                </a>
-                                <a class="btn btn-social-icon btn-vk btn-sm">
-                                    <span class="fa fa-vk"></span>
-                                </a>
-                                <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
-                                    <span class="fa fa-odnoklassniki"></span>
-                                </a>
-                            </div>
-                        </fieldset>
-                    </form>
+                <div class="container col-sm-4">
+                    <div class="row">
+                        <form role="form">
+                            <fieldset class="login-form">
+                                <div class="form-group col-sm-5">
+                                    <input type="text" id="username" name="username" placeholder="Користувач / E-Mail" class="form-control input-sm">
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    <input type="password" id="password" name="password" placeholder="Пароль" class="form-control input-sm">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <button class="btn btn-success btn-sm btn-block">Ввійти</button>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-inline"><input type="checkbox" class="checkbox"> Запам'ятати мене</label>&nbsp;&nbsp;&nbsp;
+                                    <a class="" href="#">Нагадати пароль</a>
+                                    <button type="button" class="btn btn-success btn-sm pull-right">Реєстрація</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ввійдіть за допомогою:</label>&nbsp;&nbsp;
+                                    <a class="btn btn-social-icon btn-twitter btn-sm">
+                                        <span class="fa fa-twitter"></span>
+                                    </a>
+                                    <a class="btn btn-social-icon btn-facebook btn-sm">
+                                        <span class="fa fa-facebook"></span>
+                                    </a>
+                                    <a class="btn btn-social-icon btn-vk btn-sm">
+                                        <span class="fa fa-vk"></span>
+                                    </a>
+                                    <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
+                                        <span class="fa fa-odnoklassniki"></span>
+                                    </a>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--/Title-->
+    </section>
+    {# end submenu #}
 
-<section id="blog" class="container">
-    <div class="row">
-        <!-- Sidebar -->
-        <aside class="col-sm-4 col-sm-push-8">
+    {# begin page body #}
+    <section id="blog" class="container">
+        <div class="row">
+            {% block sidebar %}
+            {% endblock %}
+            {% block body %}
+            {% endblock %}
+        </div>
+    </section>
+    {# end page body #}
 
-            <!-- Search -->
-            <div class="widget search">
+    {# begin subfooter#}
+    <section id="bottom" class="wet-asphalt bot">
+        <div class="container">
+            <div class="col-md-offset-2 col-xs-offset-3 col-md-4 col-xs-7">
+                <h4>Як з нами зв'язатися</h4>
+                <b>Адреса:</b> 18006, вул. Орджонікідзе, Черкаси, Україна<br/>
+                <b>Телефон:</b> +38 097 561-24-90<br/>
+                <b>Email:</b> <a href="mailto:volodymyr.a.kravchuk@gmail.com">volodymyr.a.kravchuk@gmail.com</a>
+
+                <h4>Підписатися на розсилку</h4>
                 <form role="form">
                     <div class="input-group">
-                        <input type="text" class="form-control" autocomplete="off" placeholder="Пошук">
-                            <span class="input-group-btn">
-                                <button class="btn btn-info" type="button" data-toggle="tooltip" data-placement="right" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
-                                <button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="right" title="Пошук"><i class="fa fa-search"></i></button>
-                            </span>
+                        <input type="text" class="form-control" autocomplete="off" placeholder="Ваш email">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="button">Go!</button>
+                                </span>
                     </div>
                 </form>
-            </div><!-- /Search -->
-
-            <div class="widget top-requests">
-                <h3>Найважливіші на думку спільноти запити</h3>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb3.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
             </div>
-
-            <div class="widget active-requests">
-                <h3>Вони потребують Вашої допомоги</h3>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb3.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="widget completed-requests">
-                <h3>Збір коштів завершено</h3>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb3.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="pull-left">
-                        <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-                        <small class="muted">Posted 17 Aug 2013</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="widget tags">
-                <h3>Хмарина тегів</h3>
-                <ul class="tag-cloud">
-                    <li><a class="btn btn-xs btn-primary" href="#">CSS3</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">HTML5</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">WordPress</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">Joomla</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">Drupal</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">Bootstrap</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">jQuery</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">Tutorial</a></li>
-                    <li><a class="btn btn-xs btn-primary" href="#">Update</a></li>
+            <div class="col-md-offset-1 col-xs-offset-3 col-md-4 col-xs-7">
+                <h4>Залишайтеся на зв'язку</h4>
+                <ul class="footer-stay-connected no-list-style">
+                    <li><a href="#" class="twitter"></a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=100009030504250" class="facebook"></a></li>
+                    <li><a href="https://plus.google.com/u/0/103178508336520769822" class="googleplus"></a></li>
                 </ul>
-            </div><!--/.tags-->
-        </aside>
-        <!-- /Sidebar -->
+            </div>
+        </div>
+    </section>
+    {# end subfooter #}
 
-        <div class="col-sm-8 col-sm-pull-4">
-            <div class="blog">
-                <div class="dropdown">
-                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Сортувати по даті додавання, спочатку більш свіжі</button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Сортувати по даті додавання, спочатку більш старі</a></li>
-                        <li><a href="#">Сортувати по важливості, спочатку більш важливі</a></li>
-                        <li><a href="#">Сортувати по важливості, спочатку менш важливі</a></li>
-                        <li><a href="#">Сортувати по часу що залишився, спочатку більш термінові</a></li>
-                        <li><a href="#">Сортувати по часу що залишився, спочатку менш термінові</a></li>
+    {# begin footer#}
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2016 <a target="_blank" href="http://geekhub.ck.ua/" title="Online платформа благодійності">Online платформа благодійності</a>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="#">Головна</a></li>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Зв'язатися з нами</a></li>
+                        <li><a id="gototop" class="gototop" href="#"><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
                     </ul>
                 </div>
-                <div class="blog-item">
-                    <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
-                    <div class="blog-content">
-                        <a href="#"><h3>Duis sed odio sit amet nibh vulputate cursus</h3></a>
-                        <div class="entry-meta">
-                            <span><i class="fa fa-user"></i> <a href="#">John</a></span>
-                            <span><i class="fa fa-folder"></i> <a href="#">Bootstrap</a></span>
-                            <span><i class="fa fa-calendar"></i> Sept 16th, 2012</span>
-                            <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">3 Comments</a></span>
-                        </div>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                        <a class="btn btn-default" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div><!--/.blog-item-->
-                <div class="blog-item">
-                    <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
-                    <div class="blog-content">
-                        <a href="#"><h3>Duis sed odio sit amet nibh vulputate cursus</h3></a>
-                        <div class="entry-meta">
-                            <span><i class="fa fa-user"></i> <a href="#">John</a></span>
-                            <span><i class="fa fa-folder"></i> <a href="#">Bootstrap</a></span>
-                            <span><i class="fa fa-calendar"></i> Sept 16th, 2012</span>
-                            <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">3 Comments</a></span>
-                        </div>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                        <a class="btn btn-default" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div><!--/.blog-item-->
-                <div class="blog-item">
-                    <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
-                    <div class="blog-content">
-                        <a href="#"><h3>Duis sed odio sit amet nibh vulputate cursus</h3></a>
-                        <div class="entry-meta">
-                            <span><i class="fa fa-user"></i> <a href="#">John</a></span>
-                            <span><i class="fa fa-folder"></i> <a href="#">Bootstrap</a></span>
-                            <span><i class="fa fa-calendar"></i> Sept 16th, 2012</span>
-                            <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">3 Comments</a></span>
-                        </div>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                        <a class="btn btn-default" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div><!--/.blog-item-->
-                <div class="blog-item">
-                    <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
-                    <div class="blog-content">
-                        <a href="#"><h3>Duis sed odio sit amet nibh vulputate cursus</h3></a>
-                        <div class="entry-meta">
-                            <span><i class="fa fa-user"></i> <a href="#">John</a></span>
-                            <span><i class="fa fa-folder"></i> <a href="#">Bootstrap</a></span>
-                            <span><i class="fa fa-calendar"></i> Sept 16th, 2012</span>
-                            <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">3 Comments</a></span>
-                        </div>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                        <a class="btn btn-default" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div><!--/.blog-item-->
-                <div class="blog-item">
-                    <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
-                    <div class="blog-content">
-                        <a href="#"><h3>Duis sed odio sit amet nibh vulputate cursus</h3></a>
-                        <div class="entry-meta">
-                            <span><i class="fa fa-user"></i> <a href="#">John</a></span>
-                            <span><i class="fa fa-folder"></i> <a href="#">Bootstrap</a></span>
-                            <span><i class="fa fa-calendar"></i> Sept 16th, 2012</span>
-                            <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">3 Comments</a></span>
-                        </div>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                        <a class="btn btn-default" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div><!--/.blog-item-->
-                <ul class="pagination pagination-lg">
-                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                </ul><!--/.pagination-->
-            </div>
-        </div><!--/.col-md-8-->
-    </div><!--/.row-->
-</section><!--/#blog-->
-
-<section id="bottom" class="wet-asphalt bot">
-    <div class="container">
-        <div class="col-md-offset-2 col-xs-offset-3 col-md-4 col-xs-7">
-            <h4>Як з нами зв'язатися</h4>
-            <b>Адреса:</b> 18006, вул. Орджонікідзе, Черкаси, Україна<br/>
-            <b>Телефон:</b> +38 097 561-24-90<br/>
-            <b>Email:</b> <a href="mailto:volodymyr.a.kravchuk@gmail.com">volodymyr.a.kravchuk@gmail.com</a>
-
-            <h4>Підписатися на розсилку</h4>
-            <form role="form">
-                <div class="input-group">
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Ваш email">
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button">Go!</button>
-                            </span>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-offset-1 col-xs-offset-3 col-md-4 col-xs-7">
-            <h4>Залишайтеся на зв'язку</h4>
-            <ul class="footer-stay-connected no-list-style">
-                <li><a href="#" class="twitter"></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100009030504250" class="facebook"></a></li>
-                <li><a href="https://plus.google.com/u/0/103178508336520769822" class="googleplus"></a></li>
-            </ul>
-        </div>
-        <!--/.col-md-3-->
-    </div>
-    </div>
-</section><!--/#bottom-->
-
-<footer id="footer" class="midnight-blue">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                &copy; 2016 <a target="_blank" href="http://geekhub.ck.ua/" title="Online платформа благодійності">Online платформа благодійності</a>
-            </div>
-            <div class="col-sm-6">
-                <ul class="pull-right">
-                    <li><a href="#">Головна</a></li>
-                    <li><a href="#">Faq</a></li>
-                    <li><a href="#">Зв'язатися з нами</a></li>
-                    <li><a id="gototop" class="gototop" href="#"><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
-                </ul>
             </div>
         </div>
-    </div>
-</footer><!--/#footer-->
+    </footer>
+    {# end footer #}
 
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
