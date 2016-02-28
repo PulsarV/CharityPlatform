@@ -1,0 +1,92 @@
+AppBundle\Entity\Tag:
+  tag{1..10}:
+    tagName: <word()>
+    charities: '2x @charity*'
+
+AppBundle\Entity\Comment:
+  comment(template):
+    content: <paragraph(3)>
+    rating: <numberBetween(0, 10)>
+    charity: '@charity*'
+  comment{1..5} (extends comment):
+    user: '@organization*'
+  comment{6..10} (extends comment):
+    user: '@person*'
+
+AppBundle\Entity\Charity:
+  charity(template):
+    banner: image('/tmp', 640, 480)
+    title: <sentence(6, true)>
+    content: <paragraph(100)>
+    primaryUser: null
+    category: '@category*'
+    ratingCount: <numberBetween(0, 10)>
+    viewCount: <numberBetween(5, 50)>
+    needMoney: <numberBetween(1000, 30000)>
+    collectedMoney: <numberBetween(500, 1000)>
+    images: <word()>
+    video: <url()>
+    comments: '2x @comment*'
+    isActive: <boolean()>
+    tags: '2x @tag*'
+  charity{1..5} (extends charity):
+    user: '@person*'
+  charity{6..10} (extends charity):
+    user: '@organization*'
+
+AppBundle\Entity\Category:
+  category(template):
+    title: <word()>
+    charities: '2x @charity*'
+    importance: <numberBetween(0, 10)>
+  category{1..5} (extends category):
+    user: '2x @person*'
+    followedByUsers: '2x @organization*'
+  category{6..10} (extends category):
+    user: '2x @organization*'
+    followedByUsers: '2x @person*'
+
+AppBundle\Entity\Organization:
+  organization{1..4}:
+    username: <firstName()>
+    password: <password()>
+    email: <email()>
+    avatar: image('/tmp', 100, 100)
+    role: <word()>
+    bankDetails: <paragraph(10)>
+    address: <address()>
+    phone: <phoneNumber()>
+    categories: '2x @category*'
+    showOtherCategories: <boolean()>
+    followCategories: '2x @category*'
+    charities: '2x @charity*'
+    primaryCharities: null
+    comments: '2x @comment*'
+    isActive: <boolean()>
+    cautionCount: <numberBetween(0, 20)>
+    organizationName: <catchPhrase()>
+    organizationDocuments: <sentence(8, true)>
+    activityProfile: <sentence(5, true)>
+    website: <url()>
+
+AppBundle\Entity\Person:
+  person{1..6}:
+    username: <firstName()>
+    password: <password()>
+    email: <email()>
+    avatar: image('/tmp', 100, 100)
+    role: <word()>
+    bankDetails: <paragraph(10)>
+    address: <address()>
+    phone: <phoneNumber()>
+    categories: '2x @category*'
+    showOtherCategories: <boolean()>
+    followCategories: '2x @category*'
+    charities: '2x @charity*'
+    primaryCharities: null
+    comments: '2x @comment*'
+    isActive: <boolean()>
+    cautionCount: <numberBetween(0, 20)>
+    firstname: <firstName()>
+    lastname: <lastName()>
+    birthday: <dateTimeThisCentury()>
