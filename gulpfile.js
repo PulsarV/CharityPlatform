@@ -57,6 +57,6 @@ tasks.forEach(function (val) {
  });
 });
 gulp.task('watch', function () {
- var less = gulp.watch('web-src/less/*.less', ['less']),
+ var less = gulp.watch(['web-src/less/*.less', 'web-src/less/*.css'], ['less']),
  js = gulp.watch('web-src/js/*.js', ['pages-js']);
 });

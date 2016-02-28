@@ -75,7 +75,7 @@ a:focus {
   min-width: 180px;
 }
 body > section {
-  padding: 80px 0 10px;
+  padding: 50px 0 10px;
 }
 .turquoise,
 .green-sea,
@@ -620,6 +620,7 @@ body > section {
 }
 #title h1 {
   margin: 0;
+  padding-top: 15px;
   font-size: 36px;
   font-weight: 300;
 }
@@ -1057,7 +1058,7 @@ ul.faq li > div h3 {
 }
 .emerald .lng-menu,
 .emerald .country-menu {
-  padding-top: 10px;
+  padding-top: 25px;
 }
 .emerald .lng-menu .menu-title,
 .emerald .country-menu .menu-title {
@@ -1089,7 +1090,7 @@ ul.faq li > div h3 {
 .login-form {
   border: 0;
   background-color: transparent;
-  margin-top: -20px;
+  margin-top: 0px;
   padding: 0px;
   display: inline-block;
 }
@@ -1146,4 +1147,43 @@ ul.no-list-style {
 }
 ul.no-list-style li {
   line-height: 28px;
+}
+.post-filter {
+  list-style: none;
+  padding: 0;
+  margin: 0 -20px 20px 0;
+}
+.post-filter > li {
+  display: inline-block;
+}
+.blog .dropdown {
+  margin-bottom: 40px;
+}
+.blog .dropdown-menu {
+  background-color: cadetblue;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+  margin-top: 0px;
+  min-width: 50px;
+}
+.blog .dropdown-menu a {
+  color: #fff;
+  font-weight: 300;
+}
+.blog .dropdown-menu > li:hover > a,
+.blog .dropdown-menu > li:focus > a,
+.blog .dropdown-menu > li.active > a {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.blog .dropdown-toggle {
+  color: #fff;
+  font-weight: 300;
+}
+.blog .dropdown > button{
+  text-align: left;
+  color: #fff;
+  font-weight: 400;
 }

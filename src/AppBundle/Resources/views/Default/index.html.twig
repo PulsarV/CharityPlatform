@@ -135,7 +135,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" autocomplete="off" placeholder="Пошук">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-info" type="button" data-toggle="tooltip" data-placement="right" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
+                                <button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="right" title="Пошук"><i class="fa fa-search"></i></button>
                             </span>
                     </div>
                 </form>
@@ -307,6 +308,16 @@
 
         <div class="col-sm-8 col-sm-pull-4">
             <div class="blog">
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Сортувати по даті додавання, спочатку більш свіжі</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Сортувати по даті додавання, спочатку більш старі</a></li>
+                        <li><a href="#">Сортувати по важливості, спочатку більш важливі</a></li>
+                        <li><a href="#">Сортувати по важливості, спочатку менш важливі</a></li>
+                        <li><a href="#">Сортувати по часу що залишився, спочатку більш термінові</a></li>
+                        <li><a href="#">Сортувати по часу що залишився, спочатку менш термінові</a></li>
+                    </ul>
+                </div>
                 <div class="blog-item">
                     <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
                     <div class="blog-content">
