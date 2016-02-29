@@ -2,13 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Charity;
 
 class CharityController extends Controller
 {
+    private $charitiesPerPage = 5;
+
     /**
      * @Route("/charities/{page}", requirements={"page": "\d+"}, defaults={"page" = 1}, name="charity_index")
      * @Method({"GET"})
@@ -17,13 +22,19 @@ class CharityController extends Controller
     public function indexCharityAction($page)
     {
         $em = $this->getDoctrine()->getManager();
-        $charities = $em->getRepository('AppBundle:Charity')->findAll();
+        $qb = $em->getRepository('AppBundle:Charity')->findAllCharities('');
+        $adapter = new DoctrineORMAdapter($qb);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($this->charitiesPerPage);
+        $pagerfanta->setCurrentPage($page);
+        $charities = $pagerfanta->getCurrentPageResults();
 
         return [
             'title' => 'Hello world',
-            'page' => 1,
-            'pages_count' => 5,
+            'page' => $page,
+            'pages_count' => $pagerfanta->getNbPages(),
             'charities' => $charities,
+            'pager' => $pagerfanta,
         ];
     }
 

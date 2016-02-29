@@ -7,7 +7,7 @@
                 <li><a href="{{ path(app.request.attributes.get('_route'), {'page': page - 1 }) }}"><i class="fa fa-angle-left"></i></a></li>
             {% endif %}
         {% else %}
-            <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+            <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
         {% endif %}
 
         {% for i in 1..pages_count %}
@@ -29,7 +29,7 @@
                 <li><a href="{{ path(app.request.attributes.get('_route'), {'page': page + 1 }) }}"><i class="fa fa-angle-right"></i></a></li>
             {% endif %}
         {% else %}
-            <li class="disabled"><a href=""><i class="fa fa-angle-right"></i></a></li>
+            <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
         {% endif %}
     </ul>
 {% endif %}

@@ -14,12 +14,15 @@
             <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
             <div class="blog-content">
                 {% include '::charity_header.html.twig' %}
-                <p>{{ charity.content }}</p>
+                <p>{{ charity.content|slice(0, 500) }}</p>
                 <a class="btn btn-default" href="{{ path('charity_show', {'slug': charity.slug}) }}">Читати більше <i class="fa fa-angle-right"></i></a>
             </div>
         </div>
     {% endfor %}
     {% include '::pagination.html.twig' %}
+    <div class="pagerfanta">
+        {#{{ pagerfanta(pager, 'twitter_bootstrap3') }}#}
+    </div>
 {% else %}
     <div class="blog-post">
         <h4>Unfortunately nothing found</h4>
