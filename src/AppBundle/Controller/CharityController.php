@@ -30,7 +30,7 @@ class CharityController extends Controller
         $charities = $pagerfanta->getCurrentPageResults();
 
         return [
-            'title' => 'Hello world',
+            'title' => 'Список запитів',
             'page' => $page,
             'pages_count' => $pagerfanta->getNbPages(),
             'charities' => $charities,
@@ -45,9 +45,15 @@ class CharityController extends Controller
      */
     public function showCharityAction($slug)
     {
+        $em = $this->getDoctrine()->getManager();
+        $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
 
-        return [];
+        return [
+            'title' => 'Деталі запиту',
+            'charity' => $charity,
+            ];
     }
+
 //
 //
 //    /**

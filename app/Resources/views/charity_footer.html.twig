@@ -1,0 +1,11 @@
+{% if charity.tags|length > 0 %}
+    <div class="tags">
+        <i class="fa fa-tags"></i> Теги&nbsp;
+        {% for tag in charity.tags %}
+            <a class="btn btn-xs btn-primary" href="#">{{ tag.tagName }}</a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>&nbsp;</p>
+{% endif %}
+<p>&nbsp;</p>

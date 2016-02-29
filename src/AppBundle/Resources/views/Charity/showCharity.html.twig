@@ -1,2 +1,45 @@
 {% extends '::base_with_right_sidebar.html.twig' %}
+{% block content %}
+    <div class="blog-item">
+        <img class="img-responsive img-blog" src="{{ asset('images/test/blog2.jpg') }}" width="100%" alt="" />
+        <div class="blog-content">
+            <h3>{{ charity.title }}</h3>
+            {% include '::charity_header.html.twig' %}
+            {{ charity.content }}
+            <hr>
+            {% include '::charity_footer.html.twig' %}
+            <div id="comments">
+                <div id="comments-list">
+                    <h3>Коментарів: {{ charity.comments|length }}</h3>
+                    {% for comment in charity.comments %}
+                        <div class="media">
+                            <div class="pull-left">
+                                <img class="avatar img-circle" src="{{ asset('images/test/avatar3.png') }}" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="well">
+                                    <div class="media-heading">
+                                        <strong>{{ comment.user.username }}</strong>&nbsp; <small>{{ comment.createdAt|date("d M, Y") }}</small>
+                                    </div>
+                                    <p>{{ comment.content }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
 
+                <div id="comment-form">
+                    <h3>Залишити коментар</h3>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <textarea rows="8" class="form-control" placeholder="Залишіть свій коментар"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-default">Зберегти коментар</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
