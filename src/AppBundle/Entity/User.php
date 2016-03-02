@@ -20,6 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      errorPath="email",
  *      message="This email is already registered."
  * )
+ * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
  */
 abstract class User
 {
@@ -62,19 +63,11 @@ abstract class User
      */
     private $email;
 
-    /* TODO: add file upload; check VichUploaderBundle */
     /**
-     * @Assert\Image(
-     *     minWidth = 100,
-     *     maxWidth = 100,
-     *     minHeight = 100,
-     *     maxHeight = 100,
-     *     allowLandscape = false,
-     *     allowPortrait = false
-     * )
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\UploadableFileName
      */
-    private $avatar;
+    private $avatarFileName;
 
     /**
      * @Assert\NotBlank()
@@ -260,17 +253,17 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getAvatar()
+    public function getAvatarFileName()
     {
-        return $this->avatar;
+        return $this->avatarFileName;
     }
 
     /**
-     * @param mixed $avatar
+     * @param mixed $avatarFileName
      */
-    public function setAvatar($avatar)
+    public function setAvatarFileName($avatarFileName)
     {
-        $this->avatar = $avatar;
+        $this->avatarFileName = $avatarFileName;
     }
 
     /**
@@ -519,5 +512,10 @@ abstract class User
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    public function getPath()
+    {
+        return '/uploads/users/'.$this->id;
     }
 }

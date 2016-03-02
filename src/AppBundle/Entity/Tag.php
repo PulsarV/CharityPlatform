@@ -40,7 +40,7 @@ class Tag
     private $tagName;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Charity", inversedBy="tags", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Charity", inversedBy="tags", cascade={"persist"})
      */
     private $charities;
 
