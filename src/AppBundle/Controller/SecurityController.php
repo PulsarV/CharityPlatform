@@ -2,10 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Person;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Form\RegisterPersonType;
 
 class SecurityController extends Controller
 {
@@ -28,9 +30,29 @@ class SecurityController extends Controller
      */
     public function registerAction(Request $request)
     {
+        $user = new Person();
+        $form = $this->createForm(RegisterPersonType::class, $user);
 
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+//                $password = $this->get('security.password_encoder')
+//                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($user->getPlainPassword());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                var_dump($user);
+
+                return $this->redirectToRoute(
+                    "registration"
+                );
+            }
+        }
         return $this->render('@App/security/register.html.twig', [
-
+            'form' => $form->createView()
         ]);
     }
 

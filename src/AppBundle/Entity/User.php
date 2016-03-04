@@ -7,6 +7,7 @@ use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -22,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
  */
-abstract class User
+abstract class User implements  UserInterface, \Serializable
 {
     use TimestampableEntity;
 
@@ -108,7 +109,6 @@ abstract class User
 
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Type(
      *     type="bool",
      *     message="The value {{ value }} is not a valid {{ type }}."
@@ -139,7 +139,6 @@ abstract class User
 
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Type(type="bool")
      * @ORM\Column(type="boolean")
      */
@@ -168,6 +167,7 @@ abstract class User
         $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
+        $this->avatarFileName = 11;
     }
 
     /**
@@ -517,5 +517,37 @@ abstract class User
     public function getPath()
     {
         return '/uploads/users/'.$this->id;
+    }
+
+    public function getRoles()
+    {
+        return null;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($serialized);
     }
 }
