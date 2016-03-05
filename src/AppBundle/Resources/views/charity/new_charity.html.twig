@@ -1,9 +1,20 @@
 {% extends 'AppBundle::base.html.twig' %}
 
+{% block title %}Створення запиту{% endblock %}
+
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
-new_charity
+ <h2>Створити запит:</h2>
+    {{ form_start(form) }}
+    {{ form_end(form) }}
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+    <script>
+        tinymce.init({
+        selector: 'textarea'
+        });
+    </script>
+{% endblock %}

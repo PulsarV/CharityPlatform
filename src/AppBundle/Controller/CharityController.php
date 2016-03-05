@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Charity;
+use AppBundle\Form\CharityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,8 +48,25 @@ class CharityController extends Controller
      */
     public function newCharityAction(Request $request)
     {
-        return $this->render('@App/charity/new_charity.html.twig', [
+        $charity = new Charity();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(CharityType::class, $charity);
+        $form->add('save', SubmitType::class, array('label' => 'Save'));
 
+        if ($request->getMethod() === 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($charity);
+                $em->flush();
+
+                return $this->redirectToRoute('homepage');
+            }
+        }
+
+        return $this->render('@App/charity/new_charity.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
