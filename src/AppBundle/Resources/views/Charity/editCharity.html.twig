@@ -1,12 +1,13 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block title %}Створення запиту{% endblock %}
+{% block title %}Редагування запиту{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
- <h2>Створити запит:</h2>
+ <h2>Редагувати запит:</h2>
     {{ form_start(form) }}
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_end(form) }}
 {% endblock %}
 

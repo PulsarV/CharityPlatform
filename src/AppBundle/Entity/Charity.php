@@ -32,9 +32,6 @@ class Charity
      *     maxWidth = 1000,
      *     minHeight = 200,
      *     maxHeight = 400,
-     *     maxSize = "1024k",
-     *     mimeTypes = {"application/jpg", "application/png"},
-     *     mimeTypesMessage = "Please upload a valid image"
      * )
      * @ORM\Column(type="string", length=255)
      */
