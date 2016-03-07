@@ -31,7 +31,7 @@ class Charity
      *     minWidth = 400,
      *     maxWidth = 1000,
      *     minHeight = 200,
-     *     maxHeight = 400
+     *     maxHeight = 400,
      * )
      * @ORM\Column(type="string", length=255)
      */
@@ -77,14 +77,14 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $ratingCount;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $viewCount;
 
@@ -98,7 +98,7 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $collectedMoney;
 
@@ -126,7 +126,7 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="bool")
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isActive;
 
