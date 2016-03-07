@@ -3,10 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -15,13 +15,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
- * @UniqueEntity(
- *      fields={"username", "email"},
- *      errorPath="email",
- *      message="This email is already registered."
- * )
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
+ * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
  */
-abstract class User
+abstract class User implements  UserInterface, \Serializable
 {
     use TimestampableEntity;
 
@@ -62,19 +60,11 @@ abstract class User
      */
     private $email;
 
-    /* TODO: add file upload; check VichUploaderBundle */
     /**
-     * @Assert\Image(
-     *     minWidth = 100,
-     *     maxWidth = 100,
-     *     minHeight = 100,
-     *     maxHeight = 100,
-     *     allowLandscape = false,
-     *     allowPortrait = false
-     * )
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\UploadableFileName
      */
-    private $avatar;
+    private $avatarFileName;
 
     /**
      * @Assert\NotBlank()
@@ -115,7 +105,6 @@ abstract class User
 
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Type(
      *     type="bool",
      *     message="The value {{ value }} is not a valid {{ type }}."
@@ -146,7 +135,6 @@ abstract class User
 
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Type(type="bool")
      * @ORM\Column(type="boolean")
      */
@@ -175,6 +163,7 @@ abstract class User
         $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
+        $this->avatarFileName = 11;
     }
 
     /**
@@ -260,17 +249,17 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getAvatar()
+    public function getAvatarFileName()
     {
-        return $this->avatar;
+        return $this->avatarFileName;
     }
 
     /**
-     * @param mixed $avatar
+     * @param mixed $avatarFileName
      */
-    public function setAvatar($avatar)
+    public function setAvatarFileName($avatarFileName)
     {
-        $this->avatar = $avatar;
+        $this->avatarFileName = $avatarFileName;
     }
 
     /**
@@ -519,5 +508,42 @@ abstract class User
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    public function getPath()
+    {
+        return __DIR__ . '/../../../web/uploads/users/'.$this->username.'/';
+    }
+
+    public function getRoles()
+    {
+        return null;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($serialized);
     }
 }
