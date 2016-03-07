@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RegisterPersonType extends AbstractType
 {
@@ -28,6 +29,7 @@ class RegisterPersonType extends AbstractType
             ->add('email', EmailType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
+            ->add('avatarFileName', FileType::class, array('required' => false, 'data_class' => null, 'mapped' => true))
             ->add('role', TextType::class)
             ->add('bankDetails', TextareaType::class)
             ->add('address', TextType::class)

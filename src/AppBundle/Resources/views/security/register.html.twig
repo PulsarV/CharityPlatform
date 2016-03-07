@@ -12,6 +12,7 @@
             {{ form_label(plainPassword, null) }}
             {{ form_widget(plainPassword) }}
         {% endfor %}
+        {{ form_row(form.avatarFileName) }}
         {{ form_row(form.role) }}
         {{ form_row(form.bankDetails) }}
         {{ form_row(form.address) }}

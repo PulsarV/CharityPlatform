@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -16,11 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
- * @UniqueEntity(
- *      fields={"username", "email"},
- *      errorPath="email",
- *      message="This email is already registered."
- * )
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
  */
 abstract class User implements  UserInterface, \Serializable
@@ -516,7 +512,7 @@ abstract class User implements  UserInterface, \Serializable
 
     public function getPath()
     {
-        return '/uploads/users/'.$this->id;
+        return __DIR__ . '/../../../web/uploads/users/'.$this->username.'/';
     }
 
     public function getRoles()

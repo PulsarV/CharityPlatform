@@ -43,8 +43,9 @@ class SecurityController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
+                $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
                 $em->flush();
-                var_dump($user);
 
                 return $this->redirectToRoute(
                     "registration"
