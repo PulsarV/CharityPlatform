@@ -73,14 +73,14 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $ratingCount;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $viewCount;
 
@@ -94,7 +94,7 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $collectedMoney;
 
@@ -116,7 +116,7 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="bool")
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isActive;
 
@@ -452,6 +452,6 @@ class Charity
 
     public function getPath()
     {
-        return '/uploads/charities/'.$this->id;
+        return '/uploads/charities/'.$this->id.'/';
     }
 }

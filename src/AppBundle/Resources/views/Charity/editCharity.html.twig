@@ -1,0 +1,22 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}Редагування запиту{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+ <h2>Редагувати запит:</h2>
+    {{ form_start(form) }}
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {#<script src="{{ asset('js/tinymce.min.js') }}"></script>#}
+    <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+    <script>
+        tinymce.init({
+        selector: 'textarea'
+        });
+    </script>
+{% endblock %}
