@@ -1,17 +1,13 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends '::base_with_left_sidebar.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
-{% block title %}Видалення запиту{% endblock %}
-
-{% block stylesheets %}{% endblock %}
-
-{% block body %}
+{% block content %}
  <h2>Видалити запит:</h2>
     {{ form_start(form) }}
-    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_end(form) }}
 {% endblock %}
 
-{% block javascripts %}
+{% block additional_javascripts %}
     {#<script src="{{ asset('js/tinymce.min.js') }}"></script>#}
     <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
     <script>

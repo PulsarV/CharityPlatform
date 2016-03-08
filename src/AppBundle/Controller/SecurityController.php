@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,20 +12,21 @@ use AppBundle\Form\RegisterPersonType;
 
 class SecurityController extends Controller
 {
-    /**
-     * @Route("/login", name="login")
-     * @return Response
-     */
-    public function loginAction()
-    {
-
-        return $this->render('@App/security/login.html.twig', [
-
-        ]);
-    }
+//    /**
+//     * @Route("/login", name="login")
+//     * @return Response
+//     */
+//    public function loginAction()
+//    {
+//
+//        return $this->render('@App/security/login.html.twig', [
+//
+//        ]);
+//    }
 
     /**
      * @Route("/register", name="registration")
+     * @Template()
      * @param Request $request
      * @return Response
      */
@@ -52,34 +54,34 @@ class SecurityController extends Controller
                 );
             }
         }
-        return $this->render('@App/security/register.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
-    /**
-     * @Route("/logout", name="logout")
-     * @param Request $request
-     * @return Response
-     */
-    public function logoutAction(Request $request)
-    {
-
-        return $this->render('@App/security/logout.html.twig', [
-
-        ]);
-    }
-
-    /**
-     * @Route("/profile/{slug}", name="show_profile_user")
-     * @return Response
-     */
-    public function showProfileAction()
-    {
-
-        return $this->render('@App/security/profile.html.twig', [
-
-        ]);
-
-    }
+//    /**
+//     * @Route("/logout", name="logout")
+//     * @param Request $request
+//     * @return Response
+//     */
+//    public function logoutAction(Request $request)
+//    {
+//
+//        return $this->render('@App/security/logout.html.twig', [
+//
+//        ]);
+//    }
+//
+//    /**
+//     * @Route("/profile/{slug}", name="show_profile_user")
+//     * @return Response
+//     */
+//    public function showProfileAction()
+//    {
+//
+//        return $this->render('@App/security/profile.html.twig', [
+//
+//        ]);
+//
+//    }
 }

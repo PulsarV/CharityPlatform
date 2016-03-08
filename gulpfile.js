@@ -44,7 +44,7 @@ gulp.task('pages-js', function() {
  'web-src/js/*.js',
  'bower_components/tinymce/tinymce.min.js'
  ])
- //.pipe(minifyJs())
+ .pipe(minifyJs())
  .pipe(gulp.dest('web/js/'));
 });
 gulp.task('clean', function () {
@@ -53,7 +53,7 @@ gulp.task('clean', function () {
 });
 gulp.task('default', ['clean'], function () {
  var tasks = ['images', 'images-ico', 'images-test', 'fonts', 'less', 'lib-js', 'pages-js'];
-tasks.forEach(function (val) {
+ tasks.forEach(function (val) {
  gulp.start(val);
  });
 });

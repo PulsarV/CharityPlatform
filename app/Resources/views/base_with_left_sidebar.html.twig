@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+{% block sidebar %}
+    <aside class="col-sm-4 col-sm-pull-8">
+        <h3>Тут буде меню</h3>
+    </aside>
+{% endblock %}
+{% block body %}
+    <div class="col-sm-8 col-sm-push-4">
+        <div class="blog">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

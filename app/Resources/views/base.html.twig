@@ -200,9 +200,13 @@
         </div>
     </footer>
     {# end footer #}
-
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+    {#begin javascript#}
+    {% block javascript %}
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        {% block additional_javascript %}{% endblock %}
+    {% endblock %}
+    {#end javascript#}
 </body>
 </html>
