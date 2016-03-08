@@ -1,0 +1,31 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="register main-container">
+
+        {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.organizationName) }}
+        {{ form_row(form.organizationDocuments) }}
+        {{ form_row(form.activityProfile) }}
+        {{ form_row(form.email) }}
+        {% for plainPassword in form.plainPassword %}
+            {{ form_label(plainPassword, null) }}
+            {{ form_widget(plainPassword) }}
+        {% endfor %}
+        {{ form_row(form.avatarFileName) }}
+        {{ form_row(form.role) }}
+        {{ form_row(form.bankDetails) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.phone) }}
+        {{ form_row(form.website) }}
+        {{ form_row(form.categories) }}
+        {{ form_row(form.showOtherCategories) }}
+        {{ form_row(form.followCategories) }}
+        {{ form_row(form.birthday) }}
+
+        <button type="submit" class="btn btn-success">Регистрация</button>
+        <a href="{{ path('registration')}}" class=" btn btn-default">Back</a>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
