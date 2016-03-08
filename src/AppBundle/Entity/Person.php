@@ -38,9 +38,9 @@ class Person extends User
     /**
      * @Assert\NotBlank()
      * @Assert\Type(
-     *      type="date"
+     *      type="string"
      * )
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      */
     private $birthday;
 

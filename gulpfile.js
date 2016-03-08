@@ -41,9 +41,10 @@ gulp.task('lib-js', function() {
 });
 gulp.task('pages-js', function() {
  return gulp.src([
- 'web-src/js/*.js'
+ 'web-src/js/*.js',
+ 'bower_components/tinymce/tinymce.min.js'
  ])
- .pipe(minifyJs())
+ //.pipe(minifyJs())
  .pipe(gulp.dest('web/js/'));
 });
 gulp.task('clean', function () {

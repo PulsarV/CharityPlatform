@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CharityRepository")
  * @UniqueEntity("title")
  * @ORM\Table(name="charity")
+ * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
  */
 class Charity
 {
@@ -27,13 +28,8 @@ class Charity
 
     /* TODO: add file upload; check VichUploaderBundle; make correct width and height */
     /**
-     * @Assert\Image(
-     *     minWidth = 400,
-     *     maxWidth = 1000,
-     *     minHeight = 200,
-     *     maxHeight = 400
-     * )
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\UploadableFileName
      */
     private $banner;
 
@@ -77,14 +73,14 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $ratingCount;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $viewCount;
 
@@ -98,15 +94,9 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $collectedMoney;
-
-    /* TODO: add file upload */
-    /**
-     * @ORM\Column(type="string", length=60)
-     */
-    private $images;
 
     /**
      * @Assert\Url(
@@ -126,14 +116,19 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="bool")
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isActive;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="charities", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="charities", cascade={"persist"})
      */
     private $tags;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CharityImage", mappedBy="charity", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $charityImages;
 
     /**
      * @Gedmo\Slug(fields={"title"})
@@ -150,6 +145,7 @@ class Charity
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->charityImages = new ArrayCollection();
         $this->collectedMoney = 0;
         $this->ratingCount = 0;
         $this->viewCount = 0;
@@ -335,22 +331,6 @@ class Charity
     /**
      * @return mixed
      */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * @param mixed $images
-     */
-    public function setImages($images)
-    {
-        $this->images = $images;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getVideo()
     {
         return $this->video;
@@ -424,6 +404,31 @@ class Charity
     /**
      * @return mixed
      */
+    public function getCharityImages()
+    {
+        return $this->charityImages;
+    }
+
+    /**
+     * @param CharityImage $charityImage
+     */
+    public function addCharityImage(CharityImage $charityImage)
+    {
+        $this->charityImages->add($charityImage);
+    }
+
+    /**
+     *
+     * @param CharityImage $charityImage
+     */
+    public function removeCharityImage(CharityImage $charityImage)
+    {
+        $this->charityImages->removeElement($charityImage);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getTags()
     {
         return $this->tags;
@@ -443,5 +448,10 @@ class Charity
     public function removeTag(Tag $tag)
     {
         $this->tags->removeElement($tag);
+    }
+
+    public function getPath()
+    {
+        return '/uploads/charities/'.$this->id.'/';
     }
 }
