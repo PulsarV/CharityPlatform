@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,18 +15,20 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
+     * @Template()
      * @return Response
      */
     public function loginAction()
     {
 
-        return $this->render('@App/security/login.html.twig', [
+        return [
 
-        ]);
+        ];
     }
 
     /**
      * @Route("/register-person", name="registration_person")
+     * @Template()
      * @param Request $request
      * @return Response
      */
@@ -53,13 +56,14 @@ class SecurityController extends Controller
                 );
             }
         }
-        return $this->render('@App/security/register-person.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
     /**
      * @Route("/register-organization", name="registration_organization")
+     * @Template()
      * @param Request $request
      * @return Response
      */
@@ -87,34 +91,36 @@ class SecurityController extends Controller
                 );
             }
         }
-        return $this->render('@App/security/register.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
     /**
      * @Route("/logout", name="logout")
+     * @Template()
      * @param Request $request
      * @return Response
      */
     public function logoutAction(Request $request)
     {
 
-        return $this->render('@App/security/logout.html.twig', [
+        return [
 
-        ]);
+        ];
     }
 
     /**
      * @Route("/profile/{slug}", name="show_profile_user")
+     * @Template()
      * @return Response
      */
     public function showProfileAction()
     {
 
-        return $this->render('@App/security/profile.html.twig', [
+        return [
 
-        ]);
+        ];
 
     }
 }

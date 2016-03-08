@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+{% block sidebar %}
+    <aside class="col-sm-4 col-sm-push-8">
+        {% include '::right_sidebar.html.twig' %}
+    </aside>
+{% endblock %}
+{% block body %}
+    <div class="col-sm-8 col-sm-pull-4">
+        <div class="blog">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
