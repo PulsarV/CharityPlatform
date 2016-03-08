@@ -16,7 +16,7 @@ class CharityRepository extends EntityRepository
     {
         $dql = "SELECT c
                 FROM AppBundle:Charity c
-                ORDER BY c.createdAt DESC";
+                ORDER BY c.createdAt $sortmode";
 
         return $this->getEntityManager()
             ->createQuery($dql);
@@ -28,7 +28,7 @@ class CharityRepository extends EntityRepository
                 FROM AppBundle:Charity c
                 JOIN c.user u
                 WHERE u.slug = :slug
-                ORDER BY c.createdAt DESC";
+                ORDER BY c.createdAt $sortmode";
 
         return $this->getEntityManager()
             ->createQuery($dql)
@@ -41,7 +41,7 @@ class CharityRepository extends EntityRepository
                 FROM AppBundle:Charity c
                 JOIN c.category ct
                 WHERE ct.slug = :slug
-                ORDER BY c.createdAt DESC";
+                ORDER BY c.createdAt $sortmode";
 
         return $this->getEntityManager()
             ->createQuery($dql)
@@ -54,7 +54,7 @@ class CharityRepository extends EntityRepository
                 FROM AppBundle:Charity c
                 LEFT JOIN c.tags t
                 WHERE t.slug = :slug
-                ORDER BY c.createdAt DESC";
+                ORDER BY c.createdAt $sortmode";
 
         return $this->getEntityManager()
             ->createQuery($dql)

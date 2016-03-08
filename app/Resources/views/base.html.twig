@@ -29,7 +29,7 @@
         <div class="container">
             {# begin logo #}
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
+                <a class="navbar-brand" href="{{ path('index_page') }}"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
             </div>
             {# end logo #}
             <div class="collapse navbar-collapse">
@@ -190,10 +190,10 @@
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Головна</a></li>
+                        <li><a href="{{ path('index_page') }}">Головна</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Зв'язатися з нами</a></li>
-                        <li><a id="gototop" class="gototop" href="#"><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
+                        <li><a id="gototop" class="gototop" href=""><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
                     </ul>
                 </div>
             </div>
