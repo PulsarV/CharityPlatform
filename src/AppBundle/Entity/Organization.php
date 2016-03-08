@@ -23,9 +23,8 @@ class Organization extends User
      */
     private $organizationName;
 
-    /* TODO: add file upload; check VichUploaderBundle */
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $organizationDocuments;
 

@@ -82,7 +82,7 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charity-new", name="new_charity")
+     * @Route("/charity-new", name="charity_new")
      * @Method({"GET"})
      * @Template()
      * @param Request $request
@@ -103,7 +103,7 @@ class CharityController extends Controller
                 $em->persist($charity);
                 $em->flush();
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('charity_index');
             }
         }
 
@@ -113,7 +113,7 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charities/{slug}/delete", name="delete_charity")
+     * @Route("/charities/{slug}/delete", name="charity_delete")
      * @Method({"GET"})
      * @Template()
      * @param $slug
@@ -148,7 +148,7 @@ class CharityController extends Controller
                 $em->remove($charity);
                 $em->flush();
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('charity_index');
             }
         }
 
@@ -159,7 +159,7 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charities/{slug}/edit", name="edit_charity")
+     * @Route("/charities/{slug}/edit", name="charity_edit")
      * @Method({"GET"})
      * @Template()
      * @param $slug
@@ -193,7 +193,7 @@ class CharityController extends Controller
             if ($form->isValid()) {
                 $em->flush();
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('charity_index');
             }
         }
 

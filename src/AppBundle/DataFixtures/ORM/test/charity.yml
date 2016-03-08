@@ -13,9 +13,14 @@ AppBundle\Entity\Comment:
   comment{6..10} (extends comment):
     user: '@person*'
 
+AppBundle\Entity\CharityImage:
+  chimage{1..10}:
+    name: <image('<{app.dir}>/web/uploads/charities', 640, 480)>
+    charity: '@charity*'
+
 AppBundle\Entity\Charity:
   charity(template):
-    banner: image('/tmp', 640, 480)
+    banner: <image('<{app.dir}>/web/uploads/charities', 640, 480)>
     title: <sentence(6, true)>
     content: <paragraph(100)>
     primaryUser: null
@@ -24,9 +29,9 @@ AppBundle\Entity\Charity:
     viewCount: <numberBetween(5, 50)>
     needMoney: <numberBetween(1000, 30000)>
     collectedMoney: <numberBetween(500, 1000)>
-    images: <word()>
     video: <url()>
     comments: '2x @comment*'
+    charityImages: '2x @chimage*'
     isActive: <boolean()>
     tags: '2x @tag*'
   charity{1..5} (extends charity):
@@ -39,10 +44,10 @@ AppBundle\Entity\Category:
     title: <word()>
     charities: '2x @charity*'
     importance: <numberBetween(0, 10)>
-  category{1..5} (extends category):
+  category{1..2} (extends category):
     user: '2x @person*'
     followedByUsers: '2x @organization*'
-  category{6..10} (extends category):
+  category{3..4} (extends category):
     user: '2x @organization*'
     followedByUsers: '2x @person*'
 
@@ -51,7 +56,7 @@ AppBundle\Entity\Organization:
     username: <firstName()>
     password: <password()>
     email: <email()>
-    avatar: image('/tmp', 100, 100)
+    avatarFileName: <image('<{app.dir}>/web/uploads/users', 100, 100)>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -74,7 +79,7 @@ AppBundle\Entity\Person:
     username: <firstName()>
     password: <password()>
     email: <email()>
-    avatar: image('/tmp', 100, 100)
+    avatarFileName: <image('<{app.dir}>/web/uploads/users', 100, 100)>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -89,4 +94,4 @@ AppBundle\Entity\Person:
     cautionCount: <numberBetween(0, 20)>
     firstname: <firstName()>
     lastname: <lastName()>
-    birthday: <dateTimeThisCentury()>
+    birthday: <date('Y-m-d', '2000')>
