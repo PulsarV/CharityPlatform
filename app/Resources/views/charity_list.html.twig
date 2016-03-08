@@ -1,4 +1,4 @@
-{% if charities is defined and charities|length > 0 %}
+{% if pager is defined %}
     <div class="dropdown">
         <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Сортувати по даті додавання, спочатку більш свіжі</button>
         <ul class="dropdown-menu">
@@ -9,7 +9,7 @@
             <li><a href="#">Сортувати по часу що залишився, спочатку менш термінові</a></li>
         </ul>
     </div>
-    {% for charity in charities %}
+    {% for charity in pager.currentPageResults %}
         <div class="blog-item">
             <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
             <div class="blog-content">

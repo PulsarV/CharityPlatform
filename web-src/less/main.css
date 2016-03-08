@@ -653,6 +653,7 @@ body > section {
 ul.breadcrumb {
   margin-top: 10px;
   margin-bottom: -20px;
+  margin-left: -15px;
   background: transparent;
 }
 ul.breadcrumb > li {
@@ -1056,14 +1057,6 @@ ul.faq li > div h3 {
   margin-top: 150px;
   margin-bottom: 150px;
 }
-.emerald .lng-menu,
-.emerald .country-menu {
-  padding-top: 25px;
-}
-.emerald .lng-menu .menu-title,
-.emerald .country-menu .menu-title {
-  font-weight: 500;
-}
 .emerald .dropdown-menu {
   background-color: rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: none;
@@ -1086,6 +1079,17 @@ ul.faq li > div h3 {
 .emerald .dropdown-toggle {
   color: #fff;
   font-weight: 300;
+}
+.emerald .lng-menu,
+.emerald .city-menu {
+  padding-top: 25px;
+}
+.emerald .lng-menu .menu-title,
+.emerald .city-menu .menu-title {
+  font-weight: 500;
+}
+.emerald .city-menu .dropdown-menu {
+  min-width: 150px;
 }
 .login-form {
   border: 0;
@@ -1186,4 +1190,11 @@ ul.no-list-style li {
   text-align: left;
   color: #fff;
   font-weight: 400;
+}
+.top-requests > h3,
+.active-requests > h3,
+.completed-requests > h3,
+.tags > h3 {
+  margin-top: 50px;
+  margin-bottom: 30px;
 }

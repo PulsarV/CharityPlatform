@@ -13,162 +13,57 @@
 
 <div class="widget top-requests">
     <h3>Найважливіші на думку спільноти запити</h3>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+    {% for important_charity in important_charities() %}
+        <div class="media">
+            <div class="pull-left">
+                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+            </div>
+            <div class="media-body">
+                <span class="media-heading"><a href="{{ path('charity_show', {'slug': important_charity.slug}) }}">{{ important_charity.title }}</a></span>
+                <br>
+                <small class="muted">Розміщено {{ important_charity.createdAt|date("d M, Y") }}</small>
+            </div>
         </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb3.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <div class="widget active-requests">
     <h3>Вони потребують Вашої допомоги</h3>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+    {% for active_charity in active_charities() %}
+        <div class="media">
+            <div class="pull-left">
+                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+            </div>
+            <div class="media-body">
+                <span class="media-heading"><a href="{{ path('charity_show', {'slug': active_charity.slug}) }}">{{ active_charity.title }}</a></span>
+                <br>
+                <small class="muted">Розміщено {{ active_charity.createdAt|date("d M, Y") }}</small>
+            </div>
         </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb3.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <div class="widget completed-requests">
     <h3>Збір коштів завершено</h3>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+    {% for completed_charity in completed_charities() %}
+        <div class="media">
+            <div class="pull-left">
+                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+            </div>
+            <div class="media-body">
+                <span class="media-heading"><a href="{{ path('charity_show', {'slug': completed_charity.slug}) }}">{{ completed_charity.title }}</a></span>
+                <br>
+                <small class="muted">Розміщено {{ completed_charity.createdAt|date("d M, Y") }}</small>
+            </div>
         </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb3.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
-    <div class="media">
-        <div class="pull-left">
-            <img src="{{ asset('images/test/thumb2.jpg') }}" alt="">
-        </div>
-        <div class="media-body">
-            <span class="media-heading"><a href="#">Pellentesque habitant morbi tristique senectus</a></span>
-            <small class="muted">Posted 17 Aug 2013</small>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <div class="widget tags">
     <h3>Хмарина тегів</h3>
     <ul class="tag-cloud">
-        <li><a class="btn btn-xs btn-primary" href="#">CSS3</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">HTML5</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">WordPress</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">Joomla</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">Drupal</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">Bootstrap</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">jQuery</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">Tutorial</a></li>
-        <li><a class="btn btn-xs btn-primary" href="#">Update</a></li>
+    {% for tag_cloud_element in tag_cloud_elements() %}
+        <li><a class="btn btn-xs btn-primary" href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'tag', 'slug': tag_cloud_element.slug, 'sortmode': 'd'}) }}">{{ tag_cloud_element.tagName }}</a></li>
+    {% endfor %}
     </ul>
 </div><!--/.tags-->

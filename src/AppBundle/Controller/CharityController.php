@@ -2,39 +2,51 @@
 
 namespace AppBundle\Controller;
 
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Charity;
 
 class CharityController extends Controller
 {
-    private $charitiesPerPage = 5;
+    /**
+     * @Route("/charities/config/{param}/{value}", name="config_show")
+     * @Method({"GET"})
+     */
+    public function configShowAction(Request $request, $param, $value)
+    {
+        $this->get('app.charity_manager')->configShow($param, $value);
+
+        return $this->redirect($request->server->get('HTTP_REFERER'));
+    }
 
     /**
-     * @Route("/charities/{page}", requirements={"page": "\d+"}, defaults={"page" = 1}, name="charity_index")
+     * @Route("/charities/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_index")
      * @Method({"GET"})
      * @Template()
      */
     public function indexCharityAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('AppBundle:Charity')->findAllCharities('');
-        $adapter = new DoctrineORMAdapter($qb);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->charitiesPerPage);
-        $pagerfanta->setCurrentPage($page);
-        $charities = $pagerfanta->getCurrentPageResults();
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page);
 
         return [
-            'title' => 'Список запитів',
-            'page' => $page,
-            'pages_count' => $pagerfanta->getNbPages(),
-            'charities' => $charities,
-            'pager' => $pagerfanta,
+            'pager' => $pager,
+        ];
+    }
+
+    /**
+     * @Route("/charities/{filter}/{slug}/{sortmode}/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_index_filtered")
+     * @Method({"GET"})
+     * @Template("@App/Charity/indexCharity.html.twig")
+     */
+    public function indexFilteredCharityAction($filter, $slug, $sortmode, $page)
+    {
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated($filter, $slug, $sortmode, $page);
+
+        return [
+            'pager' => $pager,
         ];
     }
 
@@ -49,110 +61,7 @@ class CharityController extends Controller
         $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
 
         return [
-            'title' => 'Деталі запиту',
             'charity' => $charity,
-            ];
+        ];
     }
-
-//
-//
-//    /**
-//     * @Route("/charity-new", name="new_charity")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function newCharityAction(Request $request)
-//    {
-//        return $this->render('@App/charity/new_charity.html.twig', [
-//
-//        ]);
-//    }
-//
-//    /**
-//     * @Route("/charities/{slug}/delete", name="delete_charity")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function deleteCharityAction(Request $request)
-//    {
-//
-//        return $this->render('@App/charity/delete_charity.html.twig', [
-//
-//        ]);
-//    }
-//
-//    /**
-//     * @Route("/charities/{slug}/edit", name="edit_charity")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function editCharityAction(Request $request)
-//    {
-//
-//        return $this->render('@App/charity/edit_charity.html.twig', [
-//
-//        ]);
-//    }
-//
-//    /**
-//     * @Route("/charities/{slug}/set-rate", name="set_rate_charity")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function setRateCharityAction(Request $request)
-//    {
-//
-//        return $this->render('@App/charity/set_rate_charity.html.twig', [
-//
-//        ]);
-//    }
-//
-//    /**
-//     * @Route("/search/{slug}", name="search_charity")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function searchCharityAction(Request $request)
-//    {
-//
-//
-//        return $this->render('@App/charity/search.html.twig', [
-//
-//        ]);
-//    }
-//
-//    /**
-//     * @Route("/charities/show", name="show_charities")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function paginationAction(Request $request)
-//    {
-//
-//    }
-//
-//    /**
-//     * @Route("/callback", name="callback")
-//     * @return Response
-//     */
-//    public function callbackAction()
-//    {
-//
-//        return $this->render('@App/charity/callback.html.twig', [
-//
-//        ]);
-//    }
-//
-//    /**
-//     * @Route("/faq", name="faq")
-//     * @return Response
-//     */
-//    public function faqAction()
-//    {
-//
-//
-//        return $this->render('@App/charity/faq.html.twig', [
-//
-//        ]);
-//    }
 }
