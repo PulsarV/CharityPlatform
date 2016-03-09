@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Cabinet;
 
 use AppBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

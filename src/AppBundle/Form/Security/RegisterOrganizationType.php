@@ -1,9 +1,8 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Security;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -14,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class RegisterPersonType extends AbstractType
+class RegisterOrganizationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -49,22 +48,17 @@ class RegisterPersonType extends AbstractType
                 'choice_label' => 'title',
                 'multiple' => 'true',
             ))
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('birthday', BirthdayType::class, array(
-                    //TODO: translations
-                    'placeholder' => 'Выберите дату',
-                    'widget' => 'single_text',
-                    'input' => 'string'
-                )
-            )
+            ->add('organizationName', TextType::class)
+            ->add('organizationDocuments', TextareaType::class)
+            ->add('activityProfile', TextType::class)
+            ->add('website', TextType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Person'
+            'data_class' => 'AppBundle\Entity\Organization'
         ));
     }
 }
