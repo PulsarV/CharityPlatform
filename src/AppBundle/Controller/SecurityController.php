@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
+use AppBundle\Form\RegisterOrganizationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,7 +71,7 @@ class SecurityController extends Controller
     public function registerOrganizationAction(Request $request)
     {
         $user = new Organization();
-        $form = $this->createForm(RegisterPersonType::class, $user);
+        $form = $this->createForm(RegisterOrganizationType::class, $user);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
