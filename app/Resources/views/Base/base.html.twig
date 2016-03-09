@@ -13,7 +13,7 @@
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-social.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    <!--[if lt IE 9]>
+    {#<!--[if lt IE 9]><!---->#}
     <script src="{{ asset('js/html5shiv.js') }}"></script>
     <script src="{{ asset('js/respond.min.js') }}"></script>
     <![endif]-->
@@ -205,7 +205,8 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
-        {% block additional_javascript %}{% endblock %}
+        {% block additional_javascripts %}
+        {% endblock %}
     {% endblock %}
     {#end javascript#}
 </body>

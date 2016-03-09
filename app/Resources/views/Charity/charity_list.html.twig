@@ -14,13 +14,13 @@
             <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
             <div class="blog-content">
                 <a href="{{ path('charity_show', {'slug': charity.slug}) }}"><h3>{{ charity.title }}</h3></a>
-                {% include '::charity_header.html.twig' %}
+                {% include ':Charity:charity_header.html.twig' %}
                 <p>{{ charity.content|slice(0, 500) }}</p>
                 <a class="btn btn-default" href="{{ path('charity_show', {'slug': charity.slug}) }}">Читати більше <i class="fa fa-angle-right"></i></a>
             </div>
         </div>
     {% endfor %}
-    {% include '::pagination.html.twig' %}
+    {% include ':Pagination:pagination.html.twig' %}
 {% else %}
     <div class="blog-post">
         <h4>Unfortunately nothing found</h4>

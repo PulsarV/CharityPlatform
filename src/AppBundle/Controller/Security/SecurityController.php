@@ -1,16 +1,16 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Security;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
-use AppBundle\Form\RegisterOrganizationType;
+use AppBundle\Form\Security\RegisterOrganizationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Form\RegisterPersonType;
+use AppBundle\Form\Security\RegisterPersonType;
 
 class SecurityController extends Controller
 {
