@@ -22,10 +22,9 @@
         {{ form_row(form.categories) }}
         {{ form_row(form.showOtherCategories) }}
         {{ form_row(form.followCategories) }}
-        {{ form_row(form.birthday) }}
 
         <button type="submit" class="btn btn-success">Регистрация</button>
-        <a href="{{ path('registration')}}" class=" btn btn-default">Back</a>
+        <a href="{{ path('registration_organization')}}" class=" btn btn-default">Back</a>
         {{ form_end(form) }}
     </div>
 {% endblock %}
