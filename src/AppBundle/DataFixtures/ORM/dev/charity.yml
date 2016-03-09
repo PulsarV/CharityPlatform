@@ -34,9 +34,9 @@ AppBundle\Entity\Charity:
     charityImages: '2x @chimage*'
     isActive: <boolean()>
     tags: '2x @tag*'
-  charity{1..5} (extends charity):
+  charity{1..20} (extends charity):
     user: '@person*'
-  charity{6..10} (extends charity):
+  charity{21..40} (extends charity):
     user: '@organization*'
 
 AppBundle\Entity\Category:
@@ -52,7 +52,7 @@ AppBundle\Entity\Category:
     followedByUsers: '2x @person*'
 
 AppBundle\Entity\Organization:
-  organization{1..4}:
+  organization{1..10}:
     username: <firstName()>
     password: <password()>
     email: <email()>
@@ -75,7 +75,7 @@ AppBundle\Entity\Organization:
     website: <url()>
 
 AppBundle\Entity\Person:
-  person{1..6}:
+  person{1..10}:
     username: <firstName()>
     password: <password()>
     email: <email()>
