@@ -15,12 +15,12 @@ AppBundle\Entity\Comment:
 
 AppBundle\Entity\CharityImage:
   chimage{1..10}:
-    name: <image('<{app.dir}>/web/uploads/charities', 640, 480)>
+    name: <image('<{app.dir}>web/uploads/charities', 640, 480)>
     charity: '@charity*'
 
 AppBundle\Entity\Charity:
   charity(template):
-    banner: <image('<{app.dir}>/web/uploads/charities', 640, 480)>
+    banner: <image('<{app.dir}>web/uploads/charities', 640, 480)>
     title: <sentence(6, true)>
     content: <paragraph(100)>
     primaryUser: null
@@ -56,7 +56,7 @@ AppBundle\Entity\Organization:
     username: <firstName()>
     password: <password()>
     email: <email()>
-    avatarFileName: <image('<{app.dir}>/web/uploads/users', 100, 100)>
+    avatarFileName: <image('<{app.dir}>web/uploads/users', 100, 100)>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -79,7 +79,7 @@ AppBundle\Entity\Person:
     username: <firstName()>
     password: <password()>
     email: <email()>
-    avatarFileName: <image('<{app.dir}>/web/uploads/users', 100, 100)>
+    avatarFileName: <image('<{app.dir}>web/uploads/users', 100, 100)>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
