@@ -1,6 +1,9 @@
 <?php
+
 namespace AppBundle\DataFixtures\ORM;
+
 use Hautelook\AliceBundle\Alice\DataFixtures\Fixtures\Loader as DataFixtureLoader;
+
 class FixturesLoader extends DataFixtureLoader
 {
     /**

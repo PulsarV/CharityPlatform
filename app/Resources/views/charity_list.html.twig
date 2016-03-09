@@ -1,0 +1,28 @@
+{% if pager is defined %}
+    <div class="dropdown">
+        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Сортувати по даті додавання, спочатку більш свіжі</button>
+        <ul class="dropdown-menu">
+            <li><a href="#">Сортувати по даті додавання, спочатку більш старі</a></li>
+            <li><a href="#">Сортувати по важливості, спочатку більш важливі</a></li>
+            <li><a href="#">Сортувати по важливості, спочатку менш важливі</a></li>
+            <li><a href="#">Сортувати по часу що залишився, спочатку більш термінові</a></li>
+            <li><a href="#">Сортувати по часу що залишився, спочатку менш термінові</a></li>
+        </ul>
+    </div>
+    {% for charity in pager.currentPageResults %}
+        <div class="blog-item">
+            <img class="img-responsive img-blog" src="{{ asset('images/test/blog1.jpg') }}" width="100%" alt="" />
+            <div class="blog-content">
+                <a href="{{ path('charity_show', {'slug': charity.slug}) }}"><h3>{{ charity.title }}</h3></a>
+                {% include '::charity_header.html.twig' %}
+                <p>{{ charity.content|slice(0, 500) }}</p>
+                <a class="btn btn-default" href="{{ path('charity_show', {'slug': charity.slug}) }}">Читати більше <i class="fa fa-angle-right"></i></a>
+            </div>
+        </div>
+    {% endfor %}
+    {% include '::pagination.html.twig' %}
+{% else %}
+    <div class="blog-post">
+        <h4>Unfortunately nothing found</h4>
+    </div>
+{% endif %}

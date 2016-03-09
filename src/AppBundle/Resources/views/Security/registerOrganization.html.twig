@@ -1,9 +1,8 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends '::base_wo_sidebar_centered.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-{% block body %}
-    <div class="register main-container">
-
-        {{ form_start(form) }}
+{% block content %}
+    {{ form_start(form) }}
         {{ form_row(form.username) }}
         {{ form_row(form.organizationName) }}
         {{ form_row(form.organizationDocuments) }}
@@ -22,9 +21,7 @@
         {{ form_row(form.categories) }}
         {{ form_row(form.showOtherCategories) }}
         {{ form_row(form.followCategories) }}
-
-        <button type="submit" class="btn btn-success">Регистрация</button>
-        <a href="{{ path('registration_organization')}}" class=" btn btn-default">Back</a>
-        {{ form_end(form) }}
-    </div>
+        <a href="" class=" btn btn-info">Back</a>
+        <button type="submit" class="btn btn-success pull-right">Регистрация</button>
+    {{ form_end(form) }}
 {% endblock %}

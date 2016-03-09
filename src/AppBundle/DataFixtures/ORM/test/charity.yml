@@ -1,6 +1,6 @@
 AppBundle\Entity\Tag:
   tag{1..10}:
-    tagName: <word()>
+    tagName(unique): <word()>
     charities: '2x @charity*'
 
 AppBundle\Entity\Comment:
@@ -15,12 +15,12 @@ AppBundle\Entity\Comment:
 
 AppBundle\Entity\CharityImage:
   chimage{1..10}:
-    name: <image('<{app.dir}>/web/uploads/charities', 640, 480)>
+    name(unique): <image('<{app.dir}>web/uploads/charities', 640, 480)>
     charity: '@charity*'
 
 AppBundle\Entity\Charity:
   charity(template):
-    banner: <image('<{app.dir}>/web/uploads/charities', 640, 480)>
+    banner(unique): <image('<{app.dir}>web/uploads/charities', 640, 480)>
     title: <sentence(6, true)>
     content: <paragraph(100)>
     primaryUser: null
@@ -41,7 +41,7 @@ AppBundle\Entity\Charity:
 
 AppBundle\Entity\Category:
   category(template):
-    title: <word()>
+    title(unique): <sentence(2, true)>
     charities: '2x @charity*'
     importance: <numberBetween(0, 10)>
   category{1..2} (extends category):
@@ -53,10 +53,10 @@ AppBundle\Entity\Category:
 
 AppBundle\Entity\Organization:
   organization{1..10}:
-    username: <firstName()>
+    username(unique): <firstName()>
     password: <password()>
-    email: <email()>
-    avatarFileName: <image('<{app.dir}>/web/uploads/users', 100, 100)>
+    email(unique): <email()>
+    avatarFileName: <image('<{app.dir}>web/uploads/users', 100, 100)>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -76,10 +76,10 @@ AppBundle\Entity\Organization:
 
 AppBundle\Entity\Person:
   person{1..10}:
-    username: <firstName()>
+    username(unique): <firstName()>
     password: <password()>
-    email: <email()>
-    avatarFileName: <image('<{app.dir}>/web/uploads/users', 100, 100)>
+    email(unique): <email()>
+    avatarFileName: <image('<{app.dir}>web/uploads/users', 100, 100)>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>

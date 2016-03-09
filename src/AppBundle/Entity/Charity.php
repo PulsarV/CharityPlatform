@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CharityRepository")
  * @UniqueEntity("title")
  * @ORM\Table(name="charity")
  * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)

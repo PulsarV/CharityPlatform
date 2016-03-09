@@ -1,0 +1,69 @@
+<!-- Search -->
+<div class="widget search">
+    <form role="form">
+        <div class="input-group">
+            <input type="text" class="form-control" autocomplete="off" placeholder="Пошук">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="button" data-toggle="tooltip" data-placement="right" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
+                            <button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="right" title="Пошук"><i class="fa fa-search"></i></button>
+                        </span>
+        </div>
+    </form>
+</div><!-- /Search -->
+
+<div class="widget top-requests">
+    <h3>Найважливіші на думку спільноти запити</h3>
+    {% for important_charity in important_charities() %}
+        <div class="media">
+            <div class="pull-left">
+                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+            </div>
+            <div class="media-body">
+                <span class="media-heading"><a href="{{ path('charity_show', {'slug': important_charity.slug}) }}">{{ important_charity.title }}</a></span>
+                <br>
+                <small class="muted">Розміщено {{ important_charity.createdAt|date("d M, Y") }}</small>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="widget active-requests">
+    <h3>Вони потребують Вашої допомоги</h3>
+    {% for active_charity in active_charities() %}
+        <div class="media">
+            <div class="pull-left">
+                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+            </div>
+            <div class="media-body">
+                <span class="media-heading"><a href="{{ path('charity_show', {'slug': active_charity.slug}) }}">{{ active_charity.title }}</a></span>
+                <br>
+                <small class="muted">Розміщено {{ active_charity.createdAt|date("d M, Y") }}</small>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="widget completed-requests">
+    <h3>Збір коштів завершено</h3>
+    {% for completed_charity in completed_charities() %}
+        <div class="media">
+            <div class="pull-left">
+                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+            </div>
+            <div class="media-body">
+                <span class="media-heading"><a href="{{ path('charity_show', {'slug': completed_charity.slug}) }}">{{ completed_charity.title }}</a></span>
+                <br>
+                <small class="muted">Розміщено {{ completed_charity.createdAt|date("d M, Y") }}</small>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="widget tags">
+    <h3>Хмарина тегів</h3>
+    <ul class="tag-cloud">
+    {% for tag_cloud_element in tag_cloud_elements() %}
+        <li><a class="btn btn-xs btn-primary" href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'tag', 'slug': tag_cloud_element.slug, 'sortmode': 'd'}) }}">{{ tag_cloud_element.tagName }}</a></li>
+    {% endfor %}
+    </ul>
+</div><!--/.tags-->

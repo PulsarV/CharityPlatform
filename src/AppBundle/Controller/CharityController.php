@@ -5,32 +5,84 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Charity;
 use AppBundle\Form\CharityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CharityController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/charities/config/{param}/{value}", name="config_show")
      * @Method({"GET"})
-     * @Template()
+     * @param Request $request
+     * @param $param
+     * @param $value
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction()
+    public function configShowAction(Request $request, $param, $value)
     {
-        $post = "post";
+        $this->get('app.charity_manager')->configShow($param, $value);
 
-        return [
-            'post' => $post,
-        ];
-
+        return $this->redirect($request->server->get('HTTP_REFERER'));
     }
 
     /**
-     * @Route("/charity-new", name="new_charity")
+     * @Route("/charities/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_index")
+     * @Method({"GET"})
+     * @Template()
+     * @param $page
+     * @return array
+     */
+    public function indexCharityAction($page)
+    {
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page);
+
+        return [
+            'pager' => $pager,
+        ];
+    }
+
+    /**
+     * @Route("/charities/{filter}/{slug}/{sortmode}/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_index_filtered")
+     * @Method({"GET"})
+     * @Template("@App/Charity/indexCharity.html.twig")
+     * @param $filter
+     * @param $slug
+     * @param $sortmode
+     * @param $page
+     * @return array
+     */
+    public function indexFilteredCharityAction($filter, $slug, $sortmode, $page)
+    {
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated($filter, $slug, $sortmode, $page);
+
+        return [
+            'pager' => $pager,
+        ];
+    }
+
+    /**
+     * @Route("/charities/{slug}", name="charity_show")
+     * @Method({"GET"})
+     * @Template()
+     * @param $slug
+     * @return array
+     */
+    public function showCharityAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
+
+        return [
+            'charity' => $charity,
+        ];
+    }
+
+    /**
+     * @Route("/charity-new", name="charity_new")
      * @Method({"GET"})
      * @Template()
      * @param Request $request
@@ -51,7 +103,7 @@ class CharityController extends Controller
                 $em->persist($charity);
                 $em->flush();
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('charity_index');
             }
         }
 
@@ -61,7 +113,7 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charities/{slug}/delete", name="delete_charity")
+     * @Route("/charities/{slug}/delete", name="charity_delete")
      * @Method({"GET"})
      * @Template()
      * @param $slug
@@ -96,7 +148,7 @@ class CharityController extends Controller
                 $em->remove($charity);
                 $em->flush();
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('charity_index');
             }
         }
 
@@ -107,7 +159,7 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charities/{slug}/edit", name="edit_charity")
+     * @Route("/charities/{slug}/edit", name="charity_edit")
      * @Method({"GET"})
      * @Template()
      * @param $slug
@@ -141,7 +193,7 @@ class CharityController extends Controller
             if ($form->isValid()) {
                 $em->flush();
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('charity_index');
             }
         }
 
@@ -150,5 +202,4 @@ class CharityController extends Controller
             'charity' => $charity,
         ];
     }
-
 }
