@@ -4,6 +4,9 @@
 {% block content %}
  <h2>Редагувати запит:</h2>
     {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Редагувати"
+    class="btn btn-default pull-right" />
     {{ form_end(form) }}
 {% endblock %}
 
