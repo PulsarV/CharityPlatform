@@ -16,7 +16,6 @@ class CharityController extends Controller
 {
     /**
      * @Route("/charity-new", name="charity_new")
-     * @Method({"GET"})
      * @Template()
      * @param Request $request
      * @return array|RedirectResponse
@@ -26,7 +25,6 @@ class CharityController extends Controller
         $charity = new Charity();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CharityType::class, $charity);
-        $form->add('save', SubmitType::class, array('label' => 'Save'));
 
         if ($request->getMethod() === 'POST') {
 
@@ -47,7 +45,6 @@ class CharityController extends Controller
 
     /**
      * @Route("/charities/{slug}/delete", name="charity_delete")
-     * @Method({"GET"})
      * @Template()
      * @param $slug
      * @param Request $request
@@ -71,7 +68,6 @@ class CharityController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CharityType::class, $charity);
-        $form->add('save', SubmitType::class, array('label' => 'Видалити'));
 
         if ($request->getMethod() === 'POST') {
 
@@ -93,7 +89,6 @@ class CharityController extends Controller
 
     /**
      * @Route("/charities/{slug}/edit", name="charity_edit")
-     * @Method({"GET"})
      * @Template()
      * @param $slug
      * @param Request $request
@@ -117,7 +112,6 @@ class CharityController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CharityType::class, $charity);
-        $form->add('save', SubmitType::class, array('label' => 'Редагувати'));
 
         if ($request->getMethod() === 'POST') {
 
