@@ -1,13 +1,13 @@
-{% extends '::base_with_right_sidebar.html.twig' %}
+{% extends ':Base:base_with_right_sidebar.html.twig' %}
 {% block content %}
     <div class="blog-item">
         <img class="img-responsive img-blog" src="{{ asset('images/test/blog2.jpg') }}" width="100%" alt="" />
         <div class="blog-content">
             <h3>{{ charity.title }}</h3>
-            {% include '::charity_header.html.twig' %}
+            {% include ':Charity:charity_header.html.twig' %}
             {{ charity.content }}
             <hr>
-            {% include '::charity_footer.html.twig' %}
+            {% include ':Charity:charity_footer.html.twig' %}
             <div id="comments">
                 <div id="comments-list">
                     <h3>Коментарів: {{ charity.comments|length }}</h3>

@@ -1,9 +1,12 @@
-{% extends '::base_with_left_sidebar.html.twig' %}
+{% extends ':Base:base_with_left_sidebar.html.twig' %}
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block content %}
- <h2>Редагувати запит:</h2>
+ <h2>Видалити запит:</h2>
     {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Видалити"
+    class="btn btn-default pull-right" />
     {{ form_end(form) }}
 {% endblock %}
 

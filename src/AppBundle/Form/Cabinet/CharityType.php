@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Cabinet;
 
 use AppBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,19 +38,22 @@ class CharityType extends AbstractType
             ])
             ->add('banner', FileType::class, [
                 'label' => 'банер',
-                'required' => true,
+                'required' => false,
+                'data_class' => null,
+                'mapped' => true,
             ])
             ->add('needMoney', IntegerType::class, [
                 'label' => 'потрібно коштів',
                 'required' => true,
             ])
-            ->add('images', FileType::class, [
+            ->add('charityImages', FileType::class, [
                 'label' => 'зображення',
-                'required' => true,
+                'required' => false,
+                'data_class' => null,
+                'mapped' => true,
             ])
-            ->add('video', FileType::class, [
+            ->add('video', TextType::class, [
                 'label' => 'відео',
-                'required' => true,
             ])
             ->add('tags', EntityType::class, [
                 'label' => 'ключові слова',
@@ -61,6 +64,12 @@ class CharityType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'label' => 'Автор',
+                'class' => 'AppBundle\Entity\User',
+                'choice_label' => 'username',
+                'required' => true,
+            ])
+            ->add('primaryUser', EntityType::class, [
+                'label' => 'Чи категорія',
                 'class' => 'AppBundle\Entity\User',
                 'choice_label' => 'username',
                 'required' => true,
