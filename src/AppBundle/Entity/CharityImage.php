@@ -2,17 +2,15 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="charityImage")
- * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
  */
 class CharityImage
 {
@@ -26,15 +24,42 @@ class CharityImage
     private $id;
 
     /**
-     * @ORM\Column
-     * @Gedmo\UploadableFileName
+     * File name on server
+     *
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255)
+     */
+    private $path;
+
+    /**
+     * Original file name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Charity", inversedBy="charityImages", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Charity", inversedBy="charityImages")
      */
     private $charity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="size", type="integer", nullable=true)
+     */
+    private $size;
+
+    /**
+     * @var UploadedFile
+     */
+    private $file;
+
+    public function __construct()
+    {
+        $this->path = __DIR__ . '/../../../web/uploads/charities/'.$this->id.'/';
+    }
 
     /**
      * @return mixed
@@ -50,11 +75,6 @@ class CharityImage
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    public function getPath()
-    {
-        return '/uploads/charities/'.$this->charity->id;
     }
 
     /**
@@ -87,5 +107,53 @@ class CharityImage
     public function setCharity($charity)
     {
         $this->charity = $charity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param mixed $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param int $size
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
     }
 }

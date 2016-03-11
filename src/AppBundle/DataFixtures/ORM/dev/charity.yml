@@ -16,6 +16,8 @@ AppBundle\Entity\Comment:
 AppBundle\Entity\CharityImage:
   chimage{1..10}:
     name(unique): <image('<{app.dir}>web/uploads/charities', 640, 480)>
+    path: <(sha1($fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>.jpg
+    size: <numberBetween(300, 1000)>
     charity: '@charity*'
 
 AppBundle\Entity\Charity:
