@@ -39,25 +39,24 @@ gulp.task('lib-js', function() {
  .pipe(minifyJs())
  .pipe(gulp.dest('web/js/'));
 });
-gulp.task('pages-js', function() {
+gulp.task('tinymce-js', function() {
  return gulp.src([
- 'web-src/js/*.js',
- 'bower_components/tinymce/tinymce.min.js'
- ])
- .pipe(minifyJs())
- .pipe(gulp.dest('web/js/'));
+      'bower_components/tinymce/tinymce.js'
+     ])
+     .pipe(concatJs('tinymce.js'))
+     .pipe(minifyJs())
+     .pipe(gulp.dest('web/js/'));
 });
 gulp.task('clean', function () {
  return gulp.src(['web/css/*', 'web/js/*', 'web/images/*', 'web/fonts/*'])
  .pipe(clean());
 });
 gulp.task('default', ['clean'], function () {
- var tasks = ['images', 'images-ico', 'images-test', 'fonts', 'less', 'lib-js', 'pages-js'];
+ var tasks = ['images', 'images-ico', 'images-test', 'fonts', 'less', 'lib-js', 'tinymce-js'];
  tasks.forEach(function (val) {
  gulp.start(val);
  });
 });
 gulp.task('watch', function () {
- var less = gulp.watch(['web-src/less/*.less', 'web-src/less/*.css'], ['less']),
- js = gulp.watch('web-src/js/*.js', ['pages-js']);
+ var less = gulp.watch(['web-src/less/*.less', 'web-src/less/*.css'], ['less'])
 });
