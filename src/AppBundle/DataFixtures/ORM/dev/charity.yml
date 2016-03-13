@@ -15,14 +15,14 @@ AppBundle\Entity\Comment:
 
 AppBundle\Entity\CharityImage:
   chimage{1..10}:
-    name(unique): <image('<{app.dir}>web/uploads/charities', 640, 480)>
-    path: <(sha1($fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>.jpg
+    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
+    path: '@chimage<current()>->name'
     size: <numberBetween(300, 1000)>
     charity: '@charity*'
 
 AppBundle\Entity\Charity:
   charity(template):
-    banner(unique): <image('<{app.dir}>web/uploads/charities', 640, 480)>
+    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
     title: <sentence(6, true)>
     content: <paragraph(100)>
     primaryUser: null
@@ -58,7 +58,7 @@ AppBundle\Entity\Organization:
     username(unique): <firstName()>
     password: <password()>
     email(unique): <email()>
-    avatarFileName: <image('<{app.dir}>web/uploads/users', 100, 100)>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 640, 480)))>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -81,7 +81,7 @@ AppBundle\Entity\Person:
     username(unique): <firstName()>
     password: <password()>
     email(unique): <email()>
-    avatarFileName: <image('<{app.dir}>web/uploads/users', 100, 100)>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 640, 480)))>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>

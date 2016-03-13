@@ -14,7 +14,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CharityRepository")
  * @UniqueEntity("title")
  * @ORM\Table(name="charity")
- * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
+ * @Gedmo\Uploadable(
+ *      pathMethod="getPath",
+ *      appendNumber=true,
+ *      filenameGenerator="SHA1",
+ *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png"
+ * )
+ * @ORM\HasLifecycleCallbacks
  */
 class Charity
 {
@@ -461,26 +467,17 @@ class Charity
     {
         return $this->uploadedFiles;
     }
-
     /**
-     * @param UploadedFile $uploadedFile
+     * @param ArrayCollection $uploadedFiles
      */
-    public function addUploadedFile(UploadedFile $uploadedFile)
+    public function setUploadedFiles($uploadedFiles)
     {
-        $this->uploadedFiles->add($uploadedFile);
-    }
-
-    /**
-     * @param UploadedFile $uploadedFile
-     */
-    public function removeUploadedFile(UploadedFile $uploadedFile)
-    {
-        $this->uploadedFiles->removeElement($uploadedFile);
+        $this->uploadedFiles = $uploadedFiles;
     }
 
     public function getPath()
     {
-        return __DIR__ . '/../../../web/uploads/charities/'.$this->slug.'/';
+        return __DIR__ . '/../../../web/uploads/charities/';
     }
 
     /**
@@ -488,22 +485,24 @@ class Charity
      */
     public function upload()
     {
+        //TODO: add file limit
         /** @var UploadedFile $uploadedFile */
-        foreach($this->uploadedFiles as $uploadedFile)
-        {
-            $file = new CharityImage();
+        foreach($this->uploadedFiles as $uploadedFile) {
+            if ($uploadedFile !== null) {
+                $file = new CharityImage();
 
-            $path = sha1(uniqid(mt_rand(), true)).'.'.$uploadedFile->guessExtension();
-            $file->setPath($path);
-            $file->setSize($uploadedFile->getClientSize());
-            $file->setName($uploadedFile->getClientOriginalName());
+                $path = sha1(uniqid(mt_rand(), true)).'.'.$uploadedFile->guessExtension();
+                $file->setPath($path);
+                $file->setSize($uploadedFile->getClientSize());
+                $file->setName($uploadedFile->getClientOriginalName());
 
-            $uploadedFile->move($this->getPath(), $path);
+                $uploadedFile->move($this->getPath(), $path);
 
-            $this->getCharityImages()->add($file);
-            $file->setCharity($this);
+                $this->getCharityImages()->add($file);
+                $file->setCharity($this);
 
-            unset($uploadedFile);
+                unset($uploadedFile);
+            }
         }
     }
 }

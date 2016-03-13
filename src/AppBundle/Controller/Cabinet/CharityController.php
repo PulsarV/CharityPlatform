@@ -32,6 +32,7 @@ class CharityController extends Controller
 
             if ($form->isValid()) {
                 $em->persist($charity);
+                //TODO: add default logo if banner === null
                 if ($charity->getBanner() !== null) {
                     $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                     $uploadableManager->markEntityToUpload($charity, $charity->getBanner());

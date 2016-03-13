@@ -35,12 +35,14 @@ class CharityImage
     /**
      * Original file name
      *
+     * @Assert\Image()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Charity", inversedBy="charityImages")
+     * @ORM\JoinColumn(name="charity_id", referencedColumnName="id")
      */
     private $charity;
 

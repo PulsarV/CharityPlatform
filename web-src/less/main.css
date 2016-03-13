@@ -977,7 +977,8 @@ ul.social > li > a:hover {
   margin-bottom: 20px;
 }
 .blog .blog-item .img-blog {
-  width: 100%;
+  width: 750px;
+  height: 300px;
   border-radius: 5px 5px 0 0;
 }
 .blog .blog-item .blog-content {
