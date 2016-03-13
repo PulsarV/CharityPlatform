@@ -24,182 +24,36 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset('images/ico/apple-touch-icon-57-precomposed.png') }}">
 </head>
 <body>
-    {# begin menu #}
-    <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
-        <div class="container">
-            {# begin logo #}
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{{ path('index_page') }}"><img src="{{ asset('images/logo.png') }}" alt="logo"></a>
-            </div>
-            {# end logo #}
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ path('index_page') }}">Головна</a></li>
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Категорії <i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            {% for category in all_categories() %}
-                                <li><a href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'category', 'slug': category.slug, 'sortmode': 'd'}) }}">{{ category.title }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li><a href="#">Користувачі</a></li>
-                    <li><a href="#">Організації</a></li>
-                    <li><a href="#">Контакти</a></li>
-                    <li><a href="{{ path('charity_new') }}"><b>Створити запит</b></a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
+
+{# begin menu #}
+    {% block main_menu %}
+        {% include ':Menu:main_menu.html.twig' %}
+    {% endblock %}
     {# end menu #}
 
     {# begin submenu #}
-    <section id="title" class="emerald">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h1>{{ page_title() }}</h1>
-                    <ul class="breadcrumb">
-                        {% for bread_crumb in bread_crumbs() %}
-                            {% if loop.index < bread_crumbs()|length %}
-                                <li><a href="#">{{ bread_crumb }}</a></li>
-                            {% else %}
-                                <li class="active">{{ bread_crumb }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-sm-4">
-                    <div class="lng-menu">
-                        <span class="menu-title">Вибрана мова інтерфейсу:</span>
-                        <span class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ current_language() }}</a>
-                            <ul class="dropdown-menu">
-                                {% for language in available_languages() %}
-                                    {% if language != current_language() %}
-                                        <li><a href="{{ path('config_show', {'param': 'lng', 'value': language}) }}">{{ language }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>
-                    </div>
-                    <div class="city-menu">
-                        <span class="menu-title">Ваше місто:</span>
-                        <span class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ current_city() }}</a>
-                            <ul class="dropdown-menu">
-                                {% for city in available_cities() %}
-                                    {% if city != current_city() %}
-                                        <li><a href="{{ path('config_show', {'param': 'city', 'value': city}) }}">{{ city }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>
-                    </div>
-                </div>
-                <div class="container col-sm-4">
-                    <div class="row">
-                        <form role="form">
-                            <fieldset class="login-form">
-                                <div class="form-group col-sm-5">
-                                    <input type="text" id="username" name="username" placeholder="Користувач / E-Mail" class="form-control input-sm">
-                                </div>
-                                <div class="form-group col-sm-5">
-                                    <input type="password" id="password" name="password" placeholder="Пароль" class="form-control input-sm">
-                                </div>
-                                <div class="form-group col-sm-2">
-                                    <button class="btn btn-success btn-sm btn-block">Ввійти</button>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-inline"><input type="checkbox" class="checkbox"> Запам'ятати мене</label>&nbsp;&nbsp;&nbsp;
-                                    <a class="" href="#">Нагадати пароль</a>
-                                    <button type="button" class="btn btn-success btn-sm pull-right">Реєстрація</button>
-                                </div>
-                                <div class="form-group">
-                                    <label>Ввійдіть за допомогою:</label>&nbsp;&nbsp;
-                                    <a class="btn btn-social-icon btn-twitter btn-sm">
-                                        <span class="fa fa-twitter"></span>
-                                    </a>
-                                    <a class="btn btn-social-icon btn-facebook btn-sm">
-                                        <span class="fa fa-facebook"></span>
-                                    </a>
-                                    <a class="btn btn-social-icon btn-vk btn-sm">
-                                        <span class="fa fa-vk"></span>
-                                    </a>
-                                    <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
-                                        <span class="fa fa-odnoklassniki"></span>
-                                    </a>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% block sub_menu %}
+        {% include ':Menu:sub_menu_common.html.twig' %}
+    {% endblock %}
     {# end submenu #}
 
     {# begin page body #}
-    <section id="blog" class="container">
-        <div class="row">
-            {% block sidebar %}
-            {% endblock %}
-            {% block body %}
-            {% endblock %}
-        </div>
-    </section>
+    {% block page_body %}
+    {% endblock %}
     {# end page body #}
 
-    {# begin subfooter#}
-    <section id="bottom" class="wet-asphalt bot">
-        <div class="container">
-            <div class="col-md-offset-2 col-xs-offset-3 col-md-4 col-xs-7">
-                <h4>Як з нами зв'язатися</h4>
-                <b>Адреса:</b> 18006, вул. Орджонікідзе, Черкаси, Україна<br/>
-                <b>Телефон:</b> +38 097 561-24-90<br/>
-                <b>Email:</b> <a href="mailto:volodymyr.a.kravchuk@gmail.com">volodymyr.a.kravchuk@gmail.com</a>
+    {# begin sub_footer#}
+    {% block sub_footer %}
+        {% include ':Footer:sub_footer.html.twig' %}
+    {% endblock %}
+    {# end sub_footer #}
 
-                <h4>Підписатися на розсилку</h4>
-                <form role="form">
-                    <div class="input-group">
-                        <input type="text" class="form-control" autocomplete="off" placeholder="Ваш email">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-danger" type="button">Go!</button>
-                                </span>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-offset-1 col-xs-offset-3 col-md-4 col-xs-7">
-                <h4>Залишайтеся на зв'язку</h4>
-                <ul class="footer-stay-connected no-list-style">
-                    <li><a href="#" class="twitter"></a></li>
-                    <li><a href="https://www.facebook.com/profile.php?id=100009030504250" class="facebook"></a></li>
-                    <li><a href="https://plus.google.com/u/0/103178508336520769822" class="googleplus"></a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    {# end subfooter #}
+    {# begin main_footer#}
+    {% block main_footer %}
+        {% include ':Footer:main_footer.html.twig' %}
+    {% endblock %}
+    {# end main_footer #}
 
-    {# begin footer#}
-    <footer id="footer" class="midnight-blue">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2016 <a target="_blank" href="http://geekhub.ck.ua/" title="Online платформа благодійності">Online платформа благодійності</a>
-                </div>
-                <div class="col-sm-6">
-                    <ul class="pull-right">
-                        <li><a href="{{ path('index_page') }}">Головна</a></li>
-                        <li><a href="#">Faq</a></li>
-                        <li><a href="#">Зв'язатися з нами</a></li>
-                        <li><a id="gototop" class="gototop" href=""><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    {# end footer #}
     {#begin javascript#}
     {% block javascript %}
         <script src="{{ asset('js/app.js') }}"></script>
@@ -209,5 +63,6 @@
         {% endblock %}
     {% endblock %}
     {#end javascript#}
+
 </body>
 </html>

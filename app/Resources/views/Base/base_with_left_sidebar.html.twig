@@ -1,14 +1,22 @@
 {% extends ':Base:base.html.twig' %}
-{% block sidebar %}
-    <aside class="col-sm-3">
-        <h3>Тут буде меню</h3>
-    </aside>
+{% block sub_menu%}
 {% endblock %}
-{% block body %}
-    <div class="col-sm-9">
-        <div class="blog">
-            {% block content %}
+{% block page_body %}
+    <section id="blog" class="container cabinet">
+        <div class="row">
+            {% block sidebar %}
+                <aside class="col-sm-2 cabinet-menu">
+                    {%  include ':Sidebar:left_sidebar.html.twig' %}
+                </aside>
+            {% endblock %}
+            {% block body %}
+                <div class="col-sm-10 cabinet-content">
+                    <div class="blog">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
             {% endblock %}
         </div>
-    </div>
+    </section>
 {% endblock %}
