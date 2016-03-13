@@ -1,9 +1,15 @@
 {% extends ':Base:base.html.twig' %}
-{% block body %}
-    <div class="col-sm-6 col-sm-offset-3">
-        <div class="blog">
-            {% block content %}
+{% block page_body %}
+    <section id="blog" class="container">
+        <div class="row">
+            {% block body %}
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="blog">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
             {% endblock %}
         </div>
-    </div>
+    </section>
 {% endblock %}
