@@ -32,6 +32,10 @@ class CharityController extends Controller
 
             if ($form->isValid()) {
                 $em->persist($charity);
+                if ($charity->getBanner() !== null) {
+                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                    $uploadableManager->markEntityToUpload($charity, $charity->getBanner());
+                }
                 $em->flush();
 
                 return $this->redirectToRoute('charity_index');

@@ -61,7 +61,7 @@ abstract class User implements  UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFileName
      */
     private $avatarFileName;
@@ -163,7 +163,6 @@ abstract class User implements  UserInterface, \Serializable
         $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
-        $this->avatarFileName = 11;
     }
 
     /**

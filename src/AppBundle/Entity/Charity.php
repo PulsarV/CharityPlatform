@@ -28,7 +28,7 @@ class Charity
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFileName
      */
     private $banner;
@@ -103,7 +103,7 @@ class Charity
      *    checkDNS = true,
      *    dnsMessage = "The host '{{ value }}' could not be resolved. Use the existing one."
      * )
-     * @ORM\Column(type="string", length=120)
+     * @ORM\Column(type="string", length=120, nullable=true)
      */
     private $video;
 
