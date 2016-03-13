@@ -1,4 +1,4 @@
-{% extends ':Base:base_with_left_sidebar.html.twig' %}
+{% extends ':Base:base_charity_editor.html.twig' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block content %}
@@ -10,12 +10,3 @@
     {{ form_end(form) }}
 {% endblock %}
 
-{% block additional_javascripts %}
-    {#<script src="{{ asset('js/tinymce.min.js') }}"></script>#}
-    <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-    <script>
-        tinymce.init({
-        selector: 'textarea'
-        });
-    </script>
-{% endblock %}

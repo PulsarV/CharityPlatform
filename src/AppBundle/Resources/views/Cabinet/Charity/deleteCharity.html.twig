@@ -1,5 +1,5 @@
-{% extends ':Base:base_with_left_sidebar.html.twig' %}
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% extends ':Base:base_charity_editor.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block content %}
  <h2>Видалити запит:</h2>
@@ -8,14 +8,4 @@
         <a href="" class=" btn btn-info btn-form">Back</a>
         <input type="submit" value="Видалити" class="btn btn-success btn-form pull-right" />
     {{ form_end(form) }}
-{% endblock %}
-
-{% block additional_javascripts %}
-    {#<script src="{{ asset('js/tinymce.min.js') }}"></script>#}
-    <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-    <script>
-        tinymce.init({
-        selector: 'textarea'
-        });
-    </script>
 {% endblock %}

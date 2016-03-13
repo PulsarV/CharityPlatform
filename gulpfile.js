@@ -30,6 +30,13 @@ gulp.task('fonts', function () {
  return gulp.src(['web-src/fonts/*'])
  .pipe(gulp.dest('web/fonts/'))
 });
+gulp.task('js', function() {
+ return gulp.src([
+      'web-src/js/*.js'
+     ])
+     .pipe(minifyJs())
+     .pipe(gulp.dest('web/js/'));
+});
 gulp.task('lib-js', function() {
  return gulp.src([
   'bower_components/jquery/dist/jquery.js',
@@ -53,7 +60,7 @@ gulp.task('clean', function () {
 });
 gulp.task('default', ['clean'], function () {
  var tasks = [
-  'images', 'images-ico', 'images-test', 'fonts', 'less', 'lib-js', 'tinymce'
+  'images', 'images-ico', 'images-test', 'fonts', 'less', 'js', 'lib-js', 'tinymce'
  ];
  tasks.forEach(function (val) {
   gulp.start(val);
