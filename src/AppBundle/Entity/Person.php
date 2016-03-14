@@ -44,6 +44,12 @@ class Person extends User
      */
     private $birthday;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->entityDiscr = 'person';
+    }
+
     /**
      * @return mixed
      */

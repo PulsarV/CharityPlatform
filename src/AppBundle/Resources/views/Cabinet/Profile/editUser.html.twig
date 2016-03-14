@@ -1,0 +1,20 @@
+{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+{% form_theme editForm 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(editForm) }}
+    {{ form_widget(editForm) }}
+    <br>
+    <input type="submit" value="Update Article" class="btn btn-primary" />
+    {{ form_end(editForm) }}
+
+    <br>
+    {{ form_start(deleteForm) }}
+    {{ form_widget(deleteForm) }}
+    <input type="submit" value="Delete Article" class="btn btn-danger" />
+    {{ form_end(deleteForm) }}
+
+    <br>
+    <a href="{{ path("index_page") }}" class="btn btn-default">Back to charities</a>
+{% endblock %}

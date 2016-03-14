@@ -44,6 +44,12 @@ class Organization extends User
      */
     private $website;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->entityDiscr = 'organization';
+    }
+
     /**
      * @return mixed
      */

@@ -159,6 +159,11 @@ abstract class User implements  UserInterface, \Serializable
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $entityDiscr;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -512,6 +517,22 @@ abstract class User implements  UserInterface, \Serializable
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntityDiscr()
+    {
+        return $this->entityDiscr;
+    }
+
+    /**
+     * @param mixed $entityDiscr
+     */
+    public function setEntityDiscr($entityDiscr)
+    {
+        $this->entityDiscr = $entityDiscr;
     }
 
     public function getPath()
