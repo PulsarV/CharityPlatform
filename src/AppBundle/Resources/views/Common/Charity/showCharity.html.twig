@@ -1,7 +1,7 @@
 {% extends ':Base:base_with_right_sidebar.html.twig' %}
 {% block content %}
     <div class="blog-item">
-        <img class="img-responsive img-blog" src="{{ asset('images/test/blog2.jpg') }}" width="100%" alt="" />
+        <img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner) }}" width="100%" alt="" />
         <div class="blog-content">
             <h3>{{ charity.title }}</h3>
             {% include ':Charity:charity_header.html.twig' %}

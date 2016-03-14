@@ -48,8 +48,10 @@ class SecurityController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
+                if ($user->getAvatarFileName() !== null) {
+                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
+                }
                 $em->flush();
 
                 return $this->redirectToRoute(
@@ -83,8 +85,10 @@ class SecurityController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
+                if ($user->getAvatarFileName() !== null) {
+                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
+                }
                 $em->flush();
 
                 return $this->redirectToRoute(

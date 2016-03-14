@@ -8,12 +8,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CharityRepository")
  * @UniqueEntity("title")
  * @ORM\Table(name="charity")
- * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
+ * @Gedmo\Uploadable(
+ *      pathMethod="getPath",
+ *      appendNumber=true,
+ *      filenameGenerator="SHA1",
+ *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png"
+ * )
+ * @ORM\HasLifecycleCallbacks
  */
 class Charity
 {
@@ -26,9 +33,8 @@ class Charity
      */
     protected $id;
 
-    /* TODO: add file upload; check VichUploaderBundle; make correct width and height */
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFileName
      */
     private $banner;
@@ -103,7 +109,7 @@ class Charity
      *    checkDNS = true,
      *    dnsMessage = "The host '{{ value }}' could not be resolved. Use the existing one."
      * )
-     * @ORM\Column(type="string", length=120)
+     * @ORM\Column(type="string", length=120, nullable=true)
      */
     private $video;
 
@@ -131,6 +137,11 @@ class Charity
     private $charityImages;
 
     /**
+     * @var ArrayCollection
+     */
+    private $uploadedFiles;
+
+    /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=64, unique=true)
      */
@@ -138,14 +149,13 @@ class Charity
 
     /**
      * Charity constructor.
-     * @param $tags
-     * @param $comments
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->charityImages = new ArrayCollection();
+        $this->uploadedFiles = new ArrayCollection();
         $this->collectedMoney = 0;
         $this->ratingCount = 0;
         $this->viewCount = 0;
@@ -450,8 +460,49 @@ class Charity
         $this->tags->removeElement($tag);
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getUploadedFiles()
+    {
+        return $this->uploadedFiles;
+    }
+    /**
+     * @param ArrayCollection $uploadedFiles
+     */
+    public function setUploadedFiles($uploadedFiles)
+    {
+        $this->uploadedFiles = $uploadedFiles;
+    }
+
     public function getPath()
     {
-        return '/uploads/charities/'.$this->id.'/';
+        return __DIR__ . '/../../../web/uploads/charities/';
+    }
+
+    /**
+     * @ORM\PreFlush()
+     */
+    public function upload()
+    {
+        //TODO: add file limit
+        /** @var UploadedFile $uploadedFile */
+        foreach($this->uploadedFiles as $uploadedFile) {
+            if ($uploadedFile !== null) {
+                $file = new CharityImage();
+
+                $path = sha1(uniqid(mt_rand(), true)).'.'.$uploadedFile->guessExtension();
+                $file->setPath($path);
+                $file->setSize($uploadedFile->getClientSize());
+                $file->setName($uploadedFile->getClientOriginalName());
+
+                $uploadedFile->move($this->getPath(), $path);
+
+                $this->getCharityImages()->add($file);
+                $file->setCharity($this);
+
+                unset($uploadedFile);
+            }
+        }
     }
 }

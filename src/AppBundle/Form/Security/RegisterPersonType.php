@@ -29,7 +29,11 @@ class RegisterPersonType extends AbstractType
             ->add('email', EmailType::class, array(
                 'attr' => array('class' => 'form-control')
             ))
-            ->add('avatarFileName', FileType::class, array('required' => false, 'data_class' => null, 'mapped' => true))
+            ->add('avatarFileName', FileType::class, array(
+                'required' => false,
+                'data_class' => null,
+                'mapped' => true
+            ))
             ->add('role', TextType::class)
             ->add('bankDetails', TextareaType::class)
             ->add('address', TextType::class)
