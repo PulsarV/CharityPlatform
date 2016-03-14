@@ -1186,7 +1186,7 @@ ul.no-list-style li {
   color: #fff;
   font-weight: 300;
 }
-.blog .dropdown > button{
+.blog .dropdown > button {
   text-align: left;
   color: #fff;
   font-weight: 400;
@@ -1198,3 +1198,38 @@ ul.no-list-style li {
   margin-top: 50px;
   margin-bottom: 30px;
 }
+.btn-form {
+  margin: 20px;
+  width: 150px;
+}
+.container.cabinet {
+  margin-top: -50px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+aside.cabinet-menu {
+  margin:  0 0 -1500px 0;
+  padding: 50px 25px 1500px 25px;
+  background-color: #f39c12;
+  color: #fff;
+}
+.cabinet-menu > h4 {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+.cabinet-content {
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 30px;
+}
+.cabinet-menu-panel {
+  background-color: #f39c12;
+}
+.cabinet-menu a,
+.cabinet-menu a:hover,
+.cabinet-menu a:focus,
+.cabinet-menu a:active {
+  color: #fff;
+}
+
