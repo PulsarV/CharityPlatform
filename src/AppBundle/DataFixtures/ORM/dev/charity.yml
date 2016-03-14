@@ -22,7 +22,7 @@ AppBundle\Entity\CharityImage:
 
 AppBundle\Entity\Charity:
   charity(template):
-    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
+    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300)))>
     title: <sentence(6, true)>
     content: <paragraph(100)>
     primaryUser: null
