@@ -21,6 +21,6 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "tinymce": "^4.3.7"
+    "tinymce": "tinymce-dist#^4.3.7"
   }
 }

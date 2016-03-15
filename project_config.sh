@@ -29,7 +29,7 @@ case "$Keypress" in
     echo INSTALLING FRONTEND ...
     echo =======================
     npm install -S bower gulp less gulp-less gulp-clean gulp-concat gulp-uglify
-    ./node_modules/.bin/bower install -S bootstrap tinymce
+    ./node_modules/.bin/bower install -S bootstrap tinymce-dist
     ./node_modules/.bin/gulp
     echo
     echo CREATE DATABASE ...
@@ -57,7 +57,7 @@ case "$Keypress" in
     echo REINSTALLING FRONTEND ...
     echo =========================
     npm install -S bower gulp less gulp-less gulp-clean gulp-concat gulp-uglify
-    ./node_modules/.bin/bower install -S bootstrap tinymce
+    ./node_modules/.bin/bower install -S bootstrap tinymce-dist
     ./node_modules/.bin/gulp
 ;;
 4)
