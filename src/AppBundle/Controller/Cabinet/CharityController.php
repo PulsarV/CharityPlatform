@@ -8,16 +8,30 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CharityController extends Controller
 {
     /**
-     * @Route("/charity-new", name="charity_new")
+     * @Route("/charity-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_manager_index")
+     * @Method("GET")
      * @Template()
-     * @param Request $request
+     */
+    public function indexCharityAction($page)
+    {
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page);
+
+        return [
+            'pager' => $pager,
+        ];
+    }
+
+    /**
+     * @Route("/charity-new", name="charity_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $requestspreadsheets/d/1WoNdBtsxIcT9WfL2bOyn2ICu0i9MSIt-KZtF_nyripg/edit#gid=0
      * @return array|RedirectResponse
      */
     public function newCharityAction(Request $request)

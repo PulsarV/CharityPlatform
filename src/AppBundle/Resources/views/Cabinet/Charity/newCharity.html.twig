@@ -1,11 +1,17 @@
 {% extends ':Base:base_charity_editor.html.twig' %}
 
 {% block content %}
- <h2>Створити запит:</h2>
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <a href="" class=" btn btn-info btn-form">Back</a>
-        <input type="submit" value="Створити" class="btn btn-success btn-form pull-right" />
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h4>Створення запиту</h4></div>
+            <div class="panel-body">
+                {{ form_widget(form) }}
+            </div>
+            <div class="panel-footer">
+                <a href="" class=" btn btn-info btn-form">Назад</a>
+                <input type="submit" value="Створити" class="btn btn-success btn-form pull-right" />
+            </div>
+        </div>
     {{ form_end(form) }}
 {% endblock %}
 

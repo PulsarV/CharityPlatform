@@ -1219,10 +1219,18 @@ aside.cabinet-menu {
   margin-bottom: 30px;
 }
 .cabinet-content {
-  padding-top: 30px;
+  padding-top: 50px;
   padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 30px;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+.cabinet-content .table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+.cabinet-content .table h5 {
+  font-weight: 500;
 }
 .cabinet-menu-panel {
   background-color: #f39c12;
