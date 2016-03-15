@@ -17,7 +17,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
  * @UniqueEntity("username")
  * @UniqueEntity("email")
- * @Gedmo\Uploadable(pathMethod="getPath", appendNumber=true)
+ * @Gedmo\Uploadable(
+ *      pathMethod="getPath",
+ *      appendNumber=true,
+ *      filenameGenerator="SHA1",
+ *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png"
+ * )
  */
 abstract class User implements  UserInterface, \Serializable
 {
@@ -61,7 +66,7 @@ abstract class User implements  UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFileName
      */
     private $avatarFileName;
@@ -163,7 +168,6 @@ abstract class User implements  UserInterface, \Serializable
         $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
-        $this->avatarFileName = 11;
     }
 
     /**
@@ -512,7 +516,7 @@ abstract class User implements  UserInterface, \Serializable
 
     public function getPath()
     {
-        return __DIR__ . '/../../../web/uploads/users/'.$this->username.'/';
+        return __DIR__ . '/../../../web/uploads/users/';
     }
 
     public function getRoles()

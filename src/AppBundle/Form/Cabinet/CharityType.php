@@ -23,40 +23,34 @@ class CharityType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'attr' => array('autofocus' => true),
-                'label' => 'заголовок',
+                'label' => 'Заголовок',
                 'required' => true,
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'текст',
+                'label' => 'Текст',
                 'required' => true,
             ])
             ->add('category', EntityType::class, [
-                'label' => 'категорія',
+                'label' => 'Категорія',
                 'class' => Category::class,
                 'choice_label' => 'title',
                 'required' => true,
             ])
             ->add('banner', FileType::class, [
-                'label' => 'банер',
+                'label' => 'Банер',
                 'required' => false,
                 'data_class' => null,
                 'mapped' => true,
             ])
             ->add('needMoney', IntegerType::class, [
-                'label' => 'потрібно коштів',
+                'label' => 'Потрібно коштів',
                 'required' => true,
             ])
-            ->add('charityImages', FileType::class, [
-                'label' => 'зображення',
-                'required' => false,
-                'data_class' => null,
-                'mapped' => true,
-            ])
             ->add('video', TextType::class, [
-                'label' => 'відео',
+                'label' => 'Відео',
             ])
             ->add('tags', EntityType::class, [
-                'label' => 'ключові слова',
+                'label' => 'Ключові слова',
                 'class' => 'AppBundle\Entity\Tag',
                 'choice_label' => 'tagName',
                 'multiple' => true,
@@ -68,11 +62,12 @@ class CharityType extends AbstractType
                 'choice_label' => 'username',
                 'required' => true,
             ])
-            ->add('primaryUser', EntityType::class, [
-                'label' => 'Чи категорія',
-                'class' => 'AppBundle\Entity\User',
-                'choice_label' => 'username',
-                'required' => true,
+            ->add('uploadedFiles', FileType::class, [
+                'label' => 'Зображення',
+                'multiple' => true,
+                'data_class' => null,
+                'required' => false,
+                'mapped' => true
             ]);
     }
 
