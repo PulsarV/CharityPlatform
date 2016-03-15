@@ -77,4 +77,38 @@ class CharityController extends Controller
             'charity' => $charity,
         ];
     }
+
+    /**
+     * @Route("/persons", name="persons")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function personAction()
+    {
+        $em =$this->getDoctrine()->getManager();
+        $persons = $em
+            ->getRepository('AppBundle:Person')
+            ->findAll();
+
+        return [
+            'persons' => $persons,
+        ];
+    }
+
+    /**
+     * @Route("/organizations", name="organizations")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function organizationAction()
+    {
+        $em =$this->getDoctrine()->getManager();
+        $organizations = $em
+            ->getRepository('AppBundle:Organization')
+            ->findAll();
+
+        return [
+            'organizations' => $organizations,
+        ];
+    }
 }

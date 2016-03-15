@@ -1,0 +1,37 @@
+{% extends ':Base:base_with_right_sidebar.html.twig' %}
+
+{% block content %}
+    <h1>Організації:</h1>
+    <table border="2px">
+        <tr>
+            <th>№</th>
+            <th>Організація</th>
+            <th>Представник</th>
+        </tr>
+        <tr>
+
+            <td>
+                {% for organization in organizations %}
+                    <li>{{ loop.index }}</li>
+                {% endfor %}
+            </td>
+
+            <td>
+                {% for organization in organizations %}
+                    <li><a href="#">{{ organization.organizationName }}</a></li>
+                {% else %}
+                    <li>Немає організацій(</li>
+                {% endfor %}
+            </td>
+            <td>
+                {% for organization in organizations %}
+                    <li>{{ organization.username }}</li>
+                {% else %}
+                    <li>Немає організацій(</li>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}
+
