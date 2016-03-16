@@ -36,7 +36,7 @@ abstract class User implements  UserInterface, \Serializable
     protected $id;
 
     /**
-     * @Assert\NotBlank(message = "Blank username!.")
+     * @Assert\NotBlank(groups={"registration"})
      * @Assert\Length(
      *      min = 4,
      *      max = 16,
@@ -53,13 +53,13 @@ abstract class User implements  UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration"})
      * @Assert\Length(max = 4096)
      */
     private $plainPassword;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration"})
      * @Assert\Email()
      * @ORM\Column(type="string", length=60, unique=true)
      */
@@ -78,14 +78,12 @@ abstract class User implements  UserInterface, \Serializable
     private $role;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $bankDetails;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $address;
 
@@ -98,8 +96,7 @@ abstract class User implements  UserInterface, \Serializable
      *      minMessage = "Phone number can not be less than {{ limit }}!",
      *      maxMessage = "Phone number can not be more than {{ limit }}!"
      * )
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 

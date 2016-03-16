@@ -3,8 +3,8 @@
 namespace AppBundle\Controller\Cabinet;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\Security\RegisterOrganizationType;
-use AppBundle\Form\Security\RegisterPersonType;
+use AppBundle\Form\Cabinet\UpdateOrganizationType;
+use AppBundle\Form\Cabinet\UpdatePersonType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -79,6 +79,7 @@ class ProfileController extends Controller
                 [
                     'slug' => $slug,
                 ]);
+        $avatar = $user->getAvatarFileName();
 
         if (!$user) {
             throw $this->createNotFoundException(
@@ -88,9 +89,10 @@ class ProfileController extends Controller
 
         $editForm=null;
         if ($user->getEntityDiscr() == 'person') {
-            $editForm = $this->createForm(RegisterPersonType::class, $user);
+            $editForm = $this->createForm(UpdatePersonType::class, $user);
         } elseif ($user->getEntityDiscr() == 'organization') {
-            $editForm = $this->createForm(RegisterOrganizationType::class, $user);
+            $editForm = $this->createForm(UpdateOrganizationType::class, $user);
+
         }
         $deleteForm = $this->createDeleteUserForm($user);
 
@@ -99,9 +101,16 @@ class ProfileController extends Controller
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
+                if ($request->files->count() !== 0) {
+                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
+                } else {
+                    $user->setAvatarFileName($avatar);
+                }
                 $em->flush();
 
-                return $this->redirectToRoute('show_profile_user');
+                //TODO: edit redirect to show_user_profile or etc
+                return $this->redirectToRoute('index_page');
             }
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Security;
+namespace AppBundle\Form\Cabinet;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,21 +13,17 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class RegisterOrganizationType extends AbstractType
+class UpdateOrganizationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array('label' => 'Логин*:'))
-            ->add('plainPassword', RepeatedType::class, array(
-                    'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'Пароль*:'),
-                    'second_options' => array('label' => 'Повторить пароль*:'),
-                )
-            )
-            ->add('email', EmailType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'E-mail*:'
+            ->add('organizationName', TextType::class, array('label' => 'Название организации*:'))
+            ->add('organizationDocuments', TextareaType::class, array(
+                'label' => 'Детали организации*:',
+            ))
+            ->add('activityProfile', TextType::class, array(
+                'label' => 'Направление деятельности организации*:',
             ))
             ->add('avatarFileName', FileType::class, array(
                 'required' => false,
@@ -49,6 +45,10 @@ class RegisterOrganizationType extends AbstractType
                 'label' => 'Телефон:',
                 'required' => false,
             ))
+            ->add('website', TextType::class, array(
+                'label' => 'Веб-сайт:',
+                'required' => false,
+            ))
             ->add('categories', 'entity', array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
@@ -67,28 +67,13 @@ class RegisterOrganizationType extends AbstractType
                 'label' => 'Получать письма новостей категорий:',
                 'required' => false,
             ))
-            ->add('organizationName', TextType::class, array('label' => 'Название организации*:'))
-            ->add('organizationDocuments', TextareaType::class, array(
-                'label' => 'Детали организации*:',
-            ))
-            ->add('activityProfile', TextType::class, array(
-                'label' => 'Направление деятельности организации*:',
-            ))
-            ->add('website', TextType::class, array(
-                'label' => 'Веб-сайт:',
-                'required' => false,
-            ))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Organization',
-            'validation_groups' => array(
-                'Default',
-                'registration',
-            ),
+            'data_class' => 'AppBundle\Entity\Organization'
         ));
     }
 }

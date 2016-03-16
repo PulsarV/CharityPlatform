@@ -35,12 +35,11 @@ class Organization extends User
     private $activityProfile;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Url(
      *    checkDNS = true,
      *    dnsMessage = "The host '{{ value }}' could not be resolved. Use the existing one."
      * )
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
     private $website;
 
