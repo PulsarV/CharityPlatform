@@ -3,14 +3,20 @@
 {% block content %}
     <h1>Користувач {{ profile.username}}</h1>
     <p>
+        <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
         Назва: {{ profile.firstname}} {{ profile.lastname }} <br>
         Адреса: {{ profile.address }}<br>
-        e-mail: {{ profile.email }}<br>
-        Дата створення: {{ profile.createdAt|date("m-d-Y H:i:s a") }}<br>
+        e-mail: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a><br>
+        Телефон: {{ profile.phone }}<br>
+        <small>Дата створення: {{ profile.createdAt|date("m-d-Y H:i:s a") }}</small>
     </p>
     Запити:
     {% for charity in profile.charities %}
-         <a href="{{ path('charity_show', {'slug': charity.slug }) }}"> <li>{{ charity.title }}</li></a>
+        <p> {{ loop.index }}.
+        <a href="{{ path('charity_show', {'slug': charity.slug }) }}"> {{ charity.title }}</a>
+        </p>
+    {% else %}
+         <li>Немає жодного запиту.</li>
     {% endfor %}
 {% endblock %}
 
