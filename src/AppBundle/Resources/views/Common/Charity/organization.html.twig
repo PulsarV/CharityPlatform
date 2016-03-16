@@ -5,7 +5,7 @@
     <table border="2px">
         <tr>
             <th>№</th>
-            <th>Організація</th>
+            <th>Нікнейм</th>
             <th>Представник</th>
         </tr>
         <tr>
@@ -18,7 +18,7 @@
 
             <td>
                 {% for organization in organizations %}
-                    <li><a href="#">{{ organization.organizationName }}</a></li>
+                    <li><a href="{{ path('show_organization_profile', {'slug': organization.slug}) }}">{{ organization.organizationName }}</a></li>
                 {% else %}
                     <li>Немає організацій(</li>
                 {% endfor %}

@@ -1,11 +1,11 @@
 {% extends ':Base:base_with_right_sidebar.html.twig' %}
 
 {% block content %}
-<h1>Персони:</h1>
+<h1>Користувач:</h1>
        <table border="2px">
         <tr>
             <th>№</th>
-            <th>Користувач</th>
+            <th>Нікнейм</th>
             <th>Ім’я</th>
         </tr>
         <tr>
@@ -18,7 +18,7 @@
 
             <td>
                 {% for person in persons %}
-                    <li><a href="#">{{ person.username }}</a></li>
+                    <li><a href="{{ path('show_person_profile', {'slug': person.slug}) }}">{{ person.username }}</a></li>
                 {% else %}
                     <li>Тут пусто, станьте першим)</li>
                 {% endfor %}
