@@ -81,18 +81,13 @@ class ProfileController extends Controller
                 ]);
         $avatar = $user->getAvatarFileName();
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'Unable to find User..'
-            );
-        }
-
-        $editForm=null;
+        $editForm = $files = null;
         if ($user->getEntityDiscr() == 'person') {
             $editForm = $this->createForm(UpdatePersonType::class, $user);
+            $files = $request->files->get('update_person');
         } elseif ($user->getEntityDiscr() == 'organization') {
             $editForm = $this->createForm(UpdateOrganizationType::class, $user);
-
+            $files = $request->files->get('update_organization');
         }
         $deleteForm = $this->createDeleteUserForm($user);
 
@@ -101,7 +96,8 @@ class ProfileController extends Controller
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
-                if ($request->files->count() !== 0) {
+                $em->persist($user);
+                if ($files['avatarFileName'] !== null) {
                     $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                     $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
                 } else {

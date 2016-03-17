@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      pathMethod="getPath",
  *      appendNumber=true,
  *      filenameGenerator="SHA1",
- *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png"
+ *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
  * )
  */
 abstract class User implements  UserInterface, \Serializable
@@ -65,11 +65,14 @@ abstract class User implements  UserInterface, \Serializable
      */
     private $email;
 
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFileName
      */
-    private $avatarFileName;
+    // this property is public, because Stof/Uploadable use it with reflection
+    // reflection can't get parent's properties from child class (class User - parent, Person/Organization - child)
+    public $avatarFileName;
 
     /**
      * @Assert\NotBlank()

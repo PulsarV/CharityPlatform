@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *      pathMethod="getPath",
  *      appendNumber=true,
  *      filenameGenerator="SHA1",
- *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png"
+ *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
  * )
  * @ORM\HasLifecycleCallbacks
  */
@@ -132,6 +132,7 @@ class Charity
     private $tags;
 
     /**
+     //TODO: add file type validation
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\CharityImage", mappedBy="charity", cascade={"persist"}, orphanRemoval=true)
      */
     private $charityImages;
