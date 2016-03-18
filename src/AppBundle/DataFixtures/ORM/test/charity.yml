@@ -58,7 +58,7 @@ AppBundle\Entity\Organization:
     username(unique): <firstName()>
     password: <password()>
     email(unique): <email()>
-    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 640, 480)))>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100)))>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -81,7 +81,7 @@ AppBundle\Entity\Person:
     username(unique): <firstName()>
     password: <password()>
     email(unique): <email()>
-    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 640, 480)))>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100)))>
     role: <word()>
     bankDetails: <paragraph(10)>
     address: <address()>

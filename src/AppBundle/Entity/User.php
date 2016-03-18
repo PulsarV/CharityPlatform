@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      pathMethod="getPath",
  *      appendNumber=true,
  *      filenameGenerator="SHA1",
- *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png"
+ *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
  * )
  */
 abstract class User implements  UserInterface, \Serializable
@@ -36,7 +36,7 @@ abstract class User implements  UserInterface, \Serializable
     protected $id;
 
     /**
-     * @Assert\NotBlank(message = "Blank username!.")
+     * @Assert\NotBlank(groups={"registration"})
      * @Assert\Length(
      *      min = 4,
      *      max = 16,
@@ -53,23 +53,26 @@ abstract class User implements  UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration"})
      * @Assert\Length(max = 4096)
      */
     private $plainPassword;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration"})
      * @Assert\Email()
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $email;
 
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFileName
      */
-    private $avatarFileName;
+    // this property is public, because Stof/Uploadable use it with reflection
+    // reflection can't get parent's properties from child class (class User - parent, Person/Organization - child)
+    public $avatarFileName;
 
     /**
      * @Assert\NotBlank()
@@ -78,14 +81,12 @@ abstract class User implements  UserInterface, \Serializable
     private $role;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $bankDetails;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $address;
 
@@ -98,8 +99,7 @@ abstract class User implements  UserInterface, \Serializable
      *      minMessage = "Phone number can not be less than {{ limit }}!",
      *      maxMessage = "Phone number can not be more than {{ limit }}!"
      * )
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
@@ -158,6 +158,11 @@ abstract class User implements  UserInterface, \Serializable
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $entityDiscr;
 
     public function __construct()
     {
@@ -512,6 +517,22 @@ abstract class User implements  UserInterface, \Serializable
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntityDiscr()
+    {
+        return $this->entityDiscr;
+    }
+
+    /**
+     * @param mixed $entityDiscr
+     */
+    public function setEntityDiscr($entityDiscr)
+    {
+        $this->entityDiscr = $entityDiscr;
     }
 
     public function getPath()
