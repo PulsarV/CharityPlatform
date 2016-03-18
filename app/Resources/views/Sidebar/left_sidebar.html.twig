@@ -1,36 +1,72 @@
 <div class="widget cabinet-menu">
     <h4>Доступні функції</h4>
     <div class="panel-group" id="accordion">
-        <div class="panel cabinet-menu-panel">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                        Профіль
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <h5><a href="">Перегляд</a></h5>
-                    <h5><a href="">Редагування</a></h5>
-                    <h5><a href="">Зміна паролю</a></h5>
+        {% for cabinet_menu_element in cabinet_menu_elements() %}
+            <div class="panel cabinet-menu-panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ loop.index }}">
+                            {{ cabinet_menu_element.parent.name }}
+                        </a>
+                    </h4>
+                </div>
+                {% if active_parent_cabinet_menu_element_name() == cabinet_menu_element.parent.name %}
+                    {% set class = "in" %}
+                {% else %}
+                    {% set class = "" %}
+                {% endif %}
+                <div id="collapse_{{ loop.index }}" class="panel-collapse collapse {{ class }}">
+                    <div class="panel-body">
+                        {% for child_element in cabinet_menu_element.children %}
+                            {% if active_child_cabinet_menu_element_name() == child_element.name %}
+                                {% set class = "is-active" %}
+                            {% else %}
+                                {% set class = "" %}
+                            {% endif %}
+                            <div class="{{ class }}">
+                                <a href="{{ path(child_element.route, child_element.routeParams) }}">{{ child_element.name }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="panel cabinet-menu-panel">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                        Запити на благодійність
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <h5><a href="{{ path('charity_new') }}">Створити запит</a></h5>
-                    <h5><a href="{{ path('charity_manager_index') }}">Перегляд запитів</a></h5>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
+
+
+
+    {#<div class="panel-group" id="accordion">#}
+        {#<div class="panel cabinet-menu-panel">#}
+            {#<div class="panel-heading">#}
+                {#<h4 class="panel-title">#}
+                    {#<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">#}
+                        {#Профіль#}
+                    {#</a>#}
+                {#</h4>#}
+            {#</div>#}
+            {#<div id="collapseOne" class="panel-collapse collapse in">#}
+                {#<div class="panel-body">#}
+                    {#<h5><a href="">Перегляд</a></h5>#}
+                    {#<h5><a href="">Редагування</a></h5>#}
+                    {#<h5><a href="">Зміна паролю</a></h5>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="panel cabinet-menu-panel">#}
+            {#<div class="panel-heading">#}
+                {#<h4 class="panel-title">#}
+                    {#<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">#}
+                        {#Запити на благодійність#}
+                    {#</a>#}
+                {#</h4>#}
+            {#</div>#}
+            {#<div id="collapseTwo" class="panel-collapse collapse">#}
+                {#<div class="panel-body">#}
+                    {#<h5><a href="{{ path('charity_new') }}">Створити запит</a></h5>#}
+                    {#<h5><a href="{{ path('charity_manager_index') }}">Перегляд запитів</a></h5>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

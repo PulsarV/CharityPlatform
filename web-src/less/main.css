@@ -1210,13 +1210,31 @@ ul.no-list-style li {
 }
 aside.cabinet-menu {
   margin:  0 0 -1500px 0;
-  padding: 50px 25px 1500px 25px;
+  padding: 50px 20px 1500px 20px;
   background-color: #f39c12;
+  color: #fff;
+}
+.cabinet-menu a,
+.cabinet-menu a:hover,
+.cabinet-menu a:focus,
+.cabinet-menu a:active {
   color: #fff;
 }
 .cabinet-menu > h4 {
   margin-top: 0;
   margin-bottom: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+.cabinet-menu .panel-heading > h4 {
+  font-weight: 500;
+}
+.cabinet-menu .panel-body {
+  line-height: 30px;
+  font-weight: 300;
+}
+.cabinet-menu .panel-body .is-active {
+  font-weight: 500;
 }
 .cabinet-content {
   padding-top: 50px;
@@ -1234,11 +1252,5 @@ aside.cabinet-menu {
 }
 .cabinet-menu-panel {
   background-color: #f39c12;
-}
-.cabinet-menu a,
-.cabinet-menu a:hover,
-.cabinet-menu a:focus,
-.cabinet-menu a:active {
-  color: #fff;
 }
 

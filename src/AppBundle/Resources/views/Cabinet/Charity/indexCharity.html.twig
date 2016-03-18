@@ -3,6 +3,7 @@
 {% block content %}
     {% if pager is defined %}
         <div class="panel panel-primary">
+            {#{% set route = app.request.attributes.get('_route') %}#}
             <div class="panel-heading"><h4>Перелік створених вами запитів на благодійність</h4></div>
             <div class="panel-body">
                 <table class="table table-striped table-hover">
