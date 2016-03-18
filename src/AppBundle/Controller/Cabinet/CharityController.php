@@ -4,7 +4,6 @@ namespace AppBundle\Controller\Cabinet;
 
 use AppBundle\Entity\Charity;
 use AppBundle\Form\Cabinet\CharityType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

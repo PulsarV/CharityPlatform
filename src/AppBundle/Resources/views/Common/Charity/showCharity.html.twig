@@ -14,7 +14,7 @@
                     {% for comment in charity.comments %}
                         <div class="media">
                             <div class="pull-left">
-                                <img class="avatar img-circle" src="{{ asset('images/test/avatar3.png') }}" alt="">
+                                <img class="avatar img-circle" src="{{ asset('uploads/users/' ~ comment.user.avatarFileName) }}" alt="">
                             </div>
                             <div class="media-body">
                                 <div class="well">
