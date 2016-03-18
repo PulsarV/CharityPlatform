@@ -1171,7 +1171,7 @@ ul.no-list-style li {
   box-shadow: none;
   border: 0;
   padding: 0;
-  margin-top: 0px;
+  margin-top: 0;
   min-width: 50px;
 }
 .blog .dropdown-menu a {
@@ -1212,7 +1212,6 @@ aside.cabinet-menu {
   margin:  0 0 -1500px 0;
   padding: 50px 20px 1500px 20px;
   background-color: #f39c12;
-  color: #fff;
 }
 .cabinet-menu a,
 .cabinet-menu a:hover,
@@ -1223,8 +1222,13 @@ aside.cabinet-menu {
 .cabinet-menu > h4 {
   margin-top: 0;
   margin-bottom: 30px;
+  color: #fff;
   font-weight: 700;
   text-align: center;
+}
+.cabinet-menu-panel {
+  background-color: #f39c12;
+  border-color: rgba(0, 0, 0, 0.3);
 }
 .cabinet-menu .panel-heading > h4 {
   font-weight: 500;
@@ -1250,7 +1254,3 @@ aside.cabinet-menu {
 .cabinet-content .table h5 {
   font-weight: 500;
 }
-.cabinet-menu-panel {
-  background-color: #f39c12;
-}
-

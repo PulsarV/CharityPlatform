@@ -76,7 +76,6 @@ class AppExtension extends \Twig_Extension
                 ],
             ],
         ];
-//        $this->router->generate('index_page')
     }
 
     public function getFilters()
