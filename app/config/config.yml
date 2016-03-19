@@ -35,6 +35,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      paginator_length: %app.paginator_length%
 
 # Doctrine Configuration
 doctrine:

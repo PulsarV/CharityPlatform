@@ -18,3 +18,8 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     app.dir: "%kernel.root_dir%/../"
+
+    # Number of elements in paginator line on index page
+    app.paginator_length: 5
+    # Number of charities on each page
+    app.paginator_count_per_page: 5

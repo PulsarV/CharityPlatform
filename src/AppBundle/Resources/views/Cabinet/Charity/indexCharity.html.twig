@@ -3,17 +3,20 @@
 {% block content %}
     {% if pager is defined %}
         <div class="panel panel-primary">
-            {#{% set route = app.request.attributes.get('_route') %}#}
             <div class="panel-heading"><h4>Перелік створених вами запитів на благодійність</h4></div>
             <div class="panel-body">
                 <table class="table table-striped table-hover">
                     <tbody>
                         {% for charity in pager.currentPageResults %}
                             <tr>
-                                <td><h5><a href="{{ path('charity_show', {'slug': charity.slug}) }}">{{ charity.title }}</h5></td>
-                                <td class="col-sm-1">
-                                    <span class=" pull-right"><a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-trash"></i></a></span>
-                                </td>
+                                {#<div class="panel">#}
+                                    {#<div class="panel-heading">#}
+                                        <td><a href="{{ path('charity_show', {'slug': charity.slug}) }}">{{ charity.title }}</a></td>
+                                        <td class="col-sm-1">
+                                            <span class=" pull-right"><a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a><br><a href="#"><i class="fa fa-trash"></i></a></span>
+                                        </td>
+                                    {#</div>#}
+                                {#</div>#}
                             </tr>
                         {% endfor %}
                     </tbody>
