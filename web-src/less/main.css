@@ -999,14 +999,6 @@ ul.social > li > a:hover {
 .blog .blog-item .entry-meta > span a {
   color: #999;
 }
-ul.pagination > li > a {
-  border: 0;
-}
-ul.pagination > li.active > a,
-ul.pagination > li:hover > a {
-  background-color: #34495e;
-  color: #fff;
-}
 textarea#message {
   padding: 10px 15px;
   height: 219px;
@@ -1254,4 +1246,23 @@ aside.cabinet-menu {
 }
 .cabinet-content .table h5 {
   font-weight: 500;
+}
+ul.charity-pagination > li > a {
+  border: 0;
+}
+ul.charity-pagination > li.active > a,
+ul.charity-pagination > li:hover > a {
+  background-color: #34495e;
+  color: #fff;
+}
+ul.cabinet-pagination {
+  margin: 0;
+}
+ul.cabinet-pagination > li > a {
+  border: 0;
+}
+ul.cabinet-pagination > li.active > a,
+ul.cabinet-pagination > li:hover > a {
+  background-color: #337ab7;
+  color: #fff;
 }

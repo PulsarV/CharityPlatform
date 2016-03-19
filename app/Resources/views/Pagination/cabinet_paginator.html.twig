@@ -1,0 +1,43 @@
+{% if pager is defined and pager.nbPages > 1 %}
+    <ul class="pagination pagination-sm cabinet-pagination">
+        {% if pager.currentPage > 1 %}
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'page': 1 }) }}"><i class="fa fa-angle-double-left"></i></a></li>
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'page': pager.currentPage - 1 }) }}"><i class="fa fa-angle-left"></i></a></li>
+        {% else %}
+            <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+            <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+        {% endif %}
+
+        {% if pager.nbPages > cabinet_paginator_length %}
+            {% if pager.currentPage > pager.nbPages - cabinet_paginator_length %}
+                {% set cabinet_paginator_begin = pager.nbPages - cabinet_paginator_length %}
+                {% set cabinet_paginator_end = pager.nbPages %}
+            {% elseif pager.currentPage < cabinet_paginator_length %}
+                {% set cabinet_paginator_begin = 1 %}
+                {% set cabinet_paginator_end = cabinet_paginator_length %}
+            {% else %}
+                {% set cabinet_paginator_begin = pager.currentPage - cabinet_paginator_length / 2  %}
+                {% set cabinet_paginator_end = cabinet_paginator_begin + cabinet_paginator_length  %}
+            {% endif %}
+        {% else %}
+            {% set cabinet_paginator_begin = 1  %}
+            {% set cabinet_paginator_end = pager.nbPages  %}
+        {% endif %}
+
+        {% for i in cabinet_paginator_begin..cabinet_paginator_end %}
+            {% if i == pager.currentPage %}
+                <li class="active"><a>{{ i }}</a></li>
+            {% else %}
+                <li><a href="{{ path(app.request.attributes.get('_route'), {'page': i}) }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if pager.currentPage < pager.nbPages %}
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'page': pager.currentPage + 1 }) }}"><i class="fa fa-angle-right"></i></a></li>
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'page': pager.nbPages }) }}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% else %}
+            <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+            <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+        {% endif %}
+    </ul>
+{% endif %}

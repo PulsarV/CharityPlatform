@@ -23,3 +23,7 @@ parameters:
     app.paginator_length: 5
     # Number of charities on each page
     app.paginator_count_per_page: 5
+    # Number of elements in paginator line on index page in cabinet
+    app.cabinet_paginator_length: 5
+    # Number of items on each page in cabinet
+    app.cabinet_paginator_count_per_page: 10

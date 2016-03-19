@@ -9,20 +9,18 @@
                     <tbody>
                         {% for charity in pager.currentPageResults %}
                             <tr>
-                                {#<div class="panel">#}
-                                    {#<div class="panel-heading">#}
-                                        <td><a href="{{ path('charity_show', {'slug': charity.slug}) }}">{{ charity.title }}</a></td>
-                                        <td class="col-sm-1">
-                                            <span class=" pull-right"><a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a><br><a href="#"><i class="fa fa-trash"></i></a></span>
-                                        </td>
-                                    {#</div>#}
-                                {#</div>#}
+                                <td><a href="{{ path('charity_show', {'slug': charity.slug}) }}">{{ charity.title }}</a></td>
+                                    <td class="col-sm-1">
+                                        <span class=" pull-right"><a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-trash"></i></a></span>
+                                    </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div class="panel-footer text-right">Тут буде пагінація</div>
+            <div class="panel-footer text-right">
+                {% include ':Pagination:cabinet_paginator.html.twig' %}
+            </div>
         </div>
     {% else %}
         <div class="blog-post">
