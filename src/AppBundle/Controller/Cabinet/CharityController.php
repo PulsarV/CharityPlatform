@@ -20,10 +20,27 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page);
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page, $this->container->getParameter('app.cabinet_paginator_count_per_page'));
 
         return [
             'pager' => $pager,
+        ];
+    }
+
+    /**
+     * @Route("/charity-manager/{slug}", name="charity_manager_show")
+     * @Method({"GET"})
+     * @Template()
+     * @param $slug
+     * @return array
+     */
+    public function showCharityAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
+
+        return [
+            'charity' => $charity,
         ];
     }
 

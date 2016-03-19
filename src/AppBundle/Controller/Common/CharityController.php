@@ -35,7 +35,7 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page);
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page,  $this->container->getParameter('app.paginator_count_per_page'));
 
         return [
             'pager' => $pager,
@@ -54,7 +54,7 @@ class CharityController extends Controller
      */
     public function indexFilteredCharityAction($filter, $slug, $sortmode, $page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated($filter, $slug, $sortmode, $page);
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated($filter, $slug, $sortmode, $page, $this->container->getParameter('app.paginator_count_per_page'));
 
         return [
             'pager' => $pager,

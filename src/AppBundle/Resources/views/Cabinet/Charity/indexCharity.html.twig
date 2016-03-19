@@ -9,10 +9,13 @@
                     <tbody>
                         {% for charity in pager.currentPageResults %}
                             <tr>
-                                <td><a href="{{ path('charity_show', {'slug': charity.slug}) }}">{{ charity.title }}</a></td>
-                                    <td class="col-sm-1">
-                                        <span class=" pull-right"><a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-trash"></i></a></span>
-                                    </td>
+                                <td><a href="{{ path('charity_manager_show', {'slug': charity.slug}) }}">{{ charity.title }}</a></td>
+                                <td class="col-sm-1">
+                                    <span class=" pull-right">
+                                        <a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                        <a href="{{ path('charity_delete', {'slug': charity.slug}) }}"><i class="fa fa-trash"></i></a>
+                                    </span>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
