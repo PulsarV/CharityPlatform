@@ -1,4 +1,4 @@
-<img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner) }}" width="100%" alt="" />
+<img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner)|imagine_filter('charity_image') }}" alt="" />
 <div class="blog-content">
     <h3>{{ charity.title }}</h3>
     {% include ':Charity:charity_header.html.twig' %}
@@ -11,7 +11,7 @@
             {% for comment in charity.comments %}
                 <div class="media">
                     <div class="pull-left">
-                        <img class="avatar img-circle" src="{{ asset('uploads/users/' ~ comment.user.avatarFileName) }}" alt="">
+                        <img class="avatar img-circle" src="{{ asset('uploads/users/' ~ comment.user.avatarFileName)|imagine_filter('user_avatar') }}" alt="">
                     </div>
                     <div class="media-body">
                         <div class="well">
