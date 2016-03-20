@@ -1,7 +1,7 @@
 AppBundle\Entity\Tag:
   tag{1..10}:
     tagName(unique): <word()>
-    charities: '2x @charity*'
+    charities: <numberBetween(1, 20)>x @charity*
 
 AppBundle\Entity\Comment:
   comment(template):
@@ -23,7 +23,7 @@ AppBundle\Entity\CharityImage:
 AppBundle\Entity\Charity:
   charity(template):
     banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300)))>
-    title: <sentence(6, true)>
+    title: <(rtrim($fake('sentence'), '.'))>
     content: <paragraph(100)>
     primaryUser: null
     category: '@category*'
@@ -35,7 +35,6 @@ AppBundle\Entity\Charity:
     comments: '2x @comment*'
     charityImages: '2x @chimage*'
     isActive: <boolean()>
-    tags: '2x @tag*'
   charity{1..20} (extends charity):
     user: '@person*'
   charity{21..40} (extends charity):
@@ -43,7 +42,7 @@ AppBundle\Entity\Charity:
 
 AppBundle\Entity\Category:
   category(template):
-    title(unique): <sentence(2, true)>
+    title(unique): <(rtrim($fake('sentence'), '.'))>
     charities: '2x @charity*'
     importance: <numberBetween(0, 10)>
   category{1..2} (extends category):
