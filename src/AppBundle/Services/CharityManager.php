@@ -8,8 +8,6 @@ use Pagerfanta\Pagerfanta;
 
 class CharityManager
 {
-    const CHARITIES_PER_PAGE = 5;
-
     protected $em;
     protected $menuManager;
 
@@ -41,30 +39,30 @@ class CharityManager
         return;
     }
 
-    public function getCharityListPaginated($filtername, $filtervalue, $sortmode, $page)
+    public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
-        if ($filtervalue == '') {
+        if ($filterValue == '') {
             new \Exception('Щось пішло не так');
         }
-        if ($sortmode == 'a') {
-            $sortmode = 'ASC';
-        } else if ($sortmode == 'd') {
-            $sortmode = 'DESC';
+        if ($sortMode == 'a') {
+            $sortMode = 'ASC';
+        } else if ($sortMode == 'd') {
+            $sortMode = 'DESC';
         } else {
             new \Exception('Щось пішло не так');
         }
-        switch($filtername) {
+        switch($filterName) {
             case 'none':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharities($sortmode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharities($sortMode);
                 break;
             case 'user':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUser($filtervalue, $sortmode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUser($filterValue, $sortMode);
                 break;
             case 'category':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategory($filtervalue, $sortmode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategory($filterValue, $sortMode);
                 break;
             case 'tag':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTag($filtervalue, $sortmode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTag($filterValue, $sortMode);
                 break;
             default:
                 new \Exception('Щось пішло не так');
@@ -72,7 +70,7 @@ class CharityManager
         }
         $adapter = new DoctrineORMAdapter($qb);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(self::CHARITIES_PER_PAGE);
+        $pagerfanta->setMaxPerPage($itemsPerPage);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;

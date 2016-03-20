@@ -4,7 +4,7 @@
 parameters:
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     CharityPlatform
     database_user:     root
     database_password: ~
     # You should uncomment this if you want use pdo_sqlite
@@ -18,3 +18,12 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     app.dir: "%kernel.root_dir%/../"
+
+    # Number of elements in paginator line on index page
+    app.paginator_length: 5
+    # Number of charities on each page
+    app.paginator_count_per_page: 5
+    # Number of elements in paginator line on index page in cabinet
+    app.cabinet_paginator_length: 5
+    # Number of items on each page in cabinet
+    app.cabinet_paginator_count_per_page: 15

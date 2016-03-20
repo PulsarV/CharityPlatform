@@ -1,16 +1,35 @@
 {% if pager is defined and pager.nbPages > 1 %}
-    <ul class="pagination pagination-lg">
+    <ul class="pagination pagination-lg charity-pagination">
         {% if pager.currentPage > 1 %}
             {% if app.request.attributes.get('_route') == 'charity_index' %}
+                <li><a href="{{ path('charity_index', {'page': 1 }) }}"><i class="fa fa-angle-double-left"></i></a></li>
                 <li><a href="{{ path('charity_index', {'page': pager.currentPage - 1 }) }}"><i class="fa fa-angle-left"></i></a></li>
             {% else %}
+                <li><a href="{{ path('charity_index_filtered', {'page': 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-double-left"></i></a></li>
                 <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage - 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-left"></i></a></li>
             {% endif %}
         {% else %}
+            <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
             <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
         {% endif %}
 
-        {% for i in 1..pager.nbPages %}
+        {% if pager.nbPages > paginator_length %}
+            {% if pager.currentPage > pager.nbPages - paginator_length + 1 %}
+                {% set paginator_begin = pager.nbPages - paginator_length + 1 %}
+                {% set paginator_end = pager.nbPages %}
+            {% elseif pager.currentPage < paginator_length %}
+                {% set paginator_begin = 1 %}
+                {% set paginator_end = paginator_length %}
+            {% else %}
+                {% set paginator_begin = pager.currentPage - paginator_length // 2  %}
+                {% set paginator_end = paginator_begin + paginator_length - 1 %}
+            {% endif %}
+        {% else %}
+            {% set paginator_begin = 1  %}
+            {% set paginator_end = pager.nbPages  %}
+        {% endif %}
+
+        {% for i in paginator_begin..paginator_end %}
             {% if i == pager.currentPage %}
                 <li class="active"><a>{{ i }}</a></li>
             {% else %}
@@ -25,11 +44,14 @@
         {% if pager.currentPage < pager.nbPages %}
             {% if app.request.attributes.get('_route') == 'charity_index' %}
                 <li><a href="{{ path('charity_index', {'page': pager.currentPage + 1 }) }}"><i class="fa fa-angle-right"></i></a></li>
+                <li><a href="{{ path('charity_index', {'page': pager.nbPages }) }}"><i class="fa fa-angle-double-right"></i></a></li>
             {% else %}
                 <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage + 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-right"></i></a></li>
+                <li><a href="{{ path('charity_index_filtered', {'page': pager.nbPages, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-double-right"></i></a></li>
             {% endif %}
         {% else %}
             <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+            <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
         {% endif %}
     </ul>
 {% endif %}

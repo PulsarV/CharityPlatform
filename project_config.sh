@@ -29,7 +29,7 @@ case "$Keypress" in
     echo INSTALLING FRONTEND ...
     echo =======================
     npm install -S bower gulp less gulp-less gulp-clean gulp-concat gulp-uglify
-    ./node_modules/.bin/bower install -S bootstrap
+    ./node_modules/.bin/bower install -S bootstrap tinymce-dist
     ./node_modules/.bin/gulp
     echo
     echo CREATE DATABASE ...
@@ -39,6 +39,8 @@ case "$Keypress" in
     echo
     echo LOAD FIXTURES ...
     echo =================
+    rm -f ./web/uploads/charities/*.jpg
+    rm -f ./web/uploads/users/*.jpg
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
 ;;
 2)
@@ -57,7 +59,7 @@ case "$Keypress" in
     echo REINSTALLING FRONTEND ...
     echo =========================
     npm install -S bower gulp less gulp-less gulp-clean gulp-concat gulp-uglify
-    ./node_modules/.bin/bower install -S bootstrap
+    ./node_modules/.bin/bower install -S bootstrap tinymce-dist
     ./node_modules/.bin/gulp
 ;;
 4)
@@ -70,6 +72,8 @@ case "$Keypress" in
     echo
     echo LOAD FIXTURES ...
     echo =================
+    rm -f ./web/uploads/charities/*.jpg
+    rm -f ./web/uploads/users/*.jpg
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
 ;;
 5)
@@ -84,6 +88,8 @@ case "$Keypress" in
     echo
     echo LOAD FIXTURES ...
     echo =================
+    rm -f ./web/uploads/charities/*.jpg
+    rm -f ./web/uploads/users/*.jpg
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
 ;;
 7)

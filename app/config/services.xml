@@ -11,6 +11,7 @@
     <services>
         <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" public="false">
             <argument type="service" id="app.menu_manager" />
+            <argument type="service" id="request_stack" />
             <tag name="twig.extension" />
         </service>
 
