@@ -20,12 +20,6 @@ gulp.task('images-ico', function () {
  ])
  .pipe(gulp.dest('web/images/ico/'))
 });
-gulp.task('images-test', function () {
- return gulp.src([
-  'web-src/images/test/*'
- ])
- .pipe(gulp.dest('web/images/test/'))
-});
 gulp.task('fonts', function () {
  return gulp.src(['web-src/fonts/*'])
  .pipe(gulp.dest('web/fonts/'))
@@ -60,7 +54,7 @@ gulp.task('clean', function () {
 });
 gulp.task('default', ['clean'], function () {
  var tasks = [
-  'images', 'images-ico', 'images-test', 'fonts', 'less', 'js', 'lib-js', 'tinymce'
+  'images', 'images-ico', 'fonts', 'less', 'js', 'lib-js', 'tinymce'
  ];
  tasks.forEach(function (val) {
   gulp.start(val);
