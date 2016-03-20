@@ -1,0 +1,35 @@
+<div class="row">
+    {{ form_start(login_form) }}
+        <fieldset class="login-form">
+            <div class="form-group col-sm-5">
+                {{ form_widget(login_form.username, {'attr': {'class': 'form-control input-sm', 'placeholder': 'Користувач / E-Mail'}}) }}
+            </div>
+            <div class="form-group col-sm-5">
+                {{ form_widget(login_form.password, {'attr': {'class': 'form-control input-sm', 'placeholder': 'Пароль'}}) }}
+            </div>
+            <div class="form-group col-sm-2">
+                <button class="btn btn-success btn-sm btn-block">Ввійти</button>
+            </div>
+            <div class="form-group">
+                <label class="form-inline"><input type="checkbox" class="checkbox"> Запам'ятати мене</label>&nbsp;&nbsp;&nbsp;
+                <a class="" href="#">Нагадати пароль</a>
+                <button type="button" class="btn btn-success btn-sm pull-right">Реєстрація</button>
+            </div>
+            <div class="form-group">
+                <label>Ввійдіть за допомогою:</label>&nbsp;&nbsp;
+                <a class="btn btn-social-icon btn-twitter btn-sm">
+                    <span class="fa fa-twitter"></span>
+                </a>
+                <a class="btn btn-social-icon btn-facebook btn-sm">
+                    <span class="fa fa-facebook"></span>
+                </a>
+                <a class="btn btn-social-icon btn-vk btn-sm">
+                    <span class="fa fa-vk"></span>
+                </a>
+                <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
+                    <span class="fa fa-odnoklassniki"></span>
+                </a>
+            </div>
+        </fieldset>
+    {{ form_end(login_form) }}
+</div>

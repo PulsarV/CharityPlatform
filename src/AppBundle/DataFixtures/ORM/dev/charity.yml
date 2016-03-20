@@ -8,7 +8,7 @@ AppBundle\Entity\Category:
 AppBundle\Entity\Organization:
   organization{1..20}:
     username(unique): <firstName()>
-    password: <password()>
+    password: qwerty
     email(unique): <email()>
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
     role: <word()>
@@ -27,7 +27,7 @@ AppBundle\Entity\Organization:
 AppBundle\Entity\Person:
   person{1..20}:
     username(unique): <firstName()>
-    password: <password()>
+    password: qwerty
     email(unique): <email()>
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
     role: <word()>
