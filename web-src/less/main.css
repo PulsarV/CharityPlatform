@@ -671,6 +671,7 @@ ul.tag-cloud {
   list-style: none;
   padding: 0;
   margin: 0;
+  text-align: center;
 }
 ul.tag-cloud li {
   display: inline-block;

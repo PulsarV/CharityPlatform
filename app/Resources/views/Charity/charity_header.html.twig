@@ -1,6 +1,6 @@
 <div class="entry-meta">
     <span><i class="fa fa-user"></i> <a href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'user', 'slug': charity.user.username, 'sortmode': 'd'}) }}">{{ charity.user.username }}</a></span>
-    <span><i class="fa fa-folder"></i> <a href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'category', 'slug': charity.category.title, 'sortmode': 'd'}) }}">{{ charity.category.title }}</a></span>
+    <span><i class="fa fa-folder"></i> <a href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'category', 'slug': charity.category.slug, 'sortmode': 'd'}) }}">{{ charity.category.title }}</a></span>
     <span><i class="fa fa-calendar"></i> {{ charity.createdAt|date("d M, Y") }}</span>
     <span><i class="fa fa-comment"></i> <a href="{{ path('charity_show', {'slug': charity.slug }) }}#comments">{{ charity.comments|length }}</a></span>
 </div>

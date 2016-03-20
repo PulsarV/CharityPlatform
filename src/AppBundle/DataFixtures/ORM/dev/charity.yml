@@ -1,50 +1,9 @@
-AppBundle\Entity\Tag:
-  tag{1..80}:
-    tagName(unique): <word()>
-    charities: <numberBetween(1, 20)>x @charity*
-
-AppBundle\Entity\Comment:
-  comment{1..24}:
-    content: <paragraph(3)>
-    rating: <numberBetween(0, 10)>
-    charity: '@charity*'
-    user: @<randomElement(array('person', 'organization'))>*
-
-AppBundle\Entity\CharityImage:
-  chimage{1..120}:
-    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
-    path: '@chimage<current()>->name'
-    size: <numberBetween(300, 1000)>
-    charity: '@charity*'
-
 AppBundle\Entity\Category:
   category{1..20}:
     title(unique): <(rtrim($fake('sentence'), '.'))>
     importance: <numberBetween(0, 10)>
-#  category{1..2} (extends category):
-#    user: '2x @person*'
-#    followedByUsers: '2x @organization*'
-#  category{3..4} (extends category):
-#    user: '2x @organization*'
-#    followedByUsers: '2x @person*'
-
-AppBundle\Entity\Charity:
-  charity(template):
-    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300)))>
-    title: <(rtrim($fake('sentence'), '.'))>
-    content: <paragraph(100)>
-    primaryUser: null
-    category: @category*
-    ratingCount: <numberBetween(0, 10)>
-    viewCount: <numberBetween(5, 50)>
-    needMoney: <numberBetween(1000, 30000)>
-    collectedMoney: <numberBetween(500, 1000)>
-    video: <url()>
-    isActive: <boolean()>
-  charity{1..40} (extends charity):
-    user: '@person*'
-  charity{41..80} (extends charity):
-    user: '@organization*'
+    user: <numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*
+    followedByUsers: <numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*
 
 AppBundle\Entity\Organization:
   organization{1..20}:
@@ -56,10 +15,7 @@ AppBundle\Entity\Organization:
     bankDetails: <paragraph(10)>
     address: <address()>
     phone: <phoneNumber()>
-    categories: <numberBetween(0, 20)>x @category*
     showOtherCategories: <boolean()>
-    followCategories: <numberBetween(0, 20)>x @category*
-    charities: '2x @charity*'
     primaryCharities: null
     isActive: <boolean()>
     cautionCount: <numberBetween(0, 20)>
@@ -78,13 +34,44 @@ AppBundle\Entity\Person:
     bankDetails: <paragraph(10)>
     address: <address()>
     phone: <phoneNumber()>
-    categories: <numberBetween(0, 20)>x @category*
     showOtherCategories: <boolean()>
-    followCategories: <numberBetween(0, 20)>x @category*
-    charities: '2x @charity*'
     primaryCharities: null
     isActive: <boolean()>
     cautionCount: <numberBetween(0, 20)>
     firstname: <firstName()>
     lastname: <lastName()>
     birthday: <date('Y-m-d', '2000')>
+
+AppBundle\Entity\Charity:
+  charity{1..80}:
+    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300)))>
+    title: <(rtrim($fake('sentence'), '.'))>
+    content: <paragraph(100)>
+    primaryUser: null
+    category: @category*
+    ratingCount: <numberBetween(0, 10)>
+    viewCount: <numberBetween(5, 50)>
+    needMoney: <numberBetween(1000, 30000)>
+    collectedMoney: <numberBetween(500, 1000)>
+    video: <url()>
+    isActive: <boolean()>
+    user: @<randomElement(array('person', 'organization'))>*
+
+AppBundle\Entity\CharityImage:
+  chimage{1..120}:
+    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
+    path: '@chimage<current()>->name'
+    size: <numberBetween(300, 1000)>
+    charity: '@charity*'
+
+AppBundle\Entity\Tag:
+  tag{1..80}:
+    tagName(unique): <word()>
+    charities: <numberBetween(1, 20)>x @charity*
+
+AppBundle\Entity\Comment:
+  comment{1..240}:
+    content: <paragraph(3)>
+    rating: <numberBetween(0, 10)>
+    charity: '@charity*'
+    user: @<randomElement(array('person', 'organization'))>*
