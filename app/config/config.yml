@@ -118,9 +118,9 @@ liip_imagine:
         charity_image:
             quality: 100
             filters:
-                thumbnail: { size: [750, 300], mode: inbound }
+                thumbnail: { size: [750, 300], mode: outbound }
 
         charity_image_small:
              quality: 70
              filters:
-                thumbnail: { size: [120, 90], mode: inbound }
+                thumbnail: { size: [75, 75], mode: outbound }
