@@ -9,15 +9,15 @@
         {% endif %}
 
         {% if pager.nbPages > cabinet_paginator_length %}
-            {% if pager.currentPage > pager.nbPages - cabinet_paginator_length %}
-                {% set cabinet_paginator_begin = pager.nbPages - cabinet_paginator_length %}
+            {% if pager.currentPage > pager.nbPages - cabinet_paginator_length + 1 %}
+                {% set cabinet_paginator_begin = pager.nbPages - cabinet_paginator_length + 1 %}
                 {% set cabinet_paginator_end = pager.nbPages %}
             {% elseif pager.currentPage < cabinet_paginator_length %}
                 {% set cabinet_paginator_begin = 1 %}
                 {% set cabinet_paginator_end = cabinet_paginator_length %}
             {% else %}
-                {% set cabinet_paginator_begin = pager.currentPage - cabinet_paginator_length / 2  %}
-                {% set cabinet_paginator_end = cabinet_paginator_begin + cabinet_paginator_length  %}
+                {% set cabinet_paginator_begin = pager.currentPage - cabinet_paginator_length // 2  %}
+                {% set cabinet_paginator_end = cabinet_paginator_begin + cabinet_paginator_length - 1  %}
             {% endif %}
         {% else %}
             {% set cabinet_paginator_begin = 1  %}

@@ -14,15 +14,15 @@
         {% endif %}
 
         {% if pager.nbPages > paginator_length %}
-            {% if pager.currentPage > pager.nbPages - paginator_length %}
-                {% set paginator_begin = pager.nbPages - paginator_length %}
+            {% if pager.currentPage > pager.nbPages - paginator_length + 1 %}
+                {% set paginator_begin = pager.nbPages - paginator_length + 1 %}
                 {% set paginator_end = pager.nbPages %}
             {% elseif pager.currentPage < paginator_length %}
                 {% set paginator_begin = 1 %}
                 {% set paginator_end = paginator_length %}
             {% else %}
-                {% set paginator_begin = pager.currentPage - paginator_length / 2  %}
-                {% set paginator_end = paginator_begin + paginator_length  %}
+                {% set paginator_begin = pager.currentPage - paginator_length // 2  %}
+                {% set paginator_end = paginator_begin + paginator_length - 1 %}
             {% endif %}
         {% else %}
             {% set paginator_begin = 1  %}
