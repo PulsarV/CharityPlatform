@@ -11,7 +11,7 @@
     </div>
     {% for charity in pager.currentPageResults %}
         <div class="blog-item">
-            <img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner) }}" width="100%" alt="" />
+            <img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner)|imagine_filter('charity_image') }}"/>
             <div class="blog-content">
                 <a href="{{ path('charity_show', {'slug': charity.slug}) }}"><h3>{{ charity.title }}</h3></a>
                 {% include ':Charity:charity_header.html.twig' %}
