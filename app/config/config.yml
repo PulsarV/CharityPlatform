@@ -107,3 +107,26 @@ stof_doctrine_extensions:
             timestampable: true
             softdeleteable: true
             uploadable: true
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+    driver: imagick
+    filter_sets:
+        cache: ~
+        charity_image:
+            quality: 100
+            filters:
+                thumbnail: { size: [750, 300], mode: outbound }
+
+        charity_image_small:
+             quality: 70
+             filters:
+                thumbnail: { size: [75, 75], mode: outbound }
+
+        user_avatar:
+            quality: 100
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
+
