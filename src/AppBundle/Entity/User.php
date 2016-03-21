@@ -542,7 +542,9 @@ abstract class User implements  UserInterface, \Serializable
 
     public function getRoles()
     {
-        return null;
+        return [
+            $this->getRole()
+        ];
     }
 
     public function getSalt()

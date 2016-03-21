@@ -12,6 +12,7 @@ security:
         chain_provider:
             chain:
                 providers: [in_memory, user_db]
+
         in_memory:
             memory:
                 users:
@@ -29,7 +30,9 @@ security:
                         roles: 'ROLE_USER'
 
         user_db:
-            entity: { class: AppBundle\Entity\User, property: username }
+            entity:
+                class: AppBundle\Entity\User
+                property: username
 
     firewalls:
         dev:
@@ -40,7 +43,7 @@ security:
             anonymous: ~
 
             form_login:
-                provider: in_memory
+                provider: chain_provider
                 login_path: /login
                 check_path: /login_check
                 username_parameter: form[username]
