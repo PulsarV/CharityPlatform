@@ -19,4 +19,5 @@
 /web/js/
 /web/uploads/
 /web/tinymce/
-/web/media/
+/web/media/*
+!web/media/.gitkeep
