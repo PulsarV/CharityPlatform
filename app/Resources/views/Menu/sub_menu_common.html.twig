@@ -42,7 +42,9 @@
                 </div>
             </div>
             <div class="container col-sm-4">
-                {{ render(controller('AppBundle:Security/Security:showEmbeddedLoginForm')) }}
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {{ render(controller('AppBundle:Security/Security:showEmbeddedLoginForm')) }}
+                {% endif %}
             </div>
         </div>
     </div>

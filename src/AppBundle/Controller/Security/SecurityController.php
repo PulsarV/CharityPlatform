@@ -8,6 +8,7 @@ use AppBundle\Form\Security\RegisterOrganizationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,7 @@ class SecurityController extends Controller
             ->setAction($this->generateUrl('login_check'))
             ->add('username', TextType::class, ['required' => true])
             ->add('password', PasswordType::class, ['required' => true])
+            ->add('remember_me', CheckboxType::class, ['required' => false])
             ->getForm();
         return [
             'login_form' => $form->createView()
