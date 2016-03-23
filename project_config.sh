@@ -98,7 +98,6 @@ case "$Keypress" in
     echo RUN TESTS ...
     echo =================
     phpunit -c app
-    sleep 2
 ;;
 8)
     exit 0

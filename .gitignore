@@ -23,4 +23,5 @@
 !web/uploads/users/.gitkeep
 !web/uploads/users/standart_avatar.gif
 /web/tinymce/
-/web/media/
+/web/media/*
+!web/media/.gitkeep
