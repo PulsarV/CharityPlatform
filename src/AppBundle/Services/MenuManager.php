@@ -55,17 +55,12 @@ class MenuManager
 
     public function getPageTitle()
     {
-        return 'Запити';
+        return 'Перелік запитів';
     }
 
     public function getAllCategories()
     {
         return $this->em->getRepository('AppBundle:Category')->findAll();
-    }
-
-    public function getBreadCrumbs()
-    {
-        return ['Головна', 'Запити',];
     }
 
     public function getAvailableLanguages()

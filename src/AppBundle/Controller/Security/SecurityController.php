@@ -18,16 +18,6 @@ use AppBundle\Form\Security\RegisterPersonType;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="login")
-     * @Template()
-     * @return Response
-     */
-    public function loginAction()
-    {
-
-    }
-
-    /**
      * @Template()
      */
     public function showEmbeddedLoginFormAction()
