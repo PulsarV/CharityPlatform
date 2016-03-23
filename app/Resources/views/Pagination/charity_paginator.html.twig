@@ -1,12 +1,13 @@
 {% if pager is defined and pager.nbPages > 1 %}
     <ul class="pagination pagination-lg charity-pagination">
+
         {% if pager.currentPage > 1 %}
             {% if app.request.attributes.get('_route') == 'charity_index' %}
                 <li><a href="{{ path('charity_index', {'page': 1 }) }}"><i class="fa fa-angle-double-left"></i></a></li>
                 <li><a href="{{ path('charity_index', {'page': pager.currentPage - 1 }) }}"><i class="fa fa-angle-left"></i></a></li>
             {% else %}
-                <li><a href="{{ path('charity_index_filtered', {'page': 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-double-left"></i></a></li>
-                <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage - 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-left"></i></a></li>
+                <li><a href="{{ path('charity_index_filtered', {'page': 1, 'filter': filter, 'slug': slug, 'sortmode': sortmode}) }}"><i class="fa fa-angle-double-left"></i></a></li>
+                <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage - 1, 'filter': filter, 'slug': slug, 'sortmode': sortmode}) }}"><i class="fa fa-angle-left"></i></a></li>
             {% endif %}
         {% else %}
             <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
@@ -36,7 +37,7 @@
                 {% if app.request.attributes.get('_route') == 'charity_index' %}
                     <li><a href="{{ path('charity_index', {'page': i}) }}">{{ i }}</a></li>
                 {% else %}
-                    <li><a href="{{ path('charity_index_filtered', {'page': i, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}">{{ i }}</a></li>
+                    <li><a href="{{ path('charity_index_filtered', {'page': i, 'filter': filter, 'slug': slug, 'sortmode': sortmode}) }}">{{ i }}</a></li>
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -46,8 +47,8 @@
                 <li><a href="{{ path('charity_index', {'page': pager.currentPage + 1 }) }}"><i class="fa fa-angle-right"></i></a></li>
                 <li><a href="{{ path('charity_index', {'page': pager.nbPages }) }}"><i class="fa fa-angle-double-right"></i></a></li>
             {% else %}
-                <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage + 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-right"></i></a></li>
-                <li><a href="{{ path('charity_index_filtered', {'page': pager.nbPages, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-double-right"></i></a></li>
+                <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage + 1, 'filter': filter, 'slug': slug, 'sortmode': sortmode}) }}"><i class="fa fa-angle-right"></i></a></li>
+                <li><a href="{{ path('charity_index_filtered', {'page': pager.nbPages, 'filter': filter, 'slug': slug, 'sortmode': sortmode}) }}"><i class="fa fa-angle-double-right"></i></a></li>
             {% endif %}
         {% else %}
             <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>

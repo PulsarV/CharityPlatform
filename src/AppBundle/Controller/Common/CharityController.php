@@ -3,6 +3,9 @@
 namespace AppBundle\Controller\Common;
 
 use AppBundle\Entity\Charity;
+use AppBundle\Form\Common\FindCharityModel;
+use AppBundle\Form\Common\FindCharityType;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -35,10 +38,19 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page,  $this->container->getParameter('app.paginator_count_per_page'));
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated(
+            'none',
+            'none',
+            'd',
+            $page,
+            $this->container->getParameter('app.paginator_count_per_page')
+        );
 
         return [
             'pager' => $pager,
+            'filter' => 'none',
+            'slug' => 'none',
+            'sortmode' => 'd',
         ];
     }
 
@@ -54,10 +66,19 @@ class CharityController extends Controller
      */
     public function indexFilteredCharityAction($filter, $slug, $sortmode, $page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated($filter, $slug, $sortmode, $page, $this->container->getParameter('app.paginator_count_per_page'));
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated(
+            $filter,
+            $slug,
+            $sortmode,
+            $page,
+            $this->container->getParameter('app.paginator_count_per_page')
+        );
 
         return [
             'pager' => $pager,
+            'filter' => $filter,
+            'slug' => $slug,
+            'sortmode' => $sortmode,
         ];
     }
 
@@ -75,6 +96,47 @@ class CharityController extends Controller
 
         return [
             'charity' => $charity,
+        ];
+    }
+
+    /**
+     * @Route("/charities-find-form", name="charity_find_form")
+     * @Method({"GET"})
+     * @Template()
+     * @return array
+     */
+    public function findCharitiesFormAction()
+    {
+        $charity = new FindCharityModel();
+        $form = $this->createForm(FindCharityType::class, $charity, array(
+            'action' => $this->generateUrl('charity_find_results'),
+            'method' => 'GET',
+        ));
+
+        return [
+            'find_form' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/charities-find-results", name="charity_find_results")
+     * @Method({"GET"})
+     * @Template("@App/Common/Charity/indexCharity.html.twig")
+     * @return array
+     */
+    public function findCharitiesResultsAction(Request $request)
+    {
+        $title = $request->get('title');
+        $finder = $this->container->get('fos_elastica.finder.app.charity');
+        $pagerfanta = $finder->findPaginated($title);
+        $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
+        $pagerfanta->setCurrentPage(1);
+
+        return [
+            'pager' => $pagerfanta,
+            'filter' => 'none',
+            'slug' => 'none',
+            'sortmode' => 'd',
         ];
     }
 }

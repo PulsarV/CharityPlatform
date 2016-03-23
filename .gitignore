@@ -7,7 +7,6 @@
 /app/bootstrap.php.cache
 /app/cache/*
 !app/cache/.gitkeep
-/app/config/parameters.yml
 /app/logs/*
 !app/logs/.gitkeep
 /app/phpunit.xml
@@ -17,6 +16,11 @@
 /web/fonts/
 /web/images/
 /web/js/
-/web/uploads/
+/web/uploads/charities/*
+/web/uploads/users/*
+!web/uploads/charities/.gitkeep
+!web/uploads/charities/standart_banner.jpg
+!web/uploads/users/.gitkeep
+!web/uploads/users/standart_avatar.gif
 /web/tinymce/
 /web/media/

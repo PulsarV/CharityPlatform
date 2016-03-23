@@ -1,4 +1,12 @@
-{% if pager is defined %}
+{% if pager.currentPageResults is empty %}
+    <div class="blog-item">
+        <div class="blog-content">
+            <p>
+                Благотворительные запросы не найдены.
+            </p>
+        </div>
+    </div>
+{% else %}
     <div class="dropdown">
         <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Сортувати по даті додавання, спочатку більш свіжі</button>
         <ul class="dropdown-menu">
@@ -21,8 +29,4 @@
         </div>
     {% endfor %}
     {% include ':Pagination:charity_paginator.html.twig' %}
-{% else %}
-    <div class="blog-post">
-        <h4>Unfortunately nothing found</h4>
-    </div>
 {% endif %}

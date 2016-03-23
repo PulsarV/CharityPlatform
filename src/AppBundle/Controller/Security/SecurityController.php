@@ -52,7 +52,7 @@ class SecurityController extends Controller
                     $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                     $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
                 } else {
-                    $user->setAvatarFileName('no_avatar.gif');
+                    $user->setAvatarFileName('standart_avatar.gif');
                 }
                 $em->flush();
 
@@ -91,7 +91,7 @@ class SecurityController extends Controller
                     $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                     $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
                 } else {
-                    $user->setAvatarFileName('no_avatar.gif');
+                    $user->setAvatarFileName('standart_avatar.gif');
                 }
                 $em->flush();
 
