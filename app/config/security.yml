@@ -42,18 +42,19 @@ security:
         secured_area:
             anonymous: ~
 
-            remember_me:
-                secret:   '%secret%'
-                lifetime: 60
-                path:     /
-                remember_me_parameter: form[remember_me]
-
             form_login:
                 provider: chain_provider
                 login_path: /login
                 check_path: /login_check
                 username_parameter: form[username]
                 password_parameter: form[password]
+
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 60
+                path: /
+                always_remember_me: false
+                remember_me_parameter: form[remember_me]
 
             logout:
                 path:   /logout
