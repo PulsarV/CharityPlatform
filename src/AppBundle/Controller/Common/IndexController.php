@@ -20,17 +20,17 @@ class IndexController extends Controller
      */
     public function sendTestMailAction()
     {
-        $mail = $this->get('mail');
-        $mailSender = 'gh.charity.supp@gmail.com';
+        $mail = $this->get('app.mail_sender');
+        $mailAuthor = 'gh.charity.supp@gmail.com';
         $targetMail = 'workbel14@gmail.com';
         $mailTitle = 'Yea! Test mail!';
         $mail->send(
-            $mailSender,
+            $mailAuthor,
             $targetMail,
             $mailTitle,
             'AppBundle:Emails:testmail.html.twig',
             array(
-                'mailsender' => $mailSender
+                'mailauthor' => $mailAuthor
             )
         );
         return $this->redirectToRoute('charity_index');

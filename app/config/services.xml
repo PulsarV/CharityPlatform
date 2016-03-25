@@ -24,7 +24,7 @@
             <argument type="service" id="app.menu_manager" />
         </service>
 
-        <service id="mail" class="AppBundle\Helper\EmailSender">
+        <service id="app.mail_sender" class="AppBundle\Helper\EmailSender">
             <argument>%mailer_host%</argument>
             <argument>%mailer_port%</argument>
             <argument>%mailer_encryption%</argument>
