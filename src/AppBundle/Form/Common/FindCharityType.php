@@ -16,7 +16,7 @@ class FindCharityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('searchRequest',TextType::class, [
+            ->add('searchQuery',TextType::class, [
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control',

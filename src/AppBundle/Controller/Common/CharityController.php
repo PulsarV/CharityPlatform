@@ -100,13 +100,30 @@ class CharityController extends Controller
      * @Template()
      * @return array
      */
-    public function findCharitiesFormAction()
+    public function findCharitiesFormAction(Request $request)
     {
         $charity = new FindCharityModel();
         $form = $this->createForm(FindCharityType::class, $charity, [
-            'action' => $this->generateUrl('charity_find_results'),
-            'method' => 'GET',
-        ]);
+            'action' => $this->generateUrl('charity_find_form'),
+//            'method' => 'GET',
+        ]
+        );
+
+        if ($request->getMethod() === 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                return $this->redirectToRoute(
+                    'charity_find_index',
+                    [
+                        'criteria' => 'title',
+                        'searchQuery' => filter_var($form->get('searchQuery')->getData(), FILTER_SANITIZE_STRING),
+                        'sortmode' => 'd',
+                        'page' => 1,
+                    ],
+                    302
+                );
+            }
+        }
 
         return [
             'find_form' => $form->createView()
