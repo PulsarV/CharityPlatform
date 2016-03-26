@@ -3,21 +3,24 @@
 namespace AppBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use FOS\ElasticaBundle\Finder\FinderInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 class CharityManager
 {
     protected $em;
+    protected $finder;
     protected $menuManager;
 
     /**
      * CharityManager constructor.
      * @param $menuManager
      */
-    public function __construct(ObjectManager $em, MenuManager $menuManager)
+    public function __construct(ObjectManager $em, FinderInterface $finder, MenuManager $menuManager)
     {
         $this->em = $em;
+        $this->finder =$finder;
         $this->menuManager = $menuManager;
     }
 
@@ -41,6 +44,9 @@ class CharityManager
 
     public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
+        if ($filterName == '') {
+            new \Exception('Щось пішло не так');
+        }
         if ($filterValue == '') {
             new \Exception('Щось пішло не так');
         }
@@ -70,6 +76,31 @@ class CharityManager
         }
         $adapter = new DoctrineORMAdapter($qb);
         $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($itemsPerPage);
+        $pagerfanta->setCurrentPage($page);
+
+        return $pagerfanta;
+    }
+
+    public function getFindCharityListPaginated($criteria, $searchExpression, $sortMode,    $page, $itemsPerPage)
+    {
+        if ($criteria == '') {
+            new \Exception('Щось пішло не так');
+        }
+        if ($searchExpression == '') {
+            new \Exception('Щось пішло не так');
+        }
+        if ($sortMode == 'a') {
+            $sortMode = 'ASC';
+        } else if ($sortMode == 'd') {
+            $sortMode = 'DESC';
+        } else {
+            new \Exception('Щось пішло не так');
+        }
+        if (!in_array($criteria, ['author', 'category', 'content', 'title'])) {
+            new \Exception('Щось пішло не так');
+        }
+        $pagerfanta = $this->finder->findPaginated($searchExpression);
         $pagerfanta->setMaxPerPage($itemsPerPage);
         $pagerfanta->setCurrentPage($page);
 
