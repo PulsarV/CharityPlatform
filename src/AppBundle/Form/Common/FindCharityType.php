@@ -16,15 +16,15 @@ class FindCharityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',TextType::class, array(
+            ->add('searchRequest',TextType::class, [
                 'label' => false,
-                'attr' => array(
+                'attr' => [
                     'class' => 'form-control',
                     'autocomplete' => 'off',
                     //TODO: add translation
                     'placeholder' => 'Search',
-                )
-            ))
+                ]
+            ])
         ;
     }
 
@@ -34,8 +34,7 @@ class FindCharityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Form\Common\FindCharityModel',
-            'csrf_protection' => false,
+            'data_class' => 'AppBundle\Form\Common\FindCharityModel'
         ]);
     }
 

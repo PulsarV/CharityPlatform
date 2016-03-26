@@ -9,21 +9,21 @@ class FindCharityModel
      * @Assert\NotBlank(message="empty_search")
      * @Assert\Type(type="string", message="Wrong search!")
      */
-    private $title;
+    private $searchRequest;
 
     /**
      * @return mixed
      */
-    public function getTitle()
+    public function getSearchRequest()
     {
-        return $this->title;
+        return $this->searchRequest;
     }
 
     /**
      * @param mixed $title
      */
-    public function setTitle($title)
+    public function setSearchRequest($searchRequest)
     {
-        $this->title = $title;
+        $this->searchRequest = $searchRequest;
     }
 }

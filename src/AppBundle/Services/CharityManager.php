@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services;
 
+use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -9,6 +10,7 @@ use Pagerfanta\Pagerfanta;
 
 class CharityManager
 {
+    protected $container;
     protected $em;
     protected $finder;
     protected $menuManager;
@@ -17,8 +19,9 @@ class CharityManager
      * CharityManager constructor.
      * @param $menuManager
      */
-    public function __construct(ObjectManager $em, FinderInterface $finder, MenuManager $menuManager)
+    public function __construct(Container $container, ObjectManager $em, FinderInterface $finder, MenuManager $menuManager)
     {
+        $this->container = $container;
         $this->em = $em;
         $this->finder =$finder;
         $this->menuManager = $menuManager;
@@ -82,12 +85,12 @@ class CharityManager
         return $pagerfanta;
     }
 
-    public function getFindCharityListPaginated($criteria, $searchExpression, $sortMode,    $page, $itemsPerPage)
+    public function getFindCharityListPaginated($criteria, $searchRequest, $sortMode, $page)
     {
         if ($criteria == '') {
             new \Exception('Щось пішло не так');
         }
-        if ($searchExpression == '') {
+        if ($searchRequest == '') {
             new \Exception('Щось пішло не так');
         }
         if ($sortMode == 'a') {
@@ -100,8 +103,8 @@ class CharityManager
         if (!in_array($criteria, ['author', 'category', 'content', 'title'])) {
             new \Exception('Щось пішло не так');
         }
-        $pagerfanta = $this->finder->findPaginated($searchExpression);
-        $pagerfanta->setMaxPerPage($itemsPerPage);
+        $pagerfanta = $this->finder->findPaginated($searchRequest);
+        $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
