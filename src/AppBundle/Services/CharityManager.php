@@ -4,7 +4,7 @@ namespace AppBundle\Services;
 
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
-use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -17,9 +17,12 @@ class CharityManager
 
     /**
      * CharityManager constructor.
-     * @param $menuManager
+     * @param Container $container
+     * @param ObjectManager $em
+     * @param TransformedFinder $finder
+     * @param MenuManager $menuManager
      */
-    public function __construct(Container $container, ObjectManager $em, PaginatedFinderInterface $finder, MenuManager $menuManager)
+    public function __construct(Container $container, ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager)
     {
         $this->container = $container;
         $this->em = $em;
@@ -85,19 +88,12 @@ class CharityManager
         return $pagerfanta;
     }
 
-    public function getFindCharityListPaginated($criteria, $searchQuery, $sortMode, $page)
+    public function getFindCharityListPaginated($criteria, $searchQuery, $page)
     {
         if ($criteria == '') {
             new \Exception('Щось пішло не так');
         }
         if ($searchQuery == '') {
-            new \Exception('Щось пішло не так');
-        }
-        if ($sortMode == 'a') {
-            $sortMode = 'ASC';
-        } else if ($sortMode == 'd') {
-            $sortMode = 'DESC';
-        } else {
             new \Exception('Щось пішло не так');
         }
         if (!in_array($criteria, ['author', 'category', 'content', 'title'])) {

@@ -9,8 +9,9 @@ echo "3 - Reinstall frontend"
 echo "4 - Recreate database and load fixtures"
 echo "5 - Recreate database"
 echo "6 - Load fixtures"
-echo "7 - Run tests"
-echo "8 - Exit"
+echo "7 - Recreate elastica indexes"
+echo "8 - Run tests"
+echo "10 - Exit"
 
 read Keypress
 
@@ -95,11 +96,17 @@ case "$Keypress" in
 ;;
 7)
     echo
+    echo RECREATE ELASTICA INDEXES ...
+    echo =================
+    ./app/console fos:elastica:populate
+;;
+8)
+    echo
     echo RUN TESTS ...
     echo =================
     phpunit -c app
 ;;
-8)
+10)
     exit 0
 ;;
 *)

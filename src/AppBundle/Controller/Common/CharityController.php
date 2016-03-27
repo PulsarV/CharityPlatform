@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CharityController extends Controller
 {
@@ -19,7 +20,7 @@ class CharityController extends Controller
      * @param Request $request
      * @param $param
      * @param $value
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function configShowAction(Request $request, $param, $value)
     {
@@ -95,19 +96,19 @@ class CharityController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return array|RedirectResponse
      * @Route("/charities-find-form", name="charity_find_form")
      * @Method({"POST"})
      * @Template()
-     * @return array
+
      */
     public function findCharitiesFormAction(Request $request)
     {
         $charity = new FindCharityModel();
         $form = $this->createForm(FindCharityType::class, $charity, [
             'action' => $this->generateUrl('charity_find_form'),
-//            'method' => 'GET',
-        ]
-        );
+        ]);
 
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
@@ -116,8 +117,11 @@ class CharityController extends Controller
                     'charity_find_index',
                     [
                         'criteria' => 'title',
-                        'searchQuery' => filter_var($form->get('searchQuery')->getData(), FILTER_SANITIZE_STRING),
-                        'sortmode' => 'd',
+                        'searchQuery' => $form->get('searchQuery')->getData(),
+
+// maybe next line will be used for escaping
+//                        'searchQuery' => filter_var($form->get('searchQuery')->getData(), FILTER_SANITIZE_STRING),
+
                         'page' => 1,
                     ],
                     302
@@ -131,22 +135,20 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/search/{criteria}/{searchQuery}/{sortmode}/{page}", name="charity_find_index")
+     * @Route("/search/{criteria}/{searchQuery}/{page}", name="charity_find_index")
      * @Method({"GET"})
      * @Template("@App/Common/Charity/indexCharity.html.twig")
      * @param $criteria
      * @param $searchQuery
-     * @param $sortmode
      * @param $page
      * @return array
      */
-    public function findCharitiesResultsAction($criteria, $searchQuery, $sortmode, $page)
+    public function findCharitiesResultsAction($criteria, $searchQuery, $page)
     {
         $pager = $this->get('app.charity_manager')
             ->getFindCharityListPaginated(
                 $criteria,
                 $searchQuery,
-                $sortmode,
                 $page
             );
 
