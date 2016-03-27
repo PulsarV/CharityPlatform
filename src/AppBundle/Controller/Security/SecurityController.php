@@ -20,7 +20,7 @@ class SecurityController extends Controller
     /**
      * @Template()
      */
-    public function showEmbeddedLoginFormAction()
+    public function embeddedLoginFormAction()
     {
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('login_check'))

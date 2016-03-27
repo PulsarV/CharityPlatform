@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    public function findAllCategories()
+    {
+        $dql = "SELECT c
+                FROM AppBundle:Category c
+                ORDER BY c.title ASC";
+
+        return $this->getEntityManager()
+            ->createQuery($dql)
+            ->getResult();
+    }
 }

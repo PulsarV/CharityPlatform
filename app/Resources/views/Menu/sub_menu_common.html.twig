@@ -6,37 +6,33 @@
             </div>
             <div class="col-sm-4 lng-city-zone">
                 <div class="lng-menu">
-                    {#<span class="menu-title">Мова інтерфейсу:</span>#}
-                        <span class="dropdown">
-                            {#<a href="" class="dropdown-toggle" data-toggle="dropdown">{{ current_language() }}</a>#}
-                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Мова інтерфейсу: {{ current_language() }}</button>
-                            <ul class="dropdown-menu">
-                                {% for language in available_languages() %}
-                                    {% if language != current_language() %}
-                                        <li><a href="{{ path('config_show', {'param': 'lng', 'value': language}) }}">{{ language }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>
+                    <span class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Мова інтерфейсу: {{ current_language() }}</button>
+                        <ul class="dropdown-menu">
+                            {% for language in available_languages() %}
+                                {% if language != current_language() %}
+                                    <li><a href="{{ path('config_show', {'param': 'lng', 'value': language}) }}">{{ language }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </span>
                 </div>
                 <div class="city-menu">
-                    {#<span class="menu-title">Ваш регіон:</span>#}
-                        <span class="dropdown">
-                            {#<a href="" class="dropdown-toggle" data-toggle="dropdown">{{ current_city() }}</a>#}
-                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Ваш регіон: {{ current_city() }}</button>
-                            <ul class="dropdown-menu">
-                                {% for city in available_cities() %}
-                                    {% if city != current_city() %}
-                                        <li><a href="{{ path('config_show', {'param': 'city', 'value': city}) }}">{{ city }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>
+                    <span class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Ваш регіон: {{ current_city() }}</button>
+                        <ul class="dropdown-menu">
+                            {% for city in available_cities() %}
+                                {% if city != current_city() %}
+                                    <li><a href="{{ path('config_show', {'param': 'city', 'value': city}) }}">{{ city }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </span>
                 </div>
             </div>
             <div class="container col-sm-4">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {{ render(controller('AppBundle:Security/Security:showEmbeddedLoginForm')) }}
+                    {{ render(controller('AppBundle:Security/Security:embeddedLoginForm')) }}
                 {% else %}
                     <div class="row">
                         <div class="col-sm-offset-2 col-sm-10 profile-zone">

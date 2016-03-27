@@ -65,16 +65,16 @@ class CharityManager
         }
         switch($filterName) {
             case 'none':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharities($sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesQuery($sortMode);
                 break;
             case 'user':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUser($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUserQuery($filterValue, $sortMode);
                 break;
             case 'category':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategory($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategoryQuery($filterValue, $sortMode);
                 break;
             case 'tag':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTag($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTagQuery($filterValue, $sortMode);
                 break;
             default:
                 new \Exception('Щось пішло не так');
