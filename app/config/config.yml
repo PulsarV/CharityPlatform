@@ -189,11 +189,11 @@ fos_elastica:
                         title:
                             boost: 6
 #                            TODO: uncomment it on prod server without fixtures
-                            index_analyzer : app_analyzer
+#                            index_analyzer : app_analyzer
                             search_analyzer : app_search_analyzer
                         content:
 #                            TODO: uncomment it on prod server without fixtures
-                            index_analyzer : app_analyzer
+#                            index_analyzer : app_analyzer
                             search_analyzer : app_search_analyzer
                     persistence:
                         driver: orm
