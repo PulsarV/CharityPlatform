@@ -2,7 +2,7 @@
 
 {{ form_start(find_form) }}
     <div class="input-group">
-        {{ form_widget(find_form.searchQuery) }}
+        {{ form_widget(find_form.searchQuery, {"attr": {"placeholder": "Пошук"}}) }}
             <span class="input-group-btn">
                 <button class="btn btn-info" type="button" data-target="#criteria" data-toggle="collapse" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
                 <button class="btn btn-danger" type="submit" title="Пошук"><i class="fa fa-search"></i></button>
