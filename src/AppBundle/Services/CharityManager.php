@@ -90,6 +90,7 @@ class CharityManager
 
     public function getFindCharityListPaginated($criteria, $searchQuery, $page)
     {
+
         if ($criteria == '') {
             new \Exception('Щось пішло не так');
         }
@@ -99,6 +100,9 @@ class CharityManager
         if (!in_array($criteria, ['author', 'category', 'content', 'title'])) {
             new \Exception('Щось пішло не так');
         }
+
+// тут повинно чимось типу switch() вибирати тип фільтру на основі $criteria
+
         $pagerfanta = $this->finder->findPaginated($searchQuery);
         $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
         $pagerfanta->setCurrentPage($page);

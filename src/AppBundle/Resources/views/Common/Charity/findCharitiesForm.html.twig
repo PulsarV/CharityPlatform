@@ -2,14 +2,14 @@
 
 {{ form_start(find_form) }}
     <div class="input-group">
-        {{ form_row(find_form.searchQuery) }}
+        {{ form_widget(find_form.searchQuery) }}
             <span class="input-group-btn">
                 <button class="btn btn-info" type="button" data-target="#criteria" data-toggle="collapse" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
                 <button class="btn btn-danger" type="submit" title="Пошук"><i class="fa fa-search"></i></button>
             </span>
     </div>
     <div id="criteria" class="panel panel-collapse collapse criteria">
-        {{ form_row(find_form.criteria) }}
+        {{ form_widget(find_form.criteria) }}
     </div>
     {{ form_rest(find_form) }}
 {{ form_end(find_form) }}

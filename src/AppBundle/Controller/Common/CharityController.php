@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Common;
 
-use AppBundle\Entity\Charity;
 use AppBundle\Form\Common\FindCharityModel;
 use AppBundle\Form\Common\FindCharityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
