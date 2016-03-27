@@ -1278,3 +1278,8 @@ ul.cabinet-pagination > li:hover > a {
   background-color: #337ab7;
   color: #fff;
 }
+.search .panel.criteria {
+  padding: 5px 25px 5px;
+  background-color: #fff;
+  border-color: rgba(0, 0, 0, 0.3);
+}

@@ -1,9 +1,13 @@
-{% if pager is defined and pager.nbPages > 1 %}
+{% if pager is defined and pager.haveToPaginate %}
     <ul class="pagination pagination-lg charity-pagination">
+
         {% if pager.currentPage > 1 %}
             {% if app.request.attributes.get('_route') == 'charity_index' %}
                 <li><a href="{{ path('charity_index', {'page': 1 }) }}"><i class="fa fa-angle-double-left"></i></a></li>
                 <li><a href="{{ path('charity_index', {'page': pager.currentPage - 1 }) }}"><i class="fa fa-angle-left"></i></a></li>
+            {% elseif app.request.attributes.get('_route') == 'charity_find_index' %}
+                <li><a href="{{ path('charity_find_index', {'page': 1, 'criteria': app.request.attributes.get('criteria'), 'searchQuery': app.request.attributes.get('searchQuery')}) }}"><i class="fa fa-angle-double-left"></i></a></li>
+                <li><a href="{{ path('charity_find_index', {'page': pager.currentPage - 1, 'criteria': app.request.attributes.get('criteria'), 'searchQuery': app.request.attributes.get('searchQuery')}) }}"><i class="fa fa-angle-left"></i></a></li>
             {% else %}
                 <li><a href="{{ path('charity_index_filtered', {'page': 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-double-left"></i></a></li>
                 <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage - 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-left"></i></a></li>
@@ -35,6 +39,8 @@
             {% else %}
                 {% if app.request.attributes.get('_route') == 'charity_index' %}
                     <li><a href="{{ path('charity_index', {'page': i}) }}">{{ i }}</a></li>
+                {% elseif app.request.attributes.get('_route') == 'charity_find_index' %}
+                    <li><a href="{{ path('charity_find_index', {'page': i, 'criteria': app.request.attributes.get('criteria'), 'searchQuery': app.request.attributes.get('searchQuery')}) }}">{{ i }}</a></li>
                 {% else %}
                     <li><a href="{{ path('charity_index_filtered', {'page': i, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}">{{ i }}</a></li>
                 {% endif %}
@@ -45,6 +51,9 @@
             {% if app.request.attributes.get('_route') == 'charity_index' %}
                 <li><a href="{{ path('charity_index', {'page': pager.currentPage + 1 }) }}"><i class="fa fa-angle-right"></i></a></li>
                 <li><a href="{{ path('charity_index', {'page': pager.nbPages }) }}"><i class="fa fa-angle-double-right"></i></a></li>
+            {% elseif app.request.attributes.get('_route') == 'charity_find_index' %}
+                <li><a href="{{ path('charity_find_index', {'page': pager.currentPage + 1, 'criteria': app.request.attributes.get('criteria'), 'searchQuery': app.request.attributes.get('searchQuery')}) }}"><i class="fa fa-angle-right"></i></a></li>
+                <li><a href="{{ path('charity_find_index', {'page': pager.nbPages, 'criteria': app.request.attributes.get('criteria'), 'searchQuery': app.request.attributes.get('searchQuery')}) }}"><i class="fa fa-angle-double-right"></i></a></li>
             {% else %}
                 <li><a href="{{ path('charity_index_filtered', {'page': pager.currentPage + 1, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-right"></i></a></li>
                 <li><a href="{{ path('charity_index_filtered', {'page': pager.nbPages, 'filter': app.request.attributes.get('filter'), 'slug': app.request.attributes.get('slug'), 'sortmode': app.request.attributes.get('sortmode')}) }}"><i class="fa fa-angle-double-right"></i></a></li>

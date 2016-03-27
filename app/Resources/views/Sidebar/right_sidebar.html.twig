@@ -1,14 +1,9 @@
 <!-- Search -->
+
 <div class="widget search">
-    <form role="form">
-        <div class="input-group">
-            <input type="text" class="form-control" autocomplete="off" placeholder="Пошук">
-            <span class="input-group-btn">
-                <button class="btn btn-info" type="button" data-toggle="tooltip" data-placement="right" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
-                <button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="right" title="Пошук"><i class="fa fa-search"></i></button>
-            </span>
-        </div>
-    </form>
+    {% block find_charity %}
+        {{ render(controller('AppBundle:Common/Charity:findCharitiesForm')) }}
+    {% endblock find_charity %}
 </div><!-- /Search -->
 
 <div class="widget top-requests">
