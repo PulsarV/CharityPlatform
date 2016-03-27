@@ -113,10 +113,11 @@ class CharityController extends Controller
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
+
                 return $this->redirectToRoute(
                     'charity_find_index',
                     [
-                        'criteria' => 'title',
+                        'criteria' => $form->get('criteria')->getData(),
                         'searchQuery' => $form->get('searchQuery')->getData(),
 
 // maybe next line will be used for escaping
