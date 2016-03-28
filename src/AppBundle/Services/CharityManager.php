@@ -10,10 +10,10 @@ use Pagerfanta\Pagerfanta;
 
 class CharityManager
 {
-    protected $container;
     protected $em;
     protected $finder;
     protected $menuManager;
+    protected $findedCharitiesOnPage;
 
     /**
      * CharityManager constructor.
@@ -22,12 +22,12 @@ class CharityManager
      * @param TransformedFinder $finder
      * @param MenuManager $menuManager
      */
-    public function __construct(Container $container, ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager)
+    public function __construct(ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager, $findedCharitiesOnPage)
     {
-        $this->container = $container;
         $this->em = $em;
         $this->finder = $finder;
         $this->menuManager = $menuManager;
+        $this->findedCharitiesOnPage = $findedCharitiesOnPage;
     }
 
     public function configShow($param, $value)
@@ -104,7 +104,7 @@ class CharityManager
 // тут повинно чимось типу switch() вибирати тип фільтру на основі $criteria
 
         $pagerfanta = $this->finder->findPaginated($searchQuery);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
+        $pagerfanta->setMaxPerPage($this->findedCharitiesOnPage);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;

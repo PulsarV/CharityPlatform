@@ -20,10 +20,10 @@
         </service>
 
         <service id="app.charity_manager" class="AppBundle\Services\CharityManager">
-            <argument type="service" id="service_container" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="fos_elastica.finder.app.charity" />
             <argument type="service" id="app.menu_manager" />
+            <argument>%app.paginator_count_per_page%</argument>
         </service>
 
         <service id="app.mail_sender" class="AppBundle\Helper\EmailSender">
