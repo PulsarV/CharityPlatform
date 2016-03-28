@@ -2,22 +2,31 @@
 
 namespace AppBundle\Services;
 
+use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 class CharityManager
 {
+    protected $container;
     protected $em;
+    protected $finder;
     protected $menuManager;
 
     /**
      * CharityManager constructor.
-     * @param $menuManager
+     * @param Container $container
+     * @param ObjectManager $em
+     * @param TransformedFinder $finder
+     * @param MenuManager $menuManager
      */
-    public function __construct(ObjectManager $em, MenuManager $menuManager)
+    public function __construct(Container $container, ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager)
     {
+        $this->container = $container;
         $this->em = $em;
+        $this->finder = $finder;
         $this->menuManager = $menuManager;
     }
 
@@ -41,6 +50,9 @@ class CharityManager
 
     public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
+        if ($filterName == '') {
+            new \Exception('Щось пішло не так');
+        }
         if ($filterValue == '') {
             new \Exception('Щось пішло не так');
         }
@@ -71,6 +83,28 @@ class CharityManager
         $adapter = new DoctrineORMAdapter($qb);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($itemsPerPage);
+        $pagerfanta->setCurrentPage($page);
+
+        return $pagerfanta;
+    }
+
+    public function getFindCharityListPaginated($criteria, $searchQuery, $page)
+    {
+
+        if ($criteria == '') {
+            new \Exception('Щось пішло не так');
+        }
+        if ($searchQuery == '') {
+            new \Exception('Щось пішло не так');
+        }
+        if (!in_array($criteria, ['author', 'category', 'content', 'title'])) {
+            new \Exception('Щось пішло не так');
+        }
+
+// тут повинно чимось типу switch() вибирати тип фільтру на основі $criteria
+
+        $pagerfanta = $this->finder->findPaginated($searchQuery);
+        $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;

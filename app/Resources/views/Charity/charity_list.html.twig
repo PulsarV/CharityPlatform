@@ -1,9 +1,7 @@
-{% if pager.currentPageResults is empty %}
+{% if pager is not defined or pager.nbResults < 1 %}
     <div class="blog-item">
         <div class="blog-content">
-            <p>
-                Благотворительные запросы не найдены.
-            </p>
+            <h4>Нажаль нічого не знайдено</h4>
         </div>
     </div>
 {% else %}
