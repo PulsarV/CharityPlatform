@@ -31,8 +31,7 @@ security:
 
         user_db:
             entity:
-                class: AppBundle\Entity\User
-                property: username
+                class: AppBundle:User
 
     firewalls:
         dev:
