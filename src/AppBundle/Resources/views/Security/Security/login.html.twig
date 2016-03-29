@@ -1,1 +1,40 @@
-j;slkjg;slkdgj
+{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+{% form_theme login_form 'bootstrap_3_layout.html.twig' %}
+
+{% block content %}
+    {{ form_start(login_form, {"attr": {"class": "big-login-form"}}) }}
+        {% embed '::Panel/std_panel.html.twig'%}
+            {% block panel_title %}Авторизація{% endblock %}
+            {% block panel_body %}
+                <div class="form-group form-inline pull-right">
+                    <h4>
+                        Ввійдіть за допомогою:&nbsp;&nbsp;
+                        <a class="btn btn-social-icon btn-twitter btn-sm">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                        <a class="btn btn-social-icon btn-facebook btn-sm">
+                            <span class="fa fa-facebook"></span>
+                        </a>
+                        <a class="btn btn-social-icon btn-vk btn-sm">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                        <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
+                            <span class="fa fa-odnoklassniki"></span>
+                        </a>
+                    </h4>
+                </div>
+                {{ form_errors(login_form) }}
+                {{ form_widget(login_form.username, {"attr": {"placeholder": "Користувач / E-Mail"}}) }}
+                {{ form_widget(login_form.password, {"attr": {"placeholder": "Пароль"}}) }}
+                <div class="form-group form-inline">
+                    {{ form_widget(login_form.remember_me, {"attr": {"class": "checkbox"}, "label": " Запам'ятати мене"}) }}
+                    <a class="pull-right checkbox forgot-password" href="#">Нагадати пароль</a>
+                </div>
+            {% endblock %}
+            {% block back_button_url %}{{ path('index_page') }}{% endblock %}
+            {% block back_button %}Реєстрація{% endblock %}
+            {% block submit_button %}Ввійти{% endblock %}
+        {% endembed %}
+        {{ form_rest(login_form) }}
+    {{ form_end(login_form) }}
+{% endblock %}

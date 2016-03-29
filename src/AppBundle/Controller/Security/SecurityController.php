@@ -4,13 +4,12 @@ namespace AppBundle\Controller\Security;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
+use AppBundle\Form\Security\LoginModel;
 use AppBundle\Form\Security\RegisterOrganizationType;
+use AppBundle\Form\Security\LoginType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\Security\RegisterPersonType;
@@ -18,18 +17,31 @@ use AppBundle\Form\Security\RegisterPersonType;
 class SecurityController extends Controller
 {
     /**
+     * @Route("/login", name="login")
+     * @Template()
+     */
+    public function loginAction()
+    {
+        $loginForm = $this->createForm(LoginType::class, new LoginModel(true), [
+            'action' => $this->generateUrl('login_check')
+        ]);
+
+        return [
+            'login_form' => $loginForm->createView()
+        ];
+    }
+
+    /**
      * @Template()
      */
     public function embeddedLoginFormAction()
     {
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('login_check'))
-            ->add('username', TextType::class, ['required' => true])
-            ->add('password', PasswordType::class, ['required' => true])
-            ->add('remember_me', CheckboxType::class, ['required' => false])
-            ->getForm();
+        $loginForm = $this->createForm(LoginType::class, new LoginModel(true), [
+            'action' => $this->generateUrl('login_check')
+        ]);
+
         return [
-            'login_form' => $form->createView()
+            'login_form' => $loginForm->createView()
         ];
     }
 

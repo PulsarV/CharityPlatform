@@ -45,15 +45,15 @@ security:
                 provider: chain_provider
                 login_path: /login
                 check_path: /login_check
-                username_parameter: form[username]
-                password_parameter: form[password]
+                username_parameter: login[username]
+                password_parameter: login[password]
 
             remember_me:
                 secret:   '%secret%'
                 lifetime: 60
                 path: /
                 always_remember_me: false
-                remember_me_parameter: form[remember_me]
+                remember_me_parameter: login[remember_me]
 
             logout:
                 path:   /logout
