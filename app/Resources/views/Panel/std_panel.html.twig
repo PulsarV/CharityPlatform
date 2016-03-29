@@ -10,7 +10,7 @@
         {% endblock %}
     </div>
     <div class="panel-footer">
-        <a href="{% block back_button_url %}{% endblock %}" class=" btn btn-info btn-form">{% block back_button %}{% endblock %}</a>
-        <input type="submit" value="{% block submit_button %}{% endblock %}" class="btn btn-success btn-form pull-right" />
+        <a href="{% spaceless %}{% block back_button_url %}{{ path('index_page') }}{% endblock %}{% endspaceless %}" class=" btn btn-info btn-form">{% spaceless %}{% block back_button %}Повернутися{% endblock %}{% endspaceless %}</a>
+        <input type="submit" value="{% spaceless %}{% block submit_button %}Готово{% endblock %}{% endspaceless %}" class="btn btn-success btn-form pull-right" />
     </div>
 </div>

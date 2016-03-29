@@ -46,6 +46,15 @@ class SecurityController extends Controller
     }
 
     /**
+     * @Route("/register", name="register")
+     * @Template()
+     */
+    public function registerAction()
+    {
+        return [];
+    }
+
+    /**
      * @Route("/register-person", name="registration_person")
      * @Template()
      * @param Request $request
