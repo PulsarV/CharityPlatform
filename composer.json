@@ -30,7 +30,8 @@
         "sensio/generator-bundle": "~3.0",
         "symfony/phpunit-bridge": "~2.7",
         "hautelook/alice-bundle": "^1.2",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "4.8.*"
     },
     "scripts": {
         "post-install-cmd": [

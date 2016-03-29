@@ -143,7 +143,7 @@ case "$Keypress" in
     echo
     echo RUNING TESTS ...
     echo ================
-    phpunit -c app
+    ./bin/phpunit -c app
 ;;
 10)
     exit 0
