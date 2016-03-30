@@ -1,14 +1,27 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="error-template">
-                <h1>
-                    Oops!</h1>
-                <div class="error-actions">
-                    <a href="{{ path('index_page') }}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-                        Take Me Home </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Error</title>
+<link href="{{ asset('css/exception.css') }}" rel="stylesheet">
+</head>
+<body>
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-template">
+                    <h1>
+                        Oops!</h1>
+                    <h2>
+                        That’s an error </h2>
+                    <div class="error-actions">
+                        <a href="{{ path('index_page') }}" class="btn btn-primary btn-lg"><span class="glyphicon"></span>
+                            Take Me Home </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+</body>
+</html>
