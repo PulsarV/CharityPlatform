@@ -60,10 +60,7 @@ class MenuManager
 
     public function getAllCategories()
     {
-        $s = $this->em->getRepository('AppBundle:Category')->findAllCategories();
-        dump($s);
-
-        return $s;
+        return $this->em->getRepository('AppBundle:Category')->findAllCategories();
     }
 
     public function getAvailableLanguages()

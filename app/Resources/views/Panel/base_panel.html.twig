@@ -1,0 +1,14 @@
+<div class="panel panel-primary base-panel">
+    <div class="panel-heading">
+        {% spaceless %}<h4>{%- block panel_title -%}{%- endblock -%}</h4>{% endspaceless %}
+    </div>
+    <div class="panel-body">
+        {% block panel_body %}
+        {% endblock %}
+    </div>
+    <div class="panel-footer">
+        {% block panel_footer %}
+            {% spaceless %}<a href="{%- block back_button_url -%}{{ path('index_page') }}{%- endblock -%}" class=" btn btn-info btn-form">{%- block back_button -%}Повернутися{%- endblock -%}</a>{% endspaceless %}
+        {% endblock %}
+    </div>
+</div>

@@ -1067,7 +1067,7 @@ ul.faq li > div h3 {
 }
 .emerald .city-menu button,
 .emerald .lng-menu button {
-  width: 250px;
+  width: 200px;
   border: 0;
 }
 .emerald .dropdown-menu {
@@ -1194,11 +1194,11 @@ ul.no-list-style li {
   margin-bottom: 30px;
 }
 .btn-form {
-  margin: 10px 50px 10px 50px;
+  margin: 10px 30px 10px 30px;
   width: 150px;
 }
 .btn-group-form {
-  margin: 10px 50px 10px 50px;
+  margin: 10px 30px 10px 30px;
 }
 .btn-group > .btn-form {
   margin: 0;
@@ -1227,7 +1227,6 @@ aside.cabinet-menu {
   font-weight: 700;
   text-align: center;
 }
-.login-panel,
 .cabinet-menu-panel {
   background-color: #f39c12;
   border-color: rgba(0, 0, 0, 0.3);
@@ -1288,11 +1287,20 @@ ul.cabinet-pagination > li:hover > a {
   background-color: #fff;
   border-color: rgba(0, 0, 0, 0.3);
 }
-.std-panel .panel-body {
+.base-panel .panel-body {
   padding: 30px 30px;
 }
-.std-panel .panel-body input {
+.base-panel .panel-body input {
   margin: 0 0 20px;
+}
+.base-panel .panel-footer {
+  padding: 10px 10px 10px;
+}
+.base-panel .panel-footer .btn {
+  width: 150px;
+}
+.base-panel .panel-footer .btn-group .btn {
+  width: 100px;
 }
 .big-login-form input[checked] {
   margin-top: 16px;
