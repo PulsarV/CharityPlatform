@@ -135,6 +135,7 @@ fos_elastica:
         default: { host: localhost, port: 9200 }
     indexes:
         app:
+            client: default
             settings:
                 index:
                     analysis:
@@ -187,14 +188,7 @@ fos_elastica:
                 charity:
                     mappings:
                         title:
-                            boost: 6
-#                            TODO: uncomment it on prod server without fixtures
-#                            index_analyzer : app_analyzer
-                            search_analyzer : app_search_analyzer
-                        content:
-#                            TODO: uncomment it on prod server without fixtures
-#                            index_analyzer : app_analyzer
-                            search_analyzer : app_search_analyzer
+                        content: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: custom_filter, type: string }
                     persistence:
                         driver: orm
                         model: AppBundle\Entity\Charity

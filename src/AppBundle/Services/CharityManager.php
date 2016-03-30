@@ -103,7 +103,15 @@ class CharityManager
 
 // тут повинно чимось типу switch() вибирати тип фільтру на основі $criteria
 
-        $pagerfanta = $this->finder->findPaginated($searchQuery);
+        $elasticaQuery = new \Elastica\Query\QueryString();
+        $elasticaQuery->setParam('query', $searchQuery);
+        $elasticaQuery->setParam('fields', array(
+            'title',
+            'content',
+        ));
+        $elasticaQuery->setDefaultOperator('AND');
+
+        $pagerfanta = $this->finder->findPaginated($elasticaQuery);
         $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
         $pagerfanta->setCurrentPage($page);
 
