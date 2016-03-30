@@ -2,11 +2,7 @@
 
 <div class="widget search">
     {% block find_charity %}
-        <div class="sidebar">
-            {{ render(controller(
-            'AppBundle:Common/Charity:findCharitiesForm'
-            )) }}
-        </div>
+        {{ render(controller('AppBundle:Common/Charity:findCharitiesForm')) }}
     {% endblock find_charity %}
 </div><!-- /Search -->
 
