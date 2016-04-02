@@ -9,7 +9,12 @@
             </span>
     </div>
     <div id="criteria" class="panel panel-collapse collapse criteria">
-        {{ form_widget(find_form.criteria) }}
+        Рекомендовано мінімум 3 символи для пошуку.
+        {{ form_widget(find_form.titleCriteria) }}
+        {{ form_widget(find_form.contentCriteria) }}
+        {{ form_widget(find_form.authorCriteria) }}
+        {{ form_widget(find_form.categoryCriteria) }}
+        {{ form_widget(find_form.tagsCriteria) }}
     </div>
     {{ form_rest(find_form) }}
 {{ form_end(find_form) }}

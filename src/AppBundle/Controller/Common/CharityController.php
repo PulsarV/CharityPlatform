@@ -113,10 +113,12 @@ class CharityController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
 
+                $criteria = $this->get('app.charity_manager')->generateCriteria($form);
+
                 return $this->redirectToRoute(
                     'charity_find_index',
                     [
-                        'criteria' => $form->get('criteria')->getData(),
+                        'criteria' => $criteria,
                         'searchQuery' => $form->get('searchQuery')->getData(),
 
 // maybe next line will be used for escaping
@@ -138,7 +140,7 @@ class CharityController extends Controller
      * @Route("/search/{criteria}/{searchQuery}/{page}", name="charity_find_index")
      * @Method({"GET"})
      * @Template("@App/Common/Charity/indexCharity.html.twig")
-     * @param $criteria
+     * @param  $criteria
      * @param $searchQuery
      * @param $page
      * @return array

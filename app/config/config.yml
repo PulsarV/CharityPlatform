@@ -160,52 +160,25 @@ fos_elastica:
                             worddelimiter :
                                  type: word_delimiter
             types:
-                person:
-                    mappings:
-                        username: ~
-                        firstname: ~
-                        lastname: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Person
-                        provider: ~
-                        listener: ~
-                        finder: ~
-                organization:
-                    mappings:
-                        username: ~
-                        organizationName: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Organization
-                        provider: ~
-                        listener: ~
-                        finder: ~
                 charity:
                     mappings:
                         title: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
                         content: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        category:
+                            type: "object"
+                            properties:
+                                title: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        user:
+                            type: "object"
+                            properties:
+                                username: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        tags:
+                            type: "object"
+                            properties:
+                                tagName: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
                     persistence:
                         driver: orm
                         model: AppBundle\Entity\Charity
-                        provider: ~
-                        listener: ~
-                        finder: ~
-                tag:
-                    mappings:
-                        tagName: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Tag
-                        provider: ~
-                        listener: ~
-                        finder: ~
-                category:
-                    mappings:
-                        title: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Category
                         provider: ~
                         listener: ~
                         finder: ~
