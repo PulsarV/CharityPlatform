@@ -2,7 +2,7 @@
 <div class="blog-content">
     <h3>{{ charity.title }}</h3>
     {% include ':Charity:charity_header.html.twig' %}
-    {{ charity.content }}
+    {{ charity.content | raw }}
     <hr>
     {% include ':Charity:charity_footer.html.twig' %}
     <div id="comments">
