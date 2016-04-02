@@ -135,87 +135,50 @@ fos_elastica:
         default: { host: localhost, port: 9200 }
     indexes:
         app:
+            client: default
             settings:
                 index:
                     analysis:
                         analyzer:
                             app_analyzer:
                                 type: custom
-                                tokenizer: nGram
-                                filter   : [app_ngram, asciifolding, lowercase, snowball, worddelimiter]
+                                tokenizer: standard
+                                filter: [standard, asciifolding, lowercase, snowball, worddelimiter, app_ngram]
                             app_search_analyzer:
                                 type: custom
                                 tokenizer: standard
-                                filter   : [app_ngram, asciifolding, lowercase, snowball, worddelimiter]
-                        tokenizer:
-                            nGram:
-                                type:     "nGram"
-                                min_gram: 2
-                                max_gram: 20
+                                filter: [standard, asciifolding, lowercase, snowball, worddelimiter, app_ngram]
                         filter:
                             snowball:
-                                type:     snowball
+                                type: snowball
                                 language: English
                             app_ngram:
                                 type: "nGram"
-                                min_gram: 2
+                                side: front
+                                min_gram: 3
                                 max_gram: 20
                             worddelimiter :
                                  type: word_delimiter
             types:
-                person:
-                    mappings:
-                        username: ~
-                        firstname: ~
-                        lastname: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Person
-                        provider: ~
-                        listener: ~
-                        finder: ~
-                organization:
-                    mappings:
-                        username: ~
-                        organizationName: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Organization
-                        provider: ~
-                        listener: ~
-                        finder: ~
                 charity:
                     mappings:
-                        title:
-                            boost: 6
-#                            TODO: uncomment it on prod server without fixtures
-#                            index_analyzer : app_analyzer
-                            search_analyzer : app_search_analyzer
-                        content:
-#                            TODO: uncomment it on prod server without fixtures
-#                            index_analyzer : app_analyzer
-                            search_analyzer : app_search_analyzer
+                        title: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        content: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        category:
+                            type: "object"
+                            properties:
+                                title: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        user:
+                            type: "object"
+                            properties:
+                                username: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        tags:
+                            type: "object"
+                            properties:
+                                tagName: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
                     persistence:
                         driver: orm
                         model: AppBundle\Entity\Charity
-                        provider: ~
-                        listener: ~
-                        finder: ~
-                tag:
-                    mappings:
-                        tagName: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Tag
-                        provider: ~
-                        listener: ~
-                        finder: ~
-                category:
-                    mappings:
-                        title: ~
-                    persistence:
-                        driver: orm
-                        model: AppBundle\Entity\Category
                         provider: ~
                         listener: ~
                         finder: ~
