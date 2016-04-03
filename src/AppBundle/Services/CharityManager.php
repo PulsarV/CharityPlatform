@@ -2,7 +2,6 @@
 
 namespace AppBundle\Services;
 
-use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -15,12 +14,13 @@ class CharityManager
     protected $menuManager;
     protected $findedCharitiesOnPage;
 
+
     /**
      * CharityManager constructor.
-     * @param Container $container
      * @param ObjectManager $em
      * @param TransformedFinder $finder
      * @param MenuManager $menuManager
+     * @param $findedCharitiesOnPage
      */
     public function __construct(ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager, $findedCharitiesOnPage)
     {

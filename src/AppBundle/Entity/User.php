@@ -15,13 +15,25 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
- * @UniqueEntity("username")
- * @UniqueEntity("email")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     groups={"registration"},
+ *     errorPath="username",
+ *     message="Username is already in use",
+ *     ignoreNull=false
+ * )
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     groups={"registration"},
+ *     errorPath="email",
+ *     message="E-mail is already in use",
+ *     ignoreNull=false
+ * )
  * @Gedmo\Uploadable(
- *      pathMethod="getPath",
- *      appendNumber=true,
- *      filenameGenerator="SHA1",
- *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
+ *     pathMethod="getPath",
+ *     appendNumber=true,
+ *     filenameGenerator="SHA1",
+ *     allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
  * )
  */
 abstract class User implements  UserInterface, \Serializable
@@ -57,7 +69,7 @@ abstract class User implements  UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $temporaryPassword;
 

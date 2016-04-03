@@ -16,7 +16,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     public function loadUserByUsername($username)
     {
         $dql = "SELECT u
-                FROM AppBundle:User u
+                FROM 'AppBundle:User' u
                 WHERE u.username = :username
                 OR u.email = :email";
 

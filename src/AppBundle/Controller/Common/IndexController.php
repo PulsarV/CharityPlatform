@@ -22,7 +22,7 @@ class IndexController extends Controller
     {
         $mail = $this->get('app.mail_sender');
         $mailAuthor = 'gh.charity.supp@gmail.com';
-        $targetMail = 'workbel14@gmail.com';
+        $targetMail = 'pulsarv@rambler.ru';
         $mailTitle = 'Yea! Test mail!';
         $mail->send(
             $mailAuthor,

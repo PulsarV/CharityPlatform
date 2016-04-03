@@ -36,7 +36,7 @@ class RegistrationType extends AbstractType
                 'label' => false,
                 'attr' => ['placeholder' => 'E-mail*'],
             ])
-            ->add('user_selector',  ChoiceType::class, [
+            ->add('userSelector',  ChoiceType::class, [
                 'label' => false,
                 'expanded' => false,
                 'multiple' => false,

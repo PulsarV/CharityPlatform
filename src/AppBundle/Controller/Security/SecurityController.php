@@ -61,29 +61,31 @@ class SecurityController extends Controller
 
             if ($registrationForm->isValid()) {
 
-                if ($registrationForm->get('user_selector')->getData() == 'person') {
-                    $user = new Person();
-                } elseif ($registrationForm->get('user_selector')->getData() == 'organization') {
-                    $user = new Organization();
-                } else {
-                    $this->createNotFoundException();
-                }
+                $this->get('app.user_manager')->createUser(
+                    $registrationForm->get('userSelector')->getData(),
+                    $registrationForm->get('username')->getData(),
+                    $registrationForm->get('plainPassword')->getData(),
+                    $registrationForm->get('email')->getData()
+                );
 
-                $user->setUsername($registrationForm->get('username')->getData());
-                $user->setPassword('12345678');
-                $user->setTemporaryPassword('12345678');
-                $user->setEmail($registrationForm->get('email')->getData());
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-
-                return $this->redirectToRoute('index_page');
+                return $this->redirectToRoute('registration_complete');
             }
         }
 
         return [
             'registration_form' => $registrationForm->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/complete-registration", name="registration_complete")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function registrationCompleteAction(Request $request)
+    {
+        return [
+
         ];
     }
 

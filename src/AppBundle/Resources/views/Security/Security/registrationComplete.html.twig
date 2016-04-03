@@ -1,0 +1,18 @@
+{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+{#{% form_theme registration_form 'bootstrap_3_layout.html.twig' %}#}
+
+{% block content %}
+    {#{{ form_start(registration_form) }}#}
+    {% embed '::Panel/save_panel.html.twig'%}
+        {% block panel_title %}Реєстрація нового користувача{% endblock %}
+        {% block panel_body %}
+            <p>На вказану при реєстрацію адресу e-mail було відправлено лист, в якому вказано неохідну для завершення реєстрації інформацію.</p>
+            <p>Будь-ласка перевірте свою поштову скриньку</p>
+            <p>Для повторної відправки повідомлення, натисніть кнопку "Повторити"</p>
+        {% endblock %}
+        {% block back_button %}На головну{% endblock %}
+        {% block submit_button %}Повторити{% endblock %}
+    {% endembed %}
+    {#{{ form_rest(registration_form) }}#}
+    {#{{ form_end(registration_form) }}#}
+{% endblock %}

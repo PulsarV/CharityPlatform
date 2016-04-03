@@ -1,12 +1,12 @@
 security:
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-#            algorithm: bcrypt
-#            cost: 13
-        AppBundle\Entity\User: plaintext
-#            algorithm: bcrypt
-#            cost: 13
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 13
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 13
 
     providers:
         chain_provider:
