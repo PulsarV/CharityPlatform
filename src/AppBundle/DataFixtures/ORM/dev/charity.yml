@@ -8,7 +8,7 @@ AppBundle\Entity\Category:
 AppBundle\Entity\Organization:
   organization{1..20}:
     username(unique): <firstName()>
-    password: @organization<current()>->username
+    password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
     role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
@@ -27,7 +27,7 @@ AppBundle\Entity\Organization:
 AppBundle\Entity\Person:
   person{1..20}:
     username(unique): <firstName()>
-    password: @person<current()>->username
+    password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
     role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>

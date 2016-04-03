@@ -17,16 +17,16 @@ security:
             memory:
                 users:
                     SuperAdmin:
-                        password: qwerty
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
                         roles: 'ROLE_SUPER_ADMIN'
                     Test_Admin:
-                        password: qwerty
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
                         roles: 'ROLE_ADMIN'
                     Test_Moderator:
-                        password: qwerty
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
                         roles: 'ROLE_MODERATOR'
                     Test_User:
-                        password: qwerty
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
                         roles: 'ROLE_USER'
 
         user_db:
