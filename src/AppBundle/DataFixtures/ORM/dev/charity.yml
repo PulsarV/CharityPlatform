@@ -44,7 +44,7 @@ AppBundle\Entity\Person:
 
 AppBundle\Entity\Charity:
   charity{1..80}:
-    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300)))>
+    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300, 'people')))>
     title: <(rtrim($fake('sentence'), '.'))>
     content: <paragraph(100)>
     primaryUser: null
@@ -59,7 +59,7 @@ AppBundle\Entity\Charity:
 
 AppBundle\Entity\CharityImage:
   chimage{1..120}:
-    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
+    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480, 'people')))>
     path: '@chimage<current()>->name'
     size: <numberBetween(300, 1000)>
     charity: '@charity*'

@@ -6,10 +6,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class FindCharityModel
 {
-    /**
-     * @Assert\NotBlank(message="Wrong search criteria")
-     */
-    private $criteria;
+    private $titleCriteria;
+
+    private $contentCriteria;
+
+    private $authorCriteria;
+
+    private $categoryCriteria;
+
+    private $tagsCriteria;
+
     /**
      * @Assert\NotBlank(message="empty_search")
      * @Assert\Type(type="string", message="Wrong search!")
@@ -20,25 +26,89 @@ class FindCharityModel
      * FindCharityModel constructor.
      * @param $criteria
      */
-    public function __construct($criteria = 'title')
+    public function __construct()
     {
-        $this->criteria = $criteria;
+        $this->titleCriteria = true;
     }
 
     /**
      * @return mixed
      */
-    public function getCriteria()
+    public function getTitleCriteria()
     {
-        return $this->criteria;
+        return $this->titleCriteria;
     }
 
     /**
-     * @param mixed $criteria
+     * @param mixed $titleCriteria
      */
-    public function setCriteria($criteria)
+    public function setTitleCriteria($titleCriteria)
     {
-        $this->criteria = $criteria;
+        $this->titleCriteria = $titleCriteria;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentCriteria()
+    {
+        return $this->contentCriteria;
+    }
+
+    /**
+     * @param mixed $contentCriteria
+     */
+    public function setContentCriteria($contentCriteria)
+    {
+        $this->contentCriteria = $contentCriteria;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthorCriteria()
+    {
+        return $this->authorCriteria;
+    }
+
+    /**
+     * @param mixed $authorCriteria
+     */
+    public function setAuthorCriteria($authorCriteria)
+    {
+        $this->authorCriteria = $authorCriteria;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoryCriteria()
+    {
+        return $this->categoryCriteria;
+    }
+
+    /**
+     * @param mixed $categoryCriteria
+     */
+    public function setCategoryCriteria($categoryCriteria)
+    {
+        $this->categoryCriteria = $categoryCriteria;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTagsCriteria()
+    {
+        return $this->tagsCriteria;
+    }
+
+    /**
+     * @param mixed $tagsCriteria
+     */
+    public function setTagsCriteria($tagsCriteria)
+    {
+        $this->tagsCriteria = $tagsCriteria;
     }
 
     /**

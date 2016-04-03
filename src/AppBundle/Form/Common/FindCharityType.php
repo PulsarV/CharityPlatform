@@ -3,7 +3,7 @@
 namespace AppBundle\Form\Common;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,19 +26,28 @@ class FindCharityType extends AbstractType
                     'placeholder' => 'Search',
                 ]
             ])
-            ->add('criteria', ChoiceType::class, [
-
-                'label' => false,
-                'expanded' => true,
-                'multiple' => false,
-                'choices' => [
-                    'title' => 'Шукати по заголовку запиту',
-                    'content' => 'Шукати по тексту запиту',
-                    'author' => 'Шукати по автору запиту',
-                    'category' => 'Шукати по категорії запиту',
-                    'other' => 'Ще якась байда'],
-                'choices_as_values' => false,
-            ]);
+            ->add('titleCriteria', CheckboxType::class, array(
+                'label'    => 'Шукати по заголовкам запитів',
+                'required' => false,
+                'value' => true,
+                'disabled' => true
+            ))
+            ->add('contentCriteria', CheckboxType::class, array(
+                'label'    => 'Шукати по текстам запитів',
+                'required' => false,
+            ))
+            ->add('authorCriteria', CheckboxType::class, array(
+                'label'    => 'Шукати по авторам запитів',
+                'required' => false,
+            ))
+            ->add('categoryCriteria', CheckboxType::class, array(
+                'label'    => 'Шукати по категоріям запитів',
+                'required' => false,
+            ))
+            ->add('tagsCriteria', CheckboxType::class, array(
+                'label'    => 'Шукати по тегам запитів',
+                'required' => false,
+            ));
     }
 
     /**

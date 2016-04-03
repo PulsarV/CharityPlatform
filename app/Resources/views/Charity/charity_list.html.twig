@@ -21,7 +21,7 @@
             <div class="blog-content">
                 <a href="{{ path('charity_show', {'slug': charity.slug}) }}"><h3>{{ charity.title }}</h3></a>
                 {% include ':Charity:charity_header.html.twig' %}
-                <p>{{ charity.content|slice(0, 500) }}</p>
+                <p>{{ charity.content|slice(0, 500)|raw }}</p>
                 <a class="btn btn-default" href="{{ path('charity_show', {'slug': charity.slug}) }}">Читати більше <i class="fa fa-angle-right"></i></a>
             </div>
         </div>

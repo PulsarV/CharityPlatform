@@ -2,10 +2,13 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Form\Common\FindCharityType;
+use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\Form\Form;
 
 class CharityManager
 {
@@ -30,6 +33,10 @@ class CharityManager
         $this->findedCharitiesOnPage = $findedCharitiesOnPage;
     }
 
+    /**
+     * @param $param
+     * @param $value
+     */
     public function configShow($param, $value)
     {
         switch($param) {
@@ -48,6 +55,14 @@ class CharityManager
         return;
     }
 
+    /**
+     * @param $filterName
+     * @param $filterValue
+     * @param $sortMode
+     * @param $page
+     * @param $itemsPerPage
+     * @return Pagerfanta
+     */
     public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
         if ($filterName == '') {
@@ -88,25 +103,53 @@ class CharityManager
         return $pagerfanta;
     }
 
+    /**
+     * @param $criteria
+     * @param $searchQuery
+     * @param $page
+     * @return Pagerfanta
+     */
     public function getFindCharityListPaginated($criteria, $searchQuery, $page)
     {
+        $elasticaQuery = new \Elastica\Query\QueryString();
+        $elasticaQuery->setParam('query', $searchQuery);
+        $elasticaQuery->setDefaultOperator('AND');
 
-        if ($criteria == '') {
-            new \Exception('Щось пішло не так');
-        }
-        if ($searchQuery == '') {
-            new \Exception('Щось пішло не так');
-        }
-        if (!in_array($criteria, ['author', 'category', 'content', 'title'])) {
-            new \Exception('Щось пішло не так');
-        }
+        $fieldsArray = explode('-', $criteria);
+        $fieldsArray = str_replace('user', 'user.username', $fieldsArray);
+        $fieldsArray = str_replace('category', 'category.title', $fieldsArray);
+        $fieldsArray = str_replace('tags', 'tags.tagName', $fieldsArray);
+        $elasticaQuery->setParam('fields', $fieldsArray);
 
-// тут повинно чимось типу switch() вибирати тип фільтру на основі $criteria
-
-        $pagerfanta = $this->finder->findPaginated($searchQuery);
+        $pagerfanta = $this->finder->findPaginated($elasticaQuery);
         $pagerfanta->setMaxPerPage($this->findedCharitiesOnPage);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
+    }
+
+
+    /**
+     * @param Form $form
+     * @return string
+     */
+    public function generateCriteria(Form $form)
+    {
+        $criteriaArray = array('title');
+
+        if ($form->get('contentCriteria')->getData()) {
+            $criteriaArray[] = 'content';
+        }
+        if ($form->get('authorCriteria')->getData()) {
+            $criteriaArray[] = 'user';
+        }
+        if ($form->get('categoryCriteria')->getData()) {
+            $criteriaArray[] = 'category';
+        }
+        if ($form->get('tagsCriteria')->getData()) {
+            $criteriaArray[] = 'tags';
+        }
+
+        return implode('-', $criteriaArray);
     }
 }
