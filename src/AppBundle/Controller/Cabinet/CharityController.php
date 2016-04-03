@@ -67,7 +67,7 @@ class CharityController extends Controller
                     $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                     $uploadableManager->markEntityToUpload($charity, $charity->getBanner());
                 } else {
-                    $charity->setBanner('standart_banner.jpg');
+                    $charity->setBanner('standart_banner.gif');
                 }
                 $em->flush();
 
