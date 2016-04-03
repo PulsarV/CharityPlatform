@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
-class BaseTest extends WebTestCase
+class TestBase extends WebTestCase
 {
     /** @var Client */
     protected $client = null;

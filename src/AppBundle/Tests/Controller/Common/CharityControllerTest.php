@@ -2,9 +2,9 @@
 
 namespace AppBundle\Tests\Controller\Common;
 
-use AppBundle\Tests\BaseTest;
+use AppBundle\Tests\TestBase;
 
-class CharityControllerTest extends BaseTest
+class CharityControllerTest extends TestBase
 {
     public function testIndex()
     {
