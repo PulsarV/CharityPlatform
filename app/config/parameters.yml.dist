@@ -5,10 +5,11 @@ parameters:
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     CharityPlatform
+    database_name_test:     CharityPlatform_test
     database_user:     root
     database_password: ~
     # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
+    # database_path: "%kernel.root_dir%/../../src/AppBundle/Tests/DB/data.db3"
 
     mailer_transport:  gmail
     mailer_host:       smtp.gmail.com

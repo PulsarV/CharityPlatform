@@ -2,9 +2,9 @@
 
 namespace AppBundle\Tests\Controller\Common;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Tests\BaseTest;
 
-class CharityControllerTest extends WebTestCase
+class CharityControllerTest extends BaseTest
 {
     public function testIndex()
     {
