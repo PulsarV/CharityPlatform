@@ -7,12 +7,14 @@ use AppBundle\Entity\Person;
 use AppBundle\Form\Security\LoginModel;
 use AppBundle\Form\Security\RegisterOrganizationType;
 use AppBundle\Form\Security\LoginType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\Security\RegisterPersonType;
+use AppBundle\Form\Security\RegistrationType;
 
 class SecurityController extends Controller
 {
@@ -46,12 +48,43 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/register", name="register")
+     * @Route("/registration", name="registration")
+     * @Method({"GET","POST"})
      * @Template()
      */
-    public function registerAction()
+    public function registrationAction(Request $request)
     {
-        return [];
+        $registrationForm = $this->createForm(RegistrationType::class);
+
+        if ($request->getMethod() == 'POST') {
+            $registrationForm->handleRequest($request);
+
+            if ($registrationForm->isValid()) {
+
+                if ($registrationForm->get('user_selector')->getData() == 'person') {
+                    $user = new Person();
+                } elseif ($registrationForm->get('user_selector')->getData() == 'organization') {
+                    $user = new Organization();
+                } else {
+                    $this->createNotFoundException();
+                }
+
+                $user->setUsername($registrationForm->get('username')->getData());
+                $user->setPassword('12345678');
+                $user->setTemporaryPassword('12345678');
+                $user->setEmail($registrationForm->get('email')->getData());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                return $this->redirectToRoute('index_page');
+            }
+        }
+
+        return [
+            'registration_form' => $registrationForm->createView(),
+        ];
     }
 
     /**

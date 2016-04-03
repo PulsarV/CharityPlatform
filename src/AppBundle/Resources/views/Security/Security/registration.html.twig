@@ -1,0 +1,23 @@
+{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+{% form_theme registration_form 'bootstrap_3_layout.html.twig' %}
+
+{% block content %}
+    {{ form_start(registration_form) }}
+        {% embed '::Panel/save_panel.html.twig'%}
+            {% block panel_title %}Реєстрація нового користувача{% endblock %}
+            {% block panel_body %}
+                {{ form_widget(registration_form.username) }}
+                {{ form_errors(registration_form.username) }}
+                {% for plainPassword in registration_form.plainPassword %}
+                    {{ form_widget(plainPassword) }}
+                    {{ form_errors(plainPassword) }}
+                {% endfor %}
+                {{ form_widget(registration_form.email) }}
+                {{ form_errors(registration_form.email) }}
+                {{ form_widget(registration_form.user_selector) }}
+            {% endblock %}
+            {% block submit_button %}Продовжити{% endblock %}
+        {% endembed %}
+        {{ form_rest(registration_form) }}
+    {{ form_end(registration_form) }}
+{% endblock %}

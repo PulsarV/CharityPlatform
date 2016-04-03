@@ -36,12 +36,16 @@ abstract class User implements  UserInterface, \Serializable
     protected $id;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
+     * @Assert\NotBlank(
+     *     groups={"registration"},
+     *     message = "Username can not be blank"
+     * )
      * @Assert\Length(
-     *      min = 4,
-     *      max = 16,
-     *      minMessage = "Username can not be less than {{ limit }}!",
-     *      maxMessage = "Username can not be more than {{ limit }}!"
+     *     groups={"registration"},
+     *     min = 3,
+     *     max = 16,
+     *     minMessage = "Username can not be less than {{ limit }} chars",
+     *     maxMessage = "Username can not be more than {{ limit }} chars"
      * )
      * @ORM\Column(type="string", length=25, unique=true)
      */
@@ -53,15 +57,36 @@ abstract class User implements  UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
-     * @Assert\Length(max = 4096)
+     * @ORM\Column(type="string", length=64)
+     */
+    private $temporaryPassword;
+
+    /**
+     * @Assert\NotBlank(
+     *     groups={"registration"},
+     *     message = "Password can not be blank"
+     * )
+     * @Assert\Length(
+     *     groups={"registration"},
+     *     min = 8,
+     *     max = 32,
+     *     minMessage = "Password can not be less than {{ limit }} chars",
+     *     maxMessage = "Password can not be more than {{ limit }} chars"
+     * )
      */
     private $plainPassword;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
-     * @Assert\Email()
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank(
+     *     groups={"registration"},
+     *     message = "Email can not be blank"
+     * )
+     * @Assert\Email(
+     *     groups={"registration"},
+     *     message = "The email '{{ value }}' is not a valid email",
+     *     checkMX = true
+     * )
+     * @ORM\Column(type="string", length=129, unique=true)
      */
     private $email;
 
@@ -75,7 +100,10 @@ abstract class User implements  UserInterface, \Serializable
     public $avatarFileName;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @ORM\Column(type="string", length=60)
      */
     private $role;
@@ -92,12 +120,15 @@ abstract class User implements  UserInterface, \Serializable
 
 
     /**
-     * @Assert\Type(type="string")
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @Assert\Length(
      *      min = 10,
      *      max = 20,
-     *      minMessage = "Phone number can not be less than {{ limit }}!",
-     *      maxMessage = "Phone number can not be more than {{ limit }}!"
+     *      minMessage = "Phone number can not be less than {{ limit }}",
+     *      maxMessage = "Phone number can not be more than {{ limit }}"
      * )
      * @ORM\Column(type="string", length=20, nullable=true)
      */
@@ -108,11 +139,10 @@ abstract class User implements  UserInterface, \Serializable
      */
     private $categories;
 
-
     /**
      * @Assert\Type(
      *     type="bool",
-     *     message="The value {{ value }} is not a valid {{ type }}."
+     *     message="The value {{ value }} is not a valid {{ type }}"
      * )
      * @ORM\Column(type="boolean")
      */
@@ -140,15 +170,23 @@ abstract class User implements  UserInterface, \Serializable
 
 
     /**
-     * @Assert\Type(type="bool")
+     * @Assert\Type(
+     *     type="bool",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @ORM\Column(type="boolean")
      */
     private $isActive;
 
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @Assert\NotBlank(
+     *     message = "cautionCount can not be blank"
+     * )
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @ORM\Column(type="integer")
      */
     private $cautionCount;
@@ -173,6 +211,8 @@ abstract class User implements  UserInterface, \Serializable
         $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
+        $this->showOtherCategories = false;
+        $this->role = 'ROLE_USER';
     }
 
     /**
@@ -221,6 +261,22 @@ abstract class User implements  UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTemporaryPassword()
+    {
+        return $this->temporaryPassword;
+    }
+
+    /**
+     * @param mixed $temporaryPassword
+     */
+    public function setTemporaryPassword($temporaryPassword)
+    {
+        $this->temporaryPassword = $temporaryPassword;
     }
 
     /**

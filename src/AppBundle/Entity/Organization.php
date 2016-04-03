@@ -12,7 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Organization extends User
 {
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Organization name can not be blank"
+     * )
      * @Assert\Length(
      *      min = 4,
      *      max = 40,
@@ -29,7 +31,9 @@ class Organization extends User
     private $organizationDocuments;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Organization activity profile can not be blank"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $activityProfile;

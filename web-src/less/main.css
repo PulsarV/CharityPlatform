@@ -1309,3 +1309,9 @@ ul.cabinet-pagination > li:hover > a {
   font-weight: 400;
   padding-top: 10px;
 }
+.help-block {
+  margin-top: -10px;
+}
+.help-block li {
+  color: #9f191f;
+}
