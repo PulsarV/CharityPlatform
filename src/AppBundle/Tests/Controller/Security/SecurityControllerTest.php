@@ -34,10 +34,14 @@ class SecurityControllerTest extends TestBase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-//    public function testShowProfile()
-//    {
-//        $client = static::createClient();
-//        $client->request('GET', '/login');
-//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//    }
+    public function testShowProfile()
+    {
+        $client = static::createClient();
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $slug = $em
+            ->getRepository('AppBundle:User')
+            ->findOneBy([])->getSlug();
+        $client->request('GET', "/profile/{$slug}");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }
