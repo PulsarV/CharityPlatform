@@ -4,24 +4,86 @@ namespace AppBundle\Controller\Security;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
+use AppBundle\Form\Security\LoginModel;
 use AppBundle\Form\Security\RegisterOrganizationType;
+use AppBundle\Form\Security\LoginType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\Security\RegisterPersonType;
+use AppBundle\Form\Security\RegistrationType;
 
 class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
      * @Template()
-     * @return Response
      */
     public function loginAction()
     {
+        $loginForm = $this->createForm(LoginType::class, new LoginModel(true), [
+            'action' => $this->generateUrl('login_check')
+        ]);
 
+        return [
+            'login_form' => $loginForm->createView()
+        ];
+    }
+
+    /**
+     * @Template()
+     */
+    public function embeddedLoginFormAction()
+    {
+        $loginForm = $this->createForm(LoginType::class, new LoginModel(true), [
+            'action' => $this->generateUrl('login_check')
+        ]);
+
+        return [
+            'login_form' => $loginForm->createView()
+        ];
+    }
+
+    /**
+     * @Route("/registration", name="registration")
+     * @Method({"GET","POST"})
+     * @Template()
+     */
+    public function registrationAction(Request $request)
+    {
+        $registrationForm = $this->createForm(RegistrationType::class);
+
+        if ($request->getMethod() == 'POST') {
+            $registrationForm->handleRequest($request);
+
+            if ($registrationForm->isValid()) {
+
+                $this->get('app.user_manager')->createUser(
+                    $registrationForm->get('userSelector')->getData(),
+                    $registrationForm->get('username')->getData(),
+                    $registrationForm->get('plainPassword')->getData(),
+                    $registrationForm->get('email')->getData()
+                );
+
+                return $this->redirectToRoute('registration_complete');
+            }
+        }
+
+        return [
+            'registration_form' => $registrationForm->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/complete-registration", name="registration_complete")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function registrationCompleteAction(Request $request)
+    {
         return [
 
         ];
@@ -102,20 +164,6 @@ class SecurityController extends Controller
         }
         return [
             'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     * @Template()
-     * @param Request $request
-     * @return Response
-     */
-    public function logoutAction(Request $request)
-    {
-
-        return [
-
         ];
     }
 
