@@ -17,3 +17,8 @@ To install Elastic Search, follow these steps:
 -------------------------------
 
 Use it: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-14-04
+
+If images don't load on pages, you can try to install the imagick driver:
+-------------------------------
+
+sudo apt-get install php5-imagick

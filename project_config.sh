@@ -48,6 +48,7 @@ case "$Keypress" in
     echo ====================
     rm -f ./web/uploads/charities/*.jpg
     rm -f ./web/uploads/users/*.jpg
+    rm -R -- ./web/media/*/
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
     echo
     echo CREATING ELASTICA INDEXES ...
@@ -89,6 +90,7 @@ case "$Keypress" in
     echo ====================
     rm -f ./web/uploads/charities/*.jpg
     rm -f ./web/uploads/users/*.jpg
+    rm -R -- ./web/media/*/
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
     echo
     echo RECREATING ELASTICA INDEXES ...
@@ -111,6 +113,7 @@ case "$Keypress" in
     echo ====================
     rm -f ./web/uploads/charities/*.jpg
     rm -f ./web/uploads/users/*.jpg
+    rm -R -- ./web/media/*/
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
 ;;
 6)
@@ -131,6 +134,7 @@ case "$Keypress" in
     echo ====================
     rm -f ./web/uploads/charities/*.jpg
     rm -f ./web/uploads/users/*.jpg
+    rm -R -- ./web/media/*/
     ./app/console hautelook_alice:doctrine:fixtures:load --no-interaction
 ;;
 8)

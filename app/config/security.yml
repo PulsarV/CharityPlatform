@@ -1,24 +1,69 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/book/security.html
 security:
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 13
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 13
+
     providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
+
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    SuperAdmin:
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
+                        roles: 'ROLE_SUPER_ADMIN'
+                    Test_Admin:
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
+                        roles: 'ROLE_ADMIN'
+                    Test_Moderator:
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
+                        roles: 'ROLE_MODERATOR'
+                    Test_User:
+                        password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
+                        roles: 'ROLE_USER'
+
+        user_db:
+            entity:
+                class: AppBundle:User
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        secured_area:
             anonymous: ~
-            # activate different ways to authenticate
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+            form_login:
+                provider: chain_provider
+                login_path: /login
+                check_path: /login_check
+                username_parameter: login[username]
+                password_parameter: login[password]
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 60
+                path: /
+                always_remember_me: false
+                remember_me_parameter: login[remember_me]
+
+            logout:
+                path:   /logout
+                target: /
+
+    access_control:
+        - { path: ^/cabinet, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+    role_hierarchy:
+        ROLE_MODERATOR: ROLE_USER
+        ROLE_ADMIN: ROLE_MODERATOR
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

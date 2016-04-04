@@ -12,31 +12,37 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Person extends User
 {
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Firstname can not be blank"
+     * )
      * @Assert\Length(
      *      min = 2,
      *      max = 16,
-     *      minMessage = "Organization name can not be less than {{ limit }}!",
-     *      maxMessage = "Organization name can not be more than {{ limit }}!"
+     *      minMessage = "Firstname can not be less than {{ limit }}!",
+     *      maxMessage = "Firstname can not be more than {{ limit }}!"
      * )
      * @ORM\Column(type="string", length=25)
      */
     private $firstname;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Lastname can not be blank"
+     * )
      * @Assert\Length(
      *      min = 2,
      *      max = 16,
-     *      minMessage = "Organization name can not be less than {{ limit }}!",
-     *      maxMessage = "Organization name can not be more than {{ limit }}!"
+     *      minMessage = "Lastname can not be less than {{ limit }}!",
+     *      maxMessage = "Lastname can not be more than {{ limit }}!"
      * )
      * @ORM\Column(type="string", length=25)
      */
     private $lastname;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Birthday can not be blank"
+     * )
      * @Assert\Type(
      *      type="string"
      * )

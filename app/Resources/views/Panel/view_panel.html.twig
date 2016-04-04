@@ -1,0 +1,9 @@
+{% extends ':Panel:base_panel.html.twig' %}
+
+{% block panel_footer %}
+    {{ parent() }}
+    <div class="btn-group btn-group-form pull-right" role="group">
+        {% spaceless %}<a href="{%- block edit_button_url -%}{%- endblock -%}" class="btn btn-warning">{%- block edit_button -%}Редагувати{%- endblock -%}</a>{% endspaceless %}
+        {% spaceless %}<a href="{%- block delete_button_url -%}{%- endblock -%}" class="btn btn-danger">{%- block delete_button -%}Видалити{%- endblock -%}</a>{% endspaceless %}
+    </div>
+{% endblock %}

@@ -15,8 +15,8 @@ parameters:
     mailer_host:       smtp.gmail.com
     mailer_port:       465
     mailer_encryption: ssl
-    mailer_user:       gh.charity.supp@gmail.com
-    mailer_password:   123Gh123
+    mailer_user:       ~
+    mailer_password:   ~
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
