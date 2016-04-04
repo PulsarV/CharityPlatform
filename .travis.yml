@@ -14,4 +14,4 @@ before_script:
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - app/console cache:warmup --env=test --quiet
 script:
-  - ./bin/phpunit -c app
+  - phpunit -c app
