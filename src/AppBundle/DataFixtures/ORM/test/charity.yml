@@ -2,8 +2,8 @@ AppBundle\Entity\Category:
   category{1..2}:
     title(unique): <(rtrim($fake('sentence'), '.'))>
     importance: <numberBetween(0, 10)>
-    user: <numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*
-    followedByUsers: <numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*
+    user: "<numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*"
+    followedByUsers: "<numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*"
 
 AppBundle\Entity\Organization:
   organization{1..2}:
@@ -48,14 +48,14 @@ AppBundle\Entity\Charity:
     title: <(rtrim($fake('sentence'), '.'))>
     content: <paragraph(100)>
     primaryUser: null
-    category: @category*
+    category: '@category*'
     ratingCount: <numberBetween(0, 10)>
     viewCount: <numberBetween(5, 50)>
     needMoney: <numberBetween(1000, 30000)>
     collectedMoney: <numberBetween(500, 1000)>
     video: <url()>
     isActive: <boolean()>
-    user: @<randomElement(array('person', 'organization'))>*
+    user: "@<randomElement(array('person', 'organization'))>*"
 
 AppBundle\Entity\CharityImage:
   chimage{1..12}:
@@ -67,11 +67,11 @@ AppBundle\Entity\CharityImage:
 AppBundle\Entity\Tag:
   tag{1..8}:
     tagName(unique): <word()>
-    charities: <numberBetween(1, 20)>x @charity*
+    charities: "<numberBetween(1, 20)>x @charity*"
 
 AppBundle\Entity\Comment:
   comment{1..24}:
     content: <paragraph(3)>
     rating: <numberBetween(0, 10)>
     charity: '@charity*'
-    user: @<randomElement(array('person', 'organization'))>*
+    user: "@<randomElement(array('person', 'organization'))>*"
