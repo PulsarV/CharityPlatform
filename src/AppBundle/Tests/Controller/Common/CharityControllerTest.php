@@ -14,7 +14,7 @@ class CharityControllerTest extends TestBase
 
         $crawler = $client->request('GET', '/charities');
         $heading = $crawler->filter('h1')->eq(0)->text();
-        $this->assertEquals('Запити', $heading);
+        $this->assertEquals('Перелік запитів', $heading);
         $this->assertEquals(1, $crawler->filter('h1')->count());
 
         $text2 = $crawler->filter('h3')->first()->text();

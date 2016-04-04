@@ -31,7 +31,7 @@ class SecurityControllerTest extends TestBase
     {
         $client = static::createClient();
         $client->request('GET]', '/logout');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testShowProfile()
