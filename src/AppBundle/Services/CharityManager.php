@@ -2,7 +2,9 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\Charity;
 use AppBundle\Form\Common\FindCharityType;
+use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
@@ -15,6 +17,7 @@ class CharityManager
     protected $em;
     protected $finder;
     protected $menuManager;
+    protected $uploadableManager;
     protected $findedCharitiesOnPage;
 
 
@@ -25,11 +28,17 @@ class CharityManager
      * @param MenuManager $menuManager
      * @param $findedCharitiesOnPage
      */
-    public function __construct(ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager, $findedCharitiesOnPage)
-    {
+    public function __construct(
+        ObjectManager $em,
+        TransformedFinder $finder,
+        MenuManager $menuManager,
+        UploadableManager $uploadableManager,
+        $findedCharitiesOnPage
+    ) {
         $this->em = $em;
         $this->finder = $finder;
         $this->menuManager = $menuManager;
+        $this->uploadableManager = $uploadableManager;
         $this->findedCharitiesOnPage = $findedCharitiesOnPage;
     }
 
@@ -151,5 +160,14 @@ class CharityManager
         }
 
         return implode('-', $criteriaArray);
+    }
+
+    public function setBanner(Charity $charity)
+    {
+        if ($charity->getBanner() !== null) {
+            $this->uploadableManager->markEntityToUpload($charity, $charity->getBanner());
+        } else {
+            $charity->setBanner('standart_banner.gif');
+        }
     }
 }
