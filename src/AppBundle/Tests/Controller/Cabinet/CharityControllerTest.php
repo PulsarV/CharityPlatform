@@ -14,6 +14,8 @@ class CharityControllerTest extends TestBase
         ]);
         $client->request('GET', '/charity-manager/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\CharityController::indexCharityAction', $client->getRequest()->attributes->get('_controller'));
+
     }
 
     public function testShowCharity()
@@ -28,6 +30,8 @@ class CharityControllerTest extends TestBase
             ->findOneBy([])->getSlug();
         $client->request('GET', "/charity-manager/{$slug}");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\CharityController::showCharityAction', $client->getRequest()->attributes->get('_controller'));
+
     }
 
     public function testNewCharity()
@@ -38,6 +42,8 @@ class CharityControllerTest extends TestBase
         ]);
         $client->request('POST', '/charity-new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\CharityController::newCharityAction', $client->getRequest()->attributes->get('_controller'));
+
     }
 
     public function testDeleteCharity()
@@ -52,6 +58,8 @@ class CharityControllerTest extends TestBase
             ->findOneBy([])->getSlug();
         $client->request('GET', "/charities/{$slug}/delete");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\CharityController::deleteCharityAction', $client->getRequest()->attributes->get('_controller'));
+
     }
 
     public function testEditCharity()
@@ -66,5 +74,7 @@ class CharityControllerTest extends TestBase
             ->findOneBy([])->getSlug();
         $client->request('GET', "/charities/{$slug}/edit");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\CharityController::editCharityAction', $client->getRequest()->attributes->get('_controller'));
+
     }
 }

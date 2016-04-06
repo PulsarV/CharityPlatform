@@ -15,6 +15,8 @@ class ProfileControllerTest extends TestBase
             ->findOneBy([])->getSlug();
         $client->request('DELETE', "/users/{$slug}/delete");
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\ProfileController::deleteUserAction', $client->getRequest()->attributes->get('_controller'));
+
     }
 
     public function testEditUser()
@@ -26,5 +28,6 @@ class ProfileControllerTest extends TestBase
             ->findOneBy([])->getSlug();
         $client->request('GET', "/users/{$slug}/edit");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Cabinet\ProfileController::editUserAction', $client->getRequest()->attributes->get('_controller'));
     }
 }

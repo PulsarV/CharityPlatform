@@ -11,6 +11,7 @@ class SecurityControllerTest extends TestBase
         $client = static::createClient();
         $client->request('GET', '/login');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Security\SecurityController::loginAction', $client->getRequest()->attributes->get('_controller'));
     }
 
     public function testRegisterPerson()
@@ -18,6 +19,7 @@ class SecurityControllerTest extends TestBase
         $client = static::createClient();
         $client->request('GET', '/register-person');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Security\SecurityController::registerPersonAction', $client->getRequest()->attributes->get('_controller'));
     }
 
     public function testRegisterOrganization()
@@ -25,6 +27,7 @@ class SecurityControllerTest extends TestBase
         $client = static::createClient();
         $client->request('GET', '/register-organization');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Security\SecurityController::registerOrganizationAction', $client->getRequest()->attributes->get('_controller'));
     }
 
     public function testLogout()
@@ -49,5 +52,6 @@ class SecurityControllerTest extends TestBase
             ->findOneBy([])->getSlug();
         $client->request('GET', "/profile/{$slug}");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('AppBundle\Controller\Security\SecurityController::showProfileAction', $client->getRequest()->attributes->get('_controller'));
     }
 }
