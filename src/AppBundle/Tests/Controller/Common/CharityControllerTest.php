@@ -20,6 +20,8 @@ class CharityControllerTest extends TestBase
         $text2 = $crawler->filter('h3')->first()->text();
         $this->assertEquals("Найважливіші на думку спільноти запити", $text2);
         $this->assertEquals('AppBundle\Controller\Common\CharityController::indexCharityAction', $client->getRequest()->attributes->get('_controller'));
+        $client->request('GET', "/charities/0");
+        $this->assertTrue(in_array($client->getResponse()->getStatusCode(), [404]));
     }
 
     public function testShowCharity()
@@ -35,7 +37,7 @@ class CharityControllerTest extends TestBase
             1,
             $crawler->filter('h1')->count()
         );
-         $this->assertEquals('AppBundle\Controller\Common\CharityController::showCharityAction', $client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('AppBundle\Controller\Common\CharityController::showCharityAction', $client->getRequest()->attributes->get('_controller'));
     }
 
     public function testFindCharitiesForm()
@@ -44,5 +46,7 @@ class CharityControllerTest extends TestBase
         $client->request('POST', '/charities-find-form');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals('AppBundle\Controller\Common\CharityController::findCharitiesFormAction', $client->getRequest()->attributes->get('_controller'));
+        $client->request('GET', "/charities-find-form");
+        $this->assertTrue(in_array($client->getResponse()->getStatusCode(), [405]));
     }
 }

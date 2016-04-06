@@ -16,7 +16,6 @@ class ProfileControllerTest extends TestBase
         $client->request('DELETE', "/users/{$slug}/delete");
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertEquals('AppBundle\Controller\Cabinet\ProfileController::deleteUserAction', $client->getRequest()->attributes->get('_controller'));
-
     }
 
     public function testEditUser()
