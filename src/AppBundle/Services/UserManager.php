@@ -37,7 +37,7 @@ class UserManager
         } elseif ($userSelector == 'organization') {
             $user = new Organization();
         } else {
-            throw new \Exception('Wrong parametrs for the creating user.');
+            throw new \Exception('Wrong parametrs for the user creating.');
         }
 
         $user->setUsername($username);
