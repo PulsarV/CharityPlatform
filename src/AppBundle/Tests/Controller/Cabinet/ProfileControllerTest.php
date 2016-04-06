@@ -8,13 +8,13 @@ class ProfileControllerTest extends TestBase
 {
     public function testDeleteUser()
     {
-//        $client = static::createClient();
-//        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-//        $slug = $em
-//            ->getRepository('AppBundle:User')
-//            ->findOneBy([])->getSlug();
-//        $client->request('DELETE', "/users/{$slug}/delete");
-//        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $client = static::createClient();
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $slug = $em
+            ->getRepository('AppBundle:User')
+            ->findOneBy([])->getSlug();
+        $client->request('DELETE', "/users/{$slug}/delete");
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testEditUser()
