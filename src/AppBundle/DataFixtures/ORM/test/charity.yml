@@ -7,7 +7,7 @@ AppBundle\Entity\Category:
 
 AppBundle\Entity\Organization:
   organization1:
-    username: "User"
+    username: User
     password: user
     email: user@charity.ua
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
@@ -26,7 +26,7 @@ AppBundle\Entity\Organization:
 
 AppBundle\Entity\Person:
   person1:
-    username: "Admin"
+    username: Admin
     password: admin
     email: admin@charity.ua
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>

@@ -43,12 +43,4 @@ class CharityControllerTest extends TestBase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
     }
-
-    public function testFindCharitiesResults()
-    {
-//        $client = static::createClient();
-//        $client->request('GET', '/');
-//        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-    }
-
 }
