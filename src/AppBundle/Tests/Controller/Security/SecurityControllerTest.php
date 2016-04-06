@@ -29,14 +29,20 @@ class SecurityControllerTest extends TestBase
 
     public function testLogout()
     {
-        $client = static::createClient();
+        $client = static::createClient(array(), [
+            'PHP_AUTH_USER' => 'user@charity.ua',
+            'PHP_AUTH_PW'   => 'user',
+        ]);
         $client->request('GET', '/logout');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testShowProfile()
     {
-        $client = static::createClient();
+        $client = static::createClient(array(), [
+            'PHP_AUTH_USER' => 'user@charity.ua',
+            'PHP_AUTH_PW'   => 'user',
+        ]);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $slug = $em
             ->getRepository('AppBundle:User')
