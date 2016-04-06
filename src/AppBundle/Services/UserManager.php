@@ -30,28 +30,11 @@ class UserManager
         $this->uploadableManager = $uploadableManager;
     }
 
-    public function createUser($userSelector, $username, $plainPassword, $email)
-    {
-        if ($userSelector == 'person') {
-            $user = new Person();
-        } elseif ($userSelector == 'organization') {
-            $user = new Organization();
-        } else {
-            throw new \Exception('Wrong parametrs for the user creating.');
-        }
-
-        $user->setUsername($username);
-        $password = $this->passwordEncoder->encodePassword($user, $plainPassword);
-        $user->setPassword($password);
-        $user->setTemporaryPassword($user->getPassword());
-        $user->setEmail($email);
-
-        $this->em->persist($user);
-        $this->em->flush();
-    }
-
-    public function setAvatar(User $user, $avatar = 'standart_avatar.gif', array $files = array())
-    {
+    public function setAvatar(
+        User $user,
+        $avatar = 'standart_avatar.gif',
+        array $files = array('avatarFileName' => null)
+    ) {
         if ($files['avatarFileName'] !== null || $user->getAvatarFileName() !== null) {
             $this->uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
         } else {

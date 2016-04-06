@@ -1293,6 +1293,9 @@ ul.cabinet-pagination > li:hover > a {
 .base-panel .panel-body input {
   margin: 0 0 20px;
 }
+.base-panel .panel-body input[type="checkbox"] {
+  margin-left: -20px;
+}
 .base-panel .panel-footer {
   padding: 10px 10px 10px;
 }

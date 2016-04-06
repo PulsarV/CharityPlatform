@@ -49,31 +49,13 @@ class SecurityController extends Controller
 
     /**
      * @Route("/registration", name="registration")
-     * @Method({"GET","POST"})
+     * @Method({"GET"})
      * @Template()
      */
     public function registrationAction(Request $request)
     {
-        $registrationForm = $this->createForm(RegistrationType::class);
-
-        if ($request->getMethod() == 'POST') {
-            $registrationForm->handleRequest($request);
-
-            if ($registrationForm->isValid()) {
-
-                $this->get('app.user_manager')->createUser(
-                    $registrationForm->get('userSelector')->getData(),
-                    $registrationForm->get('username')->getData(),
-                    $registrationForm->get('plainPassword')->getData(),
-                    $registrationForm->get('email')->getData()
-                );
-
-                return $this->redirectToRoute('registration_complete');
-            }
-        }
-
         return [
-            'registration_form' => $registrationForm->createView(),
+
         ];
     }
 
@@ -104,9 +86,9 @@ class SecurityController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-//                $password = $this->get('security.password_encoder')
-//                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($user->getPlainPassword());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
@@ -114,7 +96,7 @@ class SecurityController extends Controller
                 $em->flush();
 
                 return $this->redirectToRoute(
-                    "registration_person"
+                    "registration_complete"
                 );
             }
         }
@@ -138,9 +120,9 @@ class SecurityController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-//                $password = $this->get('security.password_encoder')
-//                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($user->getPlainPassword());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
@@ -148,7 +130,7 @@ class SecurityController extends Controller
                 $em->flush();
 
                 return $this->redirectToRoute(
-                    "registration_organization"
+                    "registration_complete"
                 );
             }
         }
