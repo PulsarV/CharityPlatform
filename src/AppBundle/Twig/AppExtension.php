@@ -88,7 +88,6 @@ class AppExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('page_title', [$this, 'getPageTitle']),
             new \Twig_SimpleFunction('all_categories', [$this, 'getAllCategories']),
-            new \Twig_SimpleFunction('bread_crumbs', [$this, 'getBreadCrumbs']),
             new \Twig_SimpleFunction('available_languages', [$this, 'getAvailableLanguages']),
             new \Twig_SimpleFunction('current_language', [$this, 'getCurrentLanguage']),
             new \Twig_SimpleFunction('available_cities', [$this, 'getAvailableCities']),
@@ -111,11 +110,6 @@ class AppExtension extends \Twig_Extension
     public function getAllCategories()
     {
         return $this->menuManager->getAllCategories();
-    }
-
-    public function getBreadCrumbs()
-    {
-        return $this->menuManager->getBreadCrumbs();
     }
 
     public function getAvailableLanguages()

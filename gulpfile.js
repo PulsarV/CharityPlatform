@@ -21,7 +21,7 @@ gulp.task('images-ico', function () {
  .pipe(gulp.dest('web/images/ico/'))
 });
 gulp.task('fonts', function () {
- return gulp.src(['web-src/fonts/*'])
+ return gulp.src(['web-src/fonts/*', 'bower_components/bootstrap/fonts/*.*'])
  .pipe(gulp.dest('web/fonts/'))
 });
 gulp.task('js', function() {

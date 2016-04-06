@@ -75,7 +75,10 @@ a:focus {
   min-width: 180px;
 }
 body > section {
-  padding: 50px 0 10px;
+  padding: 40px 0 10px;
+}
+body > section.emerald {
+  padding: 40px 0 20px;
 }
 .turquoise,
 .green-sea,
@@ -620,8 +623,8 @@ body > section {
 }
 #title h1 {
   margin: 0;
-  padding-top: 15px;
-  font-size: 36px;
+  padding-top: 40px;
+  font-size: 40px;
   font-weight: 300;
 }
 .center {
@@ -651,9 +654,9 @@ body > section {
   border: 0;
 }
 ul.breadcrumb {
-  margin-top: 10px;
-  margin-bottom: -20px;
-  margin-left: -15px;
+  /*margin-top: 10px;*/
+  /*margin-bottom: -20px;*/
+  /*margin-left: -15px;*/
   background: transparent;
 }
 ul.breadcrumb > li {
@@ -714,6 +717,10 @@ ul.tag-cloud li {
   border: 0;
   padding: 0;
   margin-top: -3px;
+  /**/
+  height: auto;
+  max-height: 40em;
+  overflow-x: hidden;
 }
 .navbar-inverse .navbar-nav .dropdown-menu > li > a {
   padding: 8px 15px;
@@ -1051,45 +1058,49 @@ ul.faq li > div h3 {
   margin-top: 150px;
   margin-bottom: 150px;
 }
+.emerald .lng-city-zone {
+  text-align: center;
+}
+.emerald .lng-menu,
+.emerald .city-menu {
+  line-height: 60px;
+}
+.emerald .city-menu button,
+.emerald .lng-menu button {
+  width: 200px;
+  border: 0;
+}
 .emerald .dropdown-menu {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #5cb85c;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   border: 0;
   padding: 0;
-  margin-top: 0px;
-  min-width: 50px;
+  margin-top: 10px;
+  width: 250px;
 }
 .emerald .dropdown-menu a {
   color: #fff;
   font-weight: 300;
 }
-.emerald .dropdown-menu > li:hover > a,
-.emerald .dropdown-menu > li:focus > a,
-.emerald .dropdown-menu > li.active > a {
-  background-color: rgba(0, 0, 0, 0.2);
+.emerald .profile-zone {
+  margin-top: -10px;
+  text-align: center;
 }
-.emerald .dropdown-toggle {
-  color: #fff;
+.emerald .profile-zone .user-name {
+  vertical-align: middle;
+  font-size: 36px;
   font-weight: 300;
 }
-.emerald .lng-menu,
-.emerald .city-menu {
-  padding-top: 25px;
-}
-.emerald .lng-menu .menu-title,
-.emerald .city-menu .menu-title {
-  font-weight: 500;
-}
-.emerald .city-menu .dropdown-menu {
-  min-width: 150px;
+.emerald .profile-zone .btn {
+  margin-top: 5px;
+  width: 200px;
 }
 .login-form {
   border: 0;
+  margin-bottom: -20px;
   background-color: transparent;
-  margin-top: 0px;
-  padding: 0px;
   display: inline-block;
 }
 .login-form .form-group {
@@ -1146,42 +1157,32 @@ ul.no-list-style {
 ul.no-list-style li {
   line-height: 28px;
 }
-.post-filter {
-  list-style: none;
-  padding: 0;
-  margin: 0 -20px 20px 0;
-}
-.post-filter > li {
-  display: inline-block;
-}
-.blog .dropdown {
+/*.post-filter {*/
+  /*list-style: none;*/
+  /*padding: 0;*/
+  /*margin: 0 -20px 20px 0;*/
+/*}*/
+/*.post-filter > li {*/
+  /*display: inline-block;*/
+/*}*/
+.blog .dropdown.filter-selector {
   margin-bottom: 40px;
 }
+.blog .dropdown.filter-selector button,
+.blog .dropdown.filter-selector button {
+  width: 500px;
+  border: 0;
+}
 .blog .dropdown-menu {
-  background-color: cadetblue;
+  background-color: #5bc0de;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   border: 0;
   padding: 0;
-  margin-top: 0;
-  min-width: 50px;
+  width: 500px;
 }
 .blog .dropdown-menu a {
-  color: #fff;
-  font-weight: 300;
-}
-.blog .dropdown-menu > li:hover > a,
-.blog .dropdown-menu > li:focus > a,
-.blog .dropdown-menu > li.active > a {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-.blog .dropdown-toggle {
-  color: #fff;
-  font-weight: 300;
-}
-.blog .dropdown > button {
-  text-align: left;
   color: #fff;
   font-weight: 400;
 }
@@ -1193,11 +1194,11 @@ ul.no-list-style li {
   margin-bottom: 30px;
 }
 .btn-form {
-  margin: 10px 50px 10px 50px;
+  margin: 10px 30px 10px 30px;
   width: 150px;
 }
 .btn-group-form {
-  margin: 10px 50px 10px 50px;
+  margin: 10px 30px 10px 30px;
 }
 .btn-group > .btn-form {
   margin: 0;
@@ -1209,8 +1210,8 @@ ul.no-list-style li {
   overflow: hidden;
 }
 aside.cabinet-menu {
-  margin:  0 0 -1500px 0;
-  padding: 50px 20px 1500px 20px;
+  margin:  10px 0 -5000px 0;
+  padding: 50px 20px 5000px 20px;
   background-color: #f39c12;
 }
 .cabinet-menu a,
@@ -1285,4 +1286,32 @@ ul.cabinet-pagination > li:hover > a {
   padding: 10px 25px 5px;
   background-color: #fff;
   border-color: rgba(0, 0, 0, 0.3);
+}
+.base-panel .panel-body {
+  padding: 30px 30px;
+}
+.base-panel .panel-body input {
+  margin: 0 0 20px;
+}
+.base-panel .panel-footer {
+  padding: 10px 10px 10px;
+}
+.base-panel .panel-footer .btn {
+  width: 150px;
+}
+.base-panel .panel-footer .btn-group .btn {
+  width: 100px;
+}
+.big-login-form input[checked] {
+  margin-top: 16px;
+}
+.forgot-password {
+  font-weight: 400;
+  padding-top: 10px;
+}
+.help-block {
+  margin-top: -10px;
+}
+.help-block li {
+  color: #9f191f;
 }
