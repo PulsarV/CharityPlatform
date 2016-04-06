@@ -15,7 +15,6 @@ class TestBase extends WebTestCase
 {
     /** @var Client */
     protected $client = null;
-
     public function setUp()
     {
         $this->client = static::createClient();
@@ -44,18 +43,15 @@ class TestBase extends WebTestCase
         $application->run($input, new ConsoleOutput());
     }
 
-    /**
-     * @param $role
-     */
     protected function logIn($role)
     {
         $em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         $session = $this->client->getContainer()->get('session');
-        $user = $em
+        $admin = $em
             ->getRepository('AppBundle:User')
             ->findBy($role);
         $firewall = 'main';
-        $token = new UsernamePasswordToken($user[0]->getUsername(), null, $firewall, array($role));
+        $token = new UsernamePasswordToken($admin[0]->getUsername(), null, $firewall, array($role));
         $session->set('_security_' . $firewall, serialize($token));
         $session->save();
         $cookie = new Cookie($session->getName(), $session->getId());
