@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Form\Common;
 
 use Symfony\Component\Validator\Constraints as Assert;

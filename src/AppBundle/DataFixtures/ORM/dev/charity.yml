@@ -2,16 +2,16 @@ AppBundle\Entity\Category:
   category{1..20}:
     title(unique): <(rtrim($fake('sentence'), '.'))>
     importance: <numberBetween(0, 10)>
-    user: <numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*
-    followedByUsers: <numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*
+    user: "<numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*"
+    followedByUsers: "<numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*"
 
 AppBundle\Entity\Organization:
   organization{1..20}:
     username(unique): <firstName()>
-    password: <password()>
+    password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
-    role: <word()>
+    role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
     bankDetails: <paragraph(10)>
     address: <address()>
     phone: <phoneNumber()>
@@ -27,10 +27,10 @@ AppBundle\Entity\Organization:
 AppBundle\Entity\Person:
   person{1..20}:
     username(unique): <firstName()>
-    password: <password()>
+    password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
     avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
-    role: <word()>
+    role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
     bankDetails: <paragraph(10)>
     address: <address()>
     phone: <phoneNumber()>
@@ -48,14 +48,14 @@ AppBundle\Entity\Charity:
     title: <(rtrim($fake('sentence'), '.'))>
     content: <paragraph(100)>
     primaryUser: null
-    category: @category*
+    category: '@category*'
     ratingCount: <numberBetween(0, 10)>
     viewCount: <numberBetween(5, 50)>
     needMoney: <numberBetween(1000, 30000)>
     collectedMoney: <numberBetween(500, 1000)>
     video: <url()>
     isActive: <boolean()>
-    user: @<randomElement(array('person', 'organization'))>*
+    user: "@<randomElement(array('person', 'organization'))>*"
 
 AppBundle\Entity\CharityImage:
   chimage{1..120}:
@@ -67,11 +67,11 @@ AppBundle\Entity\CharityImage:
 AppBundle\Entity\Tag:
   tag{1..80}:
     tagName(unique): <word()>
-    charities: <numberBetween(1, 20)>x @charity*
+    charities: "<numberBetween(1, 20)>x @charity*"
 
 AppBundle\Entity\Comment:
   comment{1..240}:
     content: <paragraph(3)>
     rating: <numberBetween(0, 10)>
     charity: '@charity*'
-    user: @<randomElement(array('person', 'organization'))>*
+    user: "@<randomElement(array('person', 'organization'))>*"

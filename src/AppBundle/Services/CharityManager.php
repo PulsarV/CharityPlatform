@@ -12,24 +12,25 @@ use Symfony\Component\Form\Form;
 
 class CharityManager
 {
-    protected $container;
     protected $em;
     protected $finder;
     protected $menuManager;
+    protected $findedCharitiesOnPage;
+
 
     /**
      * CharityManager constructor.
-     * @param Container $container
      * @param ObjectManager $em
      * @param TransformedFinder $finder
      * @param MenuManager $menuManager
+     * @param $findedCharitiesOnPage
      */
-    public function __construct(Container $container, ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager)
+    public function __construct(ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager, $findedCharitiesOnPage)
     {
-        $this->container = $container;
         $this->em = $em;
         $this->finder = $finder;
         $this->menuManager = $menuManager;
+        $this->findedCharitiesOnPage = $findedCharitiesOnPage;
     }
 
     /**
@@ -79,16 +80,16 @@ class CharityManager
         }
         switch($filterName) {
             case 'none':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharities($sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesQuery($sortMode);
                 break;
             case 'user':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUser($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUserQuery($filterValue, $sortMode);
                 break;
             case 'category':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategory($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategoryQuery($filterValue, $sortMode);
                 break;
             case 'tag':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTag($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTagQuery($filterValue, $sortMode);
                 break;
             default:
                 new \Exception('Щось пішло не так');
@@ -121,7 +122,7 @@ class CharityManager
         $elasticaQuery->setParam('fields', $fieldsArray);
 
         $pagerfanta = $this->finder->findPaginated($elasticaQuery);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
+        $pagerfanta->setMaxPerPage($this->findedCharitiesOnPage);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
