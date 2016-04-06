@@ -24,7 +24,8 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "white-october/pagerfanta-bundle": "^1.0",
         "liip/imagine-bundle": "^1.5",
-        "friendsofsymfony/elastica-bundle": "^3.1"
+        "friendsofsymfony/elastica-bundle": "^3.1",
+        "hwi/oauth-bundle": "^0.4.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

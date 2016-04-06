@@ -187,3 +187,15 @@ fos_elastica:
                         provider: ~
                         listener: ~
                         finder: ~
+
+hwi_oauth:
+    firewall_names: [secured_area]
+
+    resource_owners:
+        vkontakte:
+            type: vkontakte
+            client_id: "%vkontakte_app_id%"
+            client_secret: "%vkontakte_app_secret%"
+            scope: "email"
+
+

@@ -29,3 +29,6 @@ parameters:
     app.cabinet_paginator_length: 5
     # Number of items on each page in cabinet
     app.cabinet_paginator_count_per_page: 15
+
+    vkontakte_app_id: ~
+    vkontakte_app_secret: ~
