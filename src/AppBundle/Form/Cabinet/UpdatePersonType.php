@@ -2,15 +2,13 @@
 
 namespace AppBundle\Form\Cabinet;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -51,7 +49,7 @@ class UpdatePersonType extends AbstractType
                 'label' => 'Телефон:',
                 'required' => false,
             ))
-            ->add('categories', 'entity', array(
+            ->add('categories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
@@ -62,7 +60,7 @@ class UpdatePersonType extends AbstractType
                 'label' => 'Отображать благотворительные запросы из других категорий?',
                 'required' => false,
             ))
-            ->add('followCategories', 'entity', array(
+            ->add('followCategories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
