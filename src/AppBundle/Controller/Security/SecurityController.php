@@ -28,8 +28,13 @@ class SecurityController extends Controller
             'action' => $this->generateUrl('login_check')
         ]);
 
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+
         return [
-            'login_form' => $loginForm->createView()
+            'login_form' => $loginForm->createView(),
+            'error' => $error
         ];
     }
 
@@ -167,7 +172,27 @@ class SecurityController extends Controller
     {
         $userManager = $this->get('app.user_manager');
         $redirect = $userManager->checkActivationCode($code);
-        return $this->redirectToRoute($redirect);
 
+        return $this->redirectToRoute($redirect);
+    }
+
+    /**
+     * @Route("/activation-success", name="activation_success")
+     * @Template()
+     * @return Response
+     */
+    public function activationSuccessAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/activation-fail", name="activation_fail")
+     * @Template()
+     * @return Response
+     */
+    public function activationFailAction()
+    {
+        return [];
     }
 }

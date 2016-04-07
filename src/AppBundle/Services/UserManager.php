@@ -67,7 +67,7 @@ class UserManager
 
         if ($user) {
             $user->setIsActive(true);
-            $user->setTemporaryPassword('');
+            $user->setTemporaryPassword(null);
             $this->em->flush();
 
             return 'activation_success';
@@ -79,7 +79,8 @@ class UserManager
     protected function setTmpCode(User $user)
     {
         $user->setTemporaryPassword(md5(uniqid($user->getUsername(), true)));
+        $this->em->flush();
 
-        return http_build_query(array('tid' => $user->getTemporaryPassword()));
+        return $user->getTemporaryPassword();
     }
 }

@@ -24,6 +24,9 @@
                     </h4>
                 </div>
                 {{ form_errors(login_form) }}
+                {% if error %}
+                    <div class="login-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
                 {{ form_widget(login_form.username, {"attr": {"placeholder": "Користувач / E-Mail"}}) }}
                 {{ form_widget(login_form.password, {"attr": {"placeholder": "Пароль"}}) }}
                 <div class="form-group form-inline">
