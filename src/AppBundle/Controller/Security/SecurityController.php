@@ -96,6 +96,7 @@ class SecurityController extends Controller
                 $em->persist($user);
                 $userManager->setAvatar($user);
                 $em->flush();
+                $userManager->sendRegistrationCode($user);
 
                 return $this->redirectToRoute(
                     "registration_complete"
@@ -126,10 +127,13 @@ class SecurityController extends Controller
                     ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
 
+                $userManager = $this->get('app.user_manager');
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                $this->get('app.user_manager')->setAvatar($user);
+                $userManager->setAvatar($user);
                 $em->flush();
+                $userManager->sendRegistrationCode($user);
 
                 return $this->redirectToRoute(
                     "registration_complete"
@@ -152,6 +156,18 @@ class SecurityController extends Controller
         return [
 
         ];
+
+    }
+
+    /**
+     * @Route("/activation/{code}", name="profile_activation")
+     * @return Response
+     */
+    public function activationAction($code)
+    {
+        $userManager = $this->get('app.user_manager');
+        $redirect = $userManager->checkActivationCode($code);
+        return $this->redirectToRoute($redirect);
 
     }
 }

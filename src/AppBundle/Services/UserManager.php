@@ -6,12 +6,14 @@ use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
 use AppBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserManager
 {
+    protected $em;
     protected $uploadableManager;
     protected $mailSender;
 
@@ -20,9 +22,11 @@ class UserManager
      * @param $em
      */
     public function __construct(
+        EntityManager $em,
         UploadableManager $uploadableManager,
         EmailSender $mailSender
     ) {
+        $this->em = $em;
         $this->uploadableManager = $uploadableManager;
         $this->mailSender = $mailSender;
     }
@@ -54,9 +58,27 @@ class UserManager
         );
     }
 
+    public function checkActivationCode($code)
+    {
+        $user = $this->em->getRepository('AppBundle:Person')->findOneBy(['temporaryPassword' => $code]);
+        if (!$user) {
+            $user = $this->em->getRepository('AppBundle:Organization')->findOneBy(['temporaryPassword' => $code]);
+        }
+
+        if ($user) {
+            $user->setIsActive(true);
+            $user->setTemporaryPassword('');
+            $this->em->flush();
+
+            return 'activation_success';
+        } else {
+            return 'activation_fail';
+        }
+    }
+
     protected function setTmpCode(User $user)
     {
-        $user->setTemporaryPassword(md5(uniqid(rand(), true)));
+        $user->setTemporaryPassword(md5(uniqid($user->getUsername(), true)));
 
         return http_build_query(array('tid' => $user->getTemporaryPassword()));
     }
