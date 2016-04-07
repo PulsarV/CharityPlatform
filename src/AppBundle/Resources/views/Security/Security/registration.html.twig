@@ -1,23 +1,30 @@
 {% extends ':Base:base_wo_sidebar_centered.html.twig' %}
-{% form_theme registration_form 'bootstrap_3_layout.html.twig' %}
 
 {% block content %}
-    {{ form_start(registration_form) }}
-        {% embed '::Panel/save_panel.html.twig'%}
-            {% block panel_title %}Реєстрація нового користувача{% endblock %}
-            {% block panel_body %}
-                {{ form_widget(registration_form.username) }}
-                {{ form_errors(registration_form.username) }}
-                {% for plainPassword in registration_form.plainPassword %}
-                    {{ form_widget(plainPassword) }}
-                    {{ form_errors(plainPassword) }}
-                {% endfor %}
-                {{ form_widget(registration_form.email) }}
-                {{ form_errors(registration_form.email) }}
-                {{ form_widget(registration_form.userSelector) }}
-            {% endblock %}
-            {% block submit_button %}Продовжити{% endblock %}
-        {% endembed %}
-        {{ form_rest(registration_form) }}
-    {{ form_end(registration_form) }}
+    <div class="registration-info">
+        <span class="title">
+            Реєстрація
+        </span>
+        <p>
+            Реєстрація у системі "Online платформа благодійності" надає Вам можливість:
+        </p>
+        <ul>
+            <li>
+                Створювати нові благодійні запити
+            </li>
+            <li>
+                Писати коментарі до запитів, які Вас цікавлять
+            </li>
+            <li>Ставити рейтинг до запитів, які Вас цікавлять</li>
+            <li>Переглядати профілі інших користувачів</li>
+            <li>Ділитися власними даними та контактами з іншими користувачами</li>
+        </ul>
+        <p>
+            Організації, навідміну від персон, мають більш розширені можливості в користуванні "Online платформа благодійності".
+        </p>
+    </div>
+    <div class="btn-registration-block">
+        <a href="{{ path('registration_person') }}" class="btn btn-primary btn-registration"><span>Реєструвати персону</span></a>
+        <a href="{{ path('registration_organization') }}" class="btn btn-info btn-registration"><span>Реєструвати організацію</span></a>
+    </div>
 {% endblock %}

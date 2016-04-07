@@ -1318,3 +1318,30 @@ ul.cabinet-pagination > li:hover > a {
 .help-block li {
   color: #9f191f;
 }
+.blog .registration-info {
+  background: #ffffff;
+  display: block;
+  padding: 10px 20px;
+  text-align: center;
+  color: #000000;
+}
+.blog .registration-info .title{
+  font-size: 25px;
+  font-weight: 500;
+  color: #335ca0;
+}
+.blog .registration-info p,
+.blog .registration-info ul {
+  text-align: justify;
+  font-weight: 300;
+}
+.blog .registration-info ul {
+  font-size: 20px;
+}
+.blog .registration-info p {
+  font-size: 18px;
+}
+.blog .btn-registration-block {
+  margin-top: 20px;
+  text-align: center;
+}

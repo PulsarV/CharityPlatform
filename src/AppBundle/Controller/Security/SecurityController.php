@@ -90,9 +90,11 @@ class SecurityController extends Controller
                     ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
 
+                $userManager = $this->get('app.user_manager');
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                $this->get('app.user_manager')->setAvatar($user);
+                $userManager->setAvatar($user);
                 $em->flush();
 
                 return $this->redirectToRoute(
