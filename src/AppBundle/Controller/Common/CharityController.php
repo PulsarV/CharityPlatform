@@ -154,4 +154,14 @@ class CharityController extends Controller
             'pager' => $pager,
         ];
     }
+
+    /**
+     * @Route("/contact", name="contact_page")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function contactAction()
+    {
+        return [ ];
+    }
 }

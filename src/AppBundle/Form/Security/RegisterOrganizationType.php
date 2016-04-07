@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Security;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,7 +62,7 @@ class RegisterOrganizationType extends AbstractType
                 'attr' => array('placeholder' => 'Телефон:'),
                 'required' => false,
             ))
-            ->add('categories', 'entity', array(
+            ->add('categories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
@@ -72,7 +73,7 @@ class RegisterOrganizationType extends AbstractType
                 'label' => 'Отображать благотворительные запросы из других категорий?',
                 'required' => false,
             ))
-            ->add('followCategories', 'entity', array(
+            ->add('followCategories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
