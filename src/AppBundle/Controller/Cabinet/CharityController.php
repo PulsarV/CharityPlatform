@@ -63,12 +63,7 @@ class CharityController extends Controller
 
             if ($form->isValid()) {
                 $em->persist($charity);
-                if ($charity->getBanner() !== null) {
-                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                    $uploadableManager->markEntityToUpload($charity, $charity->getBanner());
-                } else {
-                    $charity->setBanner('standart_banner.gif');
-                }
+                $this->get('app.charity_manager')->setBanner($charity);
                 $em->flush();
 
                 return $this->redirectToRoute('charity_index');
@@ -150,7 +145,11 @@ class CharityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CharityType::class, $charity);
 
-        if ($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {        if (!$charity) {
+            throw $this->createNotFoundException(
+                'Unable to find Charity..'
+            );
+        }
 
             $form->handleRequest($request);
 

@@ -20,35 +20,47 @@ class RegisterPersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array('label' => 'Логин*:'))
+            ->add('username', TextType::class, array(
+                'label' => false,
+                'attr' => array('placeholder' => 'Ім\'я користувача*')
+            ))
             ->add('plainPassword', RepeatedType::class, array(
                     'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'Пароль*:'),
-                    'second_options' => array('label' => 'Повторить пароль*:'),
+                    'label' => false,
+                    'first_options'  => array('label' => false,
+                        'attr' => array('placeholder' => 'Пароль*:')
+                    ),
+                    'second_options' => array('label' => false,
+                        'attr' => array('placeholder' => 'Повторить пароль*:')
+                    ),
                 )
             )
             ->add('email', EmailType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'E-mail*:'
+                'attr' => array(
+                    'placeholder' => 'E-mail*:'
+                ),
+                'label' => false,
             ))
             ->add('avatarFileName', FileType::class, array(
                 'required' => false,
                 'data_class' => null,
                 'mapped' => true,
-                'label' => 'Аватар:'
+                'label' => false,
+                'attr' => array('placeholder' => 'Аватар:')
             ))
-            //TODO: delete role after adding security
-            ->add('role', TextType::class)
             ->add('bankDetails', TextareaType::class, array(
-                'label' => 'Банковские реквизиты:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Банковские реквизиты:'),
                 'required' => false,
             ))
             ->add('address', TextType::class, array(
-                'label' => 'Адрес:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Адрес:'),
                 'required' => false,
             ))
             ->add('phone', TextType::class, array(
-                'label' => 'Телефон:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Телефон:'),
                 'required' => false,
             ))
             ->add('categories', EntityType::class, array(
@@ -70,10 +82,12 @@ class RegisterPersonType extends AbstractType
                 'required' => false,
             ))
             ->add('firstname', TextType::class, array(
-                'label' => 'Имя*:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Имя*:'),
             ))
             ->add('lastname', TextType::class, array(
-                'label' => 'Фамилия*:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Фамилия*:'),
             ))
             ->add('birthday', BirthdayType::class, array(
                     'widget' => 'single_text',

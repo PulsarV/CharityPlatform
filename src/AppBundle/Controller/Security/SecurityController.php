@@ -28,8 +28,13 @@ class SecurityController extends Controller
             'action' => $this->generateUrl('login_check')
         ]);
 
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+
         return [
-            'login_form' => $loginForm->createView()
+            'login_form' => $loginForm->createView(),
+            'error' => $error
         ];
     }
 
@@ -49,31 +54,13 @@ class SecurityController extends Controller
 
     /**
      * @Route("/registration", name="registration")
-     * @Method({"GET","POST"})
+     * @Method({"GET"})
      * @Template()
      */
     public function registrationAction(Request $request)
     {
-        $registrationForm = $this->createForm(RegistrationType::class);
-
-        if ($request->getMethod() == 'POST') {
-            $registrationForm->handleRequest($request);
-
-            if ($registrationForm->isValid()) {
-
-                $this->get('app.user_manager')->createUser(
-                    $registrationForm->get('userSelector')->getData(),
-                    $registrationForm->get('username')->getData(),
-                    $registrationForm->get('plainPassword')->getData(),
-                    $registrationForm->get('email')->getData()
-                );
-
-                return $this->redirectToRoute('registration_complete');
-            }
-        }
-
         return [
-            'registration_form' => $registrationForm->createView(),
+
         ];
     }
 
@@ -104,22 +91,20 @@ class SecurityController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-//                $password = $this->get('security.password_encoder')
-//                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($user->getPlainPassword());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+
+                $userManager = $this->get('app.user_manager');
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                if ($user->getAvatarFileName() !== null) {
-                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
-                } else {
-                    $user->setAvatarFileName('standart_avatar.gif');
-                }
+                $userManager->setAvatar($user);
                 $em->flush();
+                $userManager->sendRegistrationCode($user);
 
                 return $this->redirectToRoute(
-                    "registration_person"
+                    "registration_complete"
                 );
             }
         }
@@ -143,22 +128,20 @@ class SecurityController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-//                $password = $this->get('security.password_encoder')
-//                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($user->getPlainPassword());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+
+                $userManager = $this->get('app.user_manager');
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                if ($user->getAvatarFileName() !== null) {
-                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
-                } else {
-                    $user->setAvatarFileName('standart_avatar.gif');
-                }
+                $userManager->setAvatar($user);
                 $em->flush();
+                $userManager->sendRegistrationCode($user);
 
                 return $this->redirectToRoute(
-                    "registration_organization"
+                    "registration_complete"
                 );
             }
         }
@@ -179,5 +162,37 @@ class SecurityController extends Controller
 
         ];
 
+    }
+
+    /**
+     * @Route("/activation/{code}", name="profile_activation")
+     * @return Response
+     */
+    public function activationAction($code)
+    {
+        $userManager = $this->get('app.user_manager');
+        $redirect = $userManager->checkActivationCode($code);
+
+        return $this->redirectToRoute($redirect);
+    }
+
+    /**
+     * @Route("/activation-success", name="activation_success")
+     * @Template()
+     * @return Response
+     */
+    public function activationSuccessAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/activation-fail", name="activation_fail")
+     * @Template()
+     * @return Response
+     */
+    public function activationFailAction()
+    {
+        return [];
     }
 }

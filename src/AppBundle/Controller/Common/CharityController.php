@@ -120,10 +120,6 @@ class CharityController extends Controller
                     [
                         'criteria' => $criteria,
                         'searchQuery' => $form->get('searchQuery')->getData(),
-
-// maybe next line will be used for escaping
-//                        'searchQuery' => filter_var($form->get('searchQuery')->getData(), FILTER_SANITIZE_STRING),
-
                         'page' => 1,
                     ],
                     302
