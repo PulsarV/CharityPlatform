@@ -196,6 +196,23 @@ hwi_oauth:
             type: vkontakte
             client_id: "%vkontakte_app_id%"
             client_secret: "%vkontakte_app_secret%"
-            scope: "email"
+            scope: "email, bdate"
+            options:
+                fields: "bdate"
+        facebook:
+            type: facebook
+            client_id: "%facebook_app_id%"
+            client_secret: "%facebook_app_secret%"
+            scope: "email, public_profile, user_birthday"
+            options:
+                display: popup
+            infos_url: "https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,birthday"
+            paths:
+                email: email
+        google:
+            type: google
+            client_id: "%google_app_id%"
+            client_secret: "%google_app_secret%"
+            scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
 
 

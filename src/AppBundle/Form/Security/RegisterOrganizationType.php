@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Security;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,38 +19,50 @@ class RegisterOrganizationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array('label' => 'Логин*:'))
+            ->add('username', TextType::class, array(
+                'label' => false,
+                'attr' => array('placeholder' => 'Ім\'я користувача*')
+            ))
             ->add('plainPassword', RepeatedType::class, array(
                     'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'Пароль*:'),
-                    'second_options' => array('label' => 'Повторить пароль*:'),
+                    'label' => false,
+                    'first_options'  => array('label' => false,
+                        'attr' => array('placeholder' => 'Пароль*:')
+                    ),
+                    'second_options' => array('label' => false,
+                        'attr' => array('placeholder' => 'Повторить пароль*:')
+                    ),
                 )
             )
             ->add('email', EmailType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'E-mail*:'
+                'attr' => array(
+                    'placeholder' => 'E-mail*:'
+                ),
+                'label' => false,
             ))
             ->add('avatarFileName', FileType::class, array(
                 'required' => false,
                 'data_class' => null,
                 'mapped' => true,
-                'label' => 'Аватар:'
+                'label' => false,
+                'attr' => array('placeholder' => 'Аватар:')
             ))
-            //TODO: delete role after adding security
-            ->add('role', TextType::class)
             ->add('bankDetails', TextareaType::class, array(
-                'label' => 'Банковские реквизиты:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Банковские реквизиты:'),
                 'required' => false,
             ))
             ->add('address', TextType::class, array(
-                'label' => 'Адрес:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Адрес:'),
                 'required' => false,
             ))
             ->add('phone', TextType::class, array(
-                'label' => 'Телефон:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Телефон:'),
                 'required' => false,
             ))
-            ->add('categories', 'entity', array(
+            ->add('categories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
@@ -60,22 +73,28 @@ class RegisterOrganizationType extends AbstractType
                 'label' => 'Отображать благотворительные запросы из других категорий?',
                 'required' => false,
             ))
-            ->add('followCategories', 'entity', array(
+            ->add('followCategories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
                 'label' => 'Получать письма новостей категорий:',
                 'required' => false,
             ))
-            ->add('organizationName', TextType::class, array('label' => 'Название организации*:'))
+            ->add('organizationName', TextType::class, array(
+                'label' => false,
+                'attr' => array('placeholder' => 'Название организации*:')
+            ))
             ->add('organizationDocuments', TextareaType::class, array(
-                'label' => 'Детали организации*:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Детали организации*:'),
             ))
             ->add('activityProfile', TextType::class, array(
-                'label' => 'Направление деятельности организации*:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Направление деятельности организации*:'),
             ))
             ->add('website', TextType::class, array(
-                'label' => 'Веб-сайт:',
+                'label' => false,
+                'attr' => array('placeholder' => 'Веб-сайт:'),
                 'required' => false,
             ))
         ;

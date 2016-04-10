@@ -92,7 +92,7 @@ class CharityRepository extends EntityRepository
         $dql = "SELECT c
                 FROM AppBundle:Charity c
                 WHERE c.isActive = false
-                ORDER BY c.createdAt DESC";
+                ORDER BY c.updatedAt DESC";
         return $this->getEntityManager()
             ->createQuery($dql)
             ->setFirstResult(1)

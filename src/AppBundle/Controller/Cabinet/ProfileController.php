@@ -73,6 +73,7 @@ class ProfileController extends Controller
     public function editUserAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
         $user = $em
             ->getRepository('AppBundle:User')
             ->findOneBy(
@@ -97,12 +98,7 @@ class ProfileController extends Controller
 
             if ($editForm->isValid()) {
                 $em->persist($user);
-                if ($files['avatarFileName'] !== null) {
-                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
-                } else {
-                    $user->setAvatarFileName($avatar);
-                }
+                $this->get('app.user_manager')->setAvatar($user, $avatar, $files);
                 $em->flush();
 
                 //TODO: edit redirect to show_user_profile or etc

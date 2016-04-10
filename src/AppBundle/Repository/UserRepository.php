@@ -26,4 +26,20 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->setParameter('email', $username)
             ->getOneOrNullResult();
     }
+
+    public function loadUserBySocialIdAndEmail($id, $email)
+    {
+        $dql = "SELECT u
+                FROM 'AppBundle:User' u
+                WHERE u.email = :email
+                AND (u.googleId = :id
+                OR u.vkontakteId = :id
+                OR u.facebookId = :id)";
+
+        return $this->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter('id', $id)
+            ->setParameter('email', $email)
+            ->getOneOrNullResult();
+    }
 }

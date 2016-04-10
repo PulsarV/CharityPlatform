@@ -1111,6 +1111,18 @@ ul.faq li > div h3 {
   color: #fff;
   font-weight: 500;
 }
+.big-login-form .form-group{
+  margin-bottom: 0;
+}
+.big-login-form .login-error {
+  color: #ff0000;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 50px;
+}
+.big-login-form input[type="checkbox"] {
+  margin: 0 !important;
+}
 .wet-asphalt.bot {
   padding: 10px 0 35px;
 }
@@ -1196,6 +1208,7 @@ ul.no-list-style li {
 .btn-form {
   margin: 10px 30px 10px 30px;
   width: 150px;
+  display: inline-block;
 }
 .btn-group-form {
   margin: 10px 30px 10px 30px;
@@ -1293,6 +1306,9 @@ ul.cabinet-pagination > li:hover > a {
 .base-panel .panel-body input {
   margin: 0 0 20px;
 }
+.base-panel .panel-body input[type="checkbox"] {
+  margin-left: -20px;
+}
 .base-panel .panel-footer {
   padding: 10px 10px 10px;
 }
@@ -1314,4 +1330,43 @@ ul.cabinet-pagination > li:hover > a {
 }
 .help-block li {
   color: #9f191f;
+}
+.blog .registration-info {
+  background: #ffffff;
+  display: block;
+  padding: 10px 20px;
+  text-align: center;
+  color: #000000;
+}
+.blog .registration-info .title{
+  font-size: 25px;
+  font-weight: 500;
+  color: #335ca0;
+}
+.blog .registration-info p,
+.blog .registration-info ul {
+  text-align: justify;
+  font-weight: 300;
+}
+.blog .registration-info ul {
+  font-size: 20px;
+}
+.blog .registration-info p {
+  font-size: 18px;
+}
+.blog .btn-registration-block {
+  margin-top: 20px;
+  text-align: center;
+}
+.btn-centered {
+  margin: auto;
+  display: block;
+}
+.btn-form-left {
+  float: left;
+  margin: 0 30px;
+}
+.btn-form-right {
+  float: right;
+  margin: 0 30px;
 }

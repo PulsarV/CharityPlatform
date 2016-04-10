@@ -9,21 +9,18 @@
                 <div class="form-group form-inline pull-right">
                     <h4>
                         Ввійдіть за допомогою:&nbsp;&nbsp;
-                        <a class="btn btn-social-icon btn-twitter btn-sm">
-                            <span class="fa fa-twitter"></span>
-                        </a>
-                        <a class="btn btn-social-icon btn-facebook btn-sm">
+                        <a href="{{ path('index_page') }}connect/facebook" class="btn btn-social-icon btn-facebook btn-sm">
                             <span class="fa fa-facebook"></span>
                         </a>
-                        <a class="btn btn-social-icon btn-vk btn-sm">
+                        <a href="{{ path('index_page') }}connect/vkontakte" class="btn btn-social-icon btn-vk btn-sm">
                             <span class="fa fa-vk"></span>
-                        </a>
-                        <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
-                            <span class="fa fa-odnoklassniki"></span>
                         </a>
                     </h4>
                 </div>
                 {{ form_errors(login_form) }}
+                {% if error %}
+                    <div class="login-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
                 {{ form_widget(login_form.username, {"attr": {"placeholder": "Користувач / E-Mail"}}) }}
                 {{ form_widget(login_form.password, {"attr": {"placeholder": "Пароль"}}) }}
                 <div class="form-group form-inline">
