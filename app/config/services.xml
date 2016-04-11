@@ -41,6 +41,16 @@
             <argument>%mailer_password%</argument>
             <argument type="service" id="templating" />
         </service>
+
+        <service id="hwi_oauth.user.provider.entity"
+                class="HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider">
+        </service>
+
+        <service id="ib_user.oauth_user_provider"
+                 class="AppBundle\Services\OAuthProvider">
+            <argument type="service" id="session"/>
+            <argument type="service" id="doctrine"/>
+        </service>
     </services>
 
 </container>

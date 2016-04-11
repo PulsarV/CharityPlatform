@@ -14,6 +14,8 @@ use Symfony\Component\Form\Form;
 
 class CharityManager
 {
+    const STANDARTBANNER = 'standart_banner.gif';
+
     protected $em;
     protected $finder;
     protected $menuManager;
@@ -167,7 +169,7 @@ class CharityManager
         if ($charity->getBanner() !== null) {
             $this->uploadableManager->markEntityToUpload($charity, $charity->getBanner());
         } else {
-            $charity->setBanner('standart_banner.gif');
+            $charity->setBanner(self::STANDARTBANNER);
         }
     }
 }

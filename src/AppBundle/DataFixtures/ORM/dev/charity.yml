@@ -10,7 +10,7 @@ AppBundle\Entity\Organization:
     username(unique): <firstName()>
     password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
-    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'business')))>
     role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
     bankDetails: <paragraph(10)>
     address: <address()>
@@ -29,7 +29,7 @@ AppBundle\Entity\Person:
     username(unique): <firstName()>
     password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
-    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'people')))>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100)))>
     role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
     bankDetails: <paragraph(10)>
     address: <address()>

@@ -19,7 +19,7 @@ use AppBundle\Form\Security\RegistrationType;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login/", name="login")
      * @Template()
      */
     public function loginAction()
