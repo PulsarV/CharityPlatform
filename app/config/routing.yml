@@ -22,6 +22,10 @@ app:
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
+login:
+    path: /login/
+    defaults:  { _controller: AppBundle:Security/Security:login }
+
 login_check:
     path: /login_check
 

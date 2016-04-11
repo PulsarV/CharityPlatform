@@ -51,6 +51,11 @@
             <argument type="service" id="session"/>
             <argument type="service" id="doctrine"/>
         </service>
+
+        <service id="app.form.friend_message" class="AppBundle\Form\Cabinet\CharityType">
+            <argument type="service" id="security.token_storage" />
+            <tag name="form.type" />
+        </service>
     </services>
 
 </container>
