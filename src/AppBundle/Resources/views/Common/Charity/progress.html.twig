@@ -6,11 +6,10 @@
             <div class="progress">
                 <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ charity.needMoney - charity.collectedMoney }}"
                      aria-valuemin="{{ charity.collectedMoney }}" aria-valuemax="{{ charity.needMoney }}" style="width:{{ 100*charity.collectedMoney/charity.needMoney }}%">
-                    {#{{ 100*charity.collectedMoney/charity.needMoney|round(1, 'floor') }}%#}
                 </div>
                 <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
                      aria-valuemin="0" aria-valuemax="100" style="width:{{ 100-100*charity.collectedMoney/charity.needMoney }}%">
-                    {#{{ 100-100*charity.collectedMoney/charity.needMoney|round(1, 'ceil') }}%#}
+                    {{ (100-100*charity.collectedMoney/charity.needMoney)|round(1, 'ceil') }}%
                 </div>
             </div>
         </div>

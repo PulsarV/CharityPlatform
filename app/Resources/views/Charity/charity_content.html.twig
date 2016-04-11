@@ -5,10 +5,17 @@
     {{ charity.content | raw }}
     <hr>
     {% include '@App/Common/Charity/progress.html.twig' %}
-
     <iframe width="520" height="415"
             src="http://www.youtube.com/embed/XGSy3_Czz8k">
     </iframe>
+
+    <div class="photos">
+        {% for charityImage in charity.charityImages %}
+            <img src="{{ asset('uploads/charities/' ~ charityImage.path)|imagine_filter('charity_photos') }}"/>
+        {% endfor %}
+    </div>
+    Банківський рахунок:<br>
+    {{ charity.user.bankDetails }}
 
     {% include ':Charity:charity_footer.html.twig' %}
     <div id="comments">
