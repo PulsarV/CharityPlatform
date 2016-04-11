@@ -1111,6 +1111,18 @@ ul.faq li > div h3 {
   color: #fff;
   font-weight: 500;
 }
+.big-login-form .form-group{
+  margin-bottom: 0;
+}
+.big-login-form .login-error {
+  color: #ff0000;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 50px;
+}
+.big-login-form input[type="checkbox"] {
+  margin: 0 !important;
+}
 .wet-asphalt.bot {
   padding: 10px 0 35px;
 }
@@ -1196,6 +1208,7 @@ ul.no-list-style li {
 .btn-form {
   margin: 10px 30px 10px 30px;
   width: 150px;
+  display: inline-block;
 }
 .btn-group-form {
   margin: 10px 30px 10px 30px;
@@ -1344,4 +1357,16 @@ ul.cabinet-pagination > li:hover > a {
 .blog .btn-registration-block {
   margin-top: 20px;
   text-align: center;
+}
+.btn-centered {
+  margin: auto;
+  display: block;
+}
+.btn-form-left {
+  float: left;
+  margin: 0 30px;
+}
+.btn-form-right {
+  float: right;
+  margin: 0 30px;
 }

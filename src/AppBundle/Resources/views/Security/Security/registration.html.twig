@@ -1,30 +1,27 @@
 {% extends ':Base:base_wo_sidebar_centered.html.twig' %}
 
 {% block content %}
-    <div class="registration-info">
-        <span class="title">
-            Реєстрація
-        </span>
-        <p>
-            Реєстрація у системі "Online платформа благодійності" надає Вам можливість:
-        </p>
-        <ul>
-            <li>
-                Створювати нові благодійні запити
-            </li>
-            <li>
-                Писати коментарі до запитів, які Вас цікавлять
-            </li>
-            <li>Ставити рейтинг до запитів, які Вас цікавлять</li>
-            <li>Переглядати профілі інших користувачів</li>
-            <li>Ділитися власними даними та контактами з іншими користувачами</li>
-        </ul>
-        <p>
-            Організації, навідміну від персон, мають більш розширені можливості в користуванні "Online платформа благодійності".
-        </p>
-    </div>
-    <div class="btn-registration-block">
-        <a href="{{ path('registration_person') }}" class="btn btn-primary btn-registration"><span>Реєструвати персону</span></a>
-        <a href="{{ path('registration_organization') }}" class="btn btn-info btn-registration"><span>Реєструвати організацію</span></a>
-    </div>
+    {% embed ':Panel:registration_panel.html.twig'%}
+        {% block panel_title %}Реєстрація нового користувача{% endblock %}
+        {% block panel_body %}
+            <p>
+                Реєстрація у системі "Online платформа благодійності" надає Вам можливість:
+            </p>
+            <ul>
+                <li>
+                    Створювати нові благодійні запити
+                </li>
+                <li>
+                    Писати коментарі до запитів, які Вас цікавлять
+                </li>
+                <li>Ставити рейтинг до запитів, які Вас цікавлять</li>
+                <li>Переглядати профілі інших користувачів</li>
+                <li>Ділитися власними даними та контактами з іншими користувачами</li>
+            </ul>
+            <p>
+                Організації, навідміну від персон, мають більш розширені можливості в користуванні "Online платформа благодійності".
+            </p>
+        {% endblock %}
+        {% block back_button %}До логіну{% endblock %}
+    {% endembed %}
 {% endblock %}

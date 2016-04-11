@@ -13,6 +13,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserManager
 {
+    const STANDARTAVATAR = 'standart_avatar.gif';
+
     protected $em;
     protected $uploadableManager;
     protected $mailSender;
@@ -33,7 +35,7 @@ class UserManager
 
     public function setAvatar(
         User $user,
-        $avatar = 'standart_avatar.gif',
+        $avatar = self::STANDARTAVATAR,
         array $files = array('avatarFileName' => null)
     ) {
         if ($files['avatarFileName'] !== null || $user->getAvatarFileName() !== null) {
@@ -67,7 +69,7 @@ class UserManager
 
         if ($user) {
             $user->setIsActive(true);
-            $user->setTemporaryPassword('');
+            $user->setTemporaryPassword(null);
             $this->em->flush();
 
             return 'activation_success';
@@ -79,7 +81,8 @@ class UserManager
     protected function setTmpCode(User $user)
     {
         $user->setTemporaryPassword(md5(uniqid($user->getUsername(), true)));
+        $this->em->flush();
 
-        return http_build_query(array('tid' => $user->getTemporaryPassword()));
+        return $user->getTemporaryPassword();
     }
 }
