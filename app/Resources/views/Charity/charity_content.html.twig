@@ -1,9 +1,15 @@
-<img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner)|imagine_filter('charity_image') }}" alt="" />
+<img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner)|imagine_filter('charity_image') }}" alt=""/>
 <div class="blog-content">
     <h3>{{ charity.title }}</h3>
     {% include ':Charity:charity_header.html.twig' %}
     {{ charity.content | raw }}
     <hr>
+    {% include '@App/Common/Charity/progress.html.twig' %}
+
+    <iframe width="520" height="415"
+            src="http://www.youtube.com/embed/XGSy3_Czz8k">
+    </iframe>
+
     {% include ':Charity:charity_footer.html.twig' %}
     <div id="comments">
         <div id="comments-list">
@@ -16,7 +22,8 @@
                     <div class="media-body">
                         <div class="well">
                             <div class="media-heading">
-                                <strong>{{ comment.user.username }}</strong>&nbsp; <small>{{ comment.createdAt|date("d M, Y") }}</small>
+                                <strong>{{ comment.user.username }}</strong>&nbsp;
+                                <small>{{ comment.createdAt|date("d M, Y") }}</small>
                             </div>
                             <p>{{ comment.content }}</p>
                         </div>
