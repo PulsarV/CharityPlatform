@@ -4,7 +4,7 @@
     {% include ':Charity:charity_header.html.twig' %}
     {{ charity.content | raw }}
     <hr>
-    {% include '@App/Common/Charity/progress.html.twig' %}
+    {% include '@App/Common/Charity/status.html.twig' %}
     <iframe width="520" height="415"
             src="http://www.youtube.com/embed/XGSy3_Czz8k">
     </iframe>
@@ -15,8 +15,7 @@
         {% endfor %}
     </div>
     Банківський рахунок:<br>
-    {{ charity.user.bankDetails }}
-
+    {{ charity.user.bankDetails }}<br>
     {% include ':Charity:charity_footer.html.twig' %}
     <div id="comments">
         <div id="comments-list">
