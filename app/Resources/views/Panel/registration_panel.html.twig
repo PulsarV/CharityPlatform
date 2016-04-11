@@ -1,7 +1,7 @@
 {% extends ':Panel:base_panel.html.twig' %}
 
 {% block panel_footer %}
-    {% spaceless %}<a href="{%- block back_button_url -%}{{ path('index_page') }}{%- endblock -%}" class=" btn btn-info btn-form btn-form-left">{%- block back_button -%}Повернутися{%- endblock -%}</a>{% endspaceless %}
+    {% spaceless %}<a href="{%- block back_button_url -%}{{ path('login') }}{%- endblock -%}" class=" btn btn-info btn-form btn-form-left">{%- block back_button -%}Повернутися{%- endblock -%}</a>{% endspaceless %}
     {% spaceless %}<a href="{{ path('registration_organization') }}" class=" btn btn-primary btn-form btn-form-right">{%- block orgainzation_button -%}Організація{%- endblock -%}</a>{% endspaceless %}
     {% spaceless %}<a href="{{ path('registration_person') }}" class=" btn btn-success btn-form btn-centered">{%- block person_button -%}Персона{%- endblock -%}</a>{% endspaceless %}
 {% endblock %}

@@ -6,7 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -17,18 +19,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
  * @UniqueEntity(
- *     fields={"username"},
- *     groups={"registration"},
- *     errorPath="username",
- *     message="Username is already in use",
- *     ignoreNull=false
+ *     fields={"username", "facebookId", "vkontakteId", "googleId"},
+ *     groups={"registration"}
  * )
  * @UniqueEntity(
- *     fields={"email"},
- *     groups={"registration"},
- *     errorPath="email",
- *     message="E-mail is already in use",
- *     ignoreNull=false
+ *     fields={"email", "facebookId", "vkontakteId", "googleId"},
+ *     groups={"registration"}
  * )
  * @Gedmo\Uploadable(
  *     pathMethod="getPath",
@@ -37,7 +33,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
  * )
  */
-abstract class User implements  UserInterface, \Serializable, AdvancedUserInterface
+abstract class User extends OAuthUser implements
+    UserInterface,
+    \Serializable,
+    AdvancedUserInterface,
+    EquatableInterface
 {
     use TimestampableEntity;
 
@@ -60,9 +60,9 @@ abstract class User implements  UserInterface, \Serializable, AdvancedUserInterf
      *     minMessage = "Username can not be less than {{ limit }} chars",
      *     maxMessage = "Username can not be more than {{ limit }} chars"
      * )
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=50)
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -99,7 +99,7 @@ abstract class User implements  UserInterface, \Serializable, AdvancedUserInterf
      *     message = "The email '{{ value }}' is not a valid email",
      *     checkMX = true
      * )
-     * @ORM\Column(type="string", length=129, unique=true)
+     * @ORM\Column(type="string", length=129)
      */
     private $email;
 
@@ -205,7 +205,28 @@ abstract class User implements  UserInterface, \Serializable, AdvancedUserInterf
     private $cautionCount;
 
     /**
-     * @Gedmo\Slug(fields={"username"})
+     * @var string
+     *
+     * @ORM\Column(name="facebook_id", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $facebookId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vkontakte_id", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $vkontakteId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="google_id", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $googleId;
+
+    /**
+     * @Gedmo\Slug(fields={"username", "id"})
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;
@@ -604,6 +625,54 @@ abstract class User implements  UserInterface, \Serializable, AdvancedUserInterf
         $this->entityDiscr = $entityDiscr;
     }
 
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * @param string $facebookId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVkontakteId()
+    {
+        return $this->vkontakteId;
+    }
+
+    /**
+     * @param string $vkontakteId
+     */
+    public function setVkontakteId($vkontakteId)
+    {
+        $this->vkontakteId = $vkontakteId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param string $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
     public function getPath()
     {
         return __DIR__ . '/../../../web/uploads/users/';
@@ -661,5 +730,14 @@ abstract class User implements  UserInterface, \Serializable, AdvancedUserInterf
     public function isEnabled()
     {
         return $this->isActive;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if ((int)$this->getId() === $user->getId()) {
+            return true;
+        }
+
+        return false;
     }
 }
