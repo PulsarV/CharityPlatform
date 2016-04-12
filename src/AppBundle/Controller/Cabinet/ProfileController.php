@@ -12,10 +12,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/cabinet/users", name="cabinet_profile")
+ */
 class ProfileController extends Controller
 {
     /**
-     * @Route("/users/{slug}/delete", name="user_delete")
+     * @Route("/{slug}/delete", name="user_delete")
      * @Method("DELETE")
      *
      * @param Request $request
@@ -63,7 +66,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/users/{slug}/edit", name="user_edit")
+     * @Route("/{slug}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      * @Template()
      * @param $slug

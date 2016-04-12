@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/cabinet", name="cabinet_charity")
+ */
 class CharityController extends Controller
 {
     /**
@@ -141,19 +144,17 @@ class CharityController extends Controller
                 'Unable to find Charity..'
             );
         }
+        $banner = $charity->getBanner();
 
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CharityType::class, $charity);
 
-        if ($request->getMethod() === 'POST') {        if (!$charity) {
-            throw $this->createNotFoundException(
-                'Unable to find Charity..'
-            );
-        }
-
+        if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                $files = $request->files->get('charity');
+                $this->get('app.charity_manager')->setBanner($charity, $banner, $files);
                 $em->flush();
 
                 return $this->redirectToRoute('charity_index');

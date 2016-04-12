@@ -164,12 +164,15 @@ class CharityManager
         return implode('-', $criteriaArray);
     }
 
-    public function setBanner(Charity $charity)
-    {
-        if ($charity->getBanner() !== null) {
+    public function setBanner(
+        Charity $charity,
+        $banner = self::STANDARTBANNER,
+        array $files = array('banner' => null)
+    ) {
+        if ($files['banner'] !== null || $charity->getBanner() !== null) {
             $this->uploadableManager->markEntityToUpload($charity, $charity->getBanner());
         } else {
-            $charity->setBanner(self::STANDARTBANNER);
+            $charity->setBanner($banner);
         }
     }
 }

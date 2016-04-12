@@ -23,11 +23,17 @@ class OAuthDTO
         $data = $response->getResponse();
         if (isset($data['response'])) {
             $this->person->setVkontakteId($response->getUsername());
+            if (empty($data['response']['0']['bdate'])) {
+                throw new \Exception('You can\'t autorize without your birthday information');
+            }
             $bdate = $data['response']['0']['bdate'];
             $bdate = \DateTime::createFromFormat('j.n.Y', $bdate);
             $this->person->setBirthday($bdate->format('Y-m-d'));
         } else {
             $this->person->setFacebookId($response->getUsername());
+            if (empty($data['birthday'])) {
+                throw new \Exception('You can\'t autorize without your birthday information');
+            }
             $bdate = $data['birthday'];
             $bdate = \DateTime::createFromFormat('m/d/Y', $bdate);
             $this->person->setBirthday($bdate->format('Y-m-d'));
