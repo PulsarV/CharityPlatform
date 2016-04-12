@@ -31,7 +31,7 @@ class RegisterPersonType extends AbstractType
                         'attr' => array('placeholder' => 'Пароль*:')
                     ),
                     'second_options' => array('label' => false,
-                        'attr' => array('placeholder' => 'Повторить пароль*:')
+                        'attr' => array('placeholder' => 'Повторити пароль*:')
                     ),
                 )
             )
@@ -50,12 +50,12 @@ class RegisterPersonType extends AbstractType
             ))
             ->add('bankDetails', TextareaType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Банковские реквизиты:'),
+                'attr' => array('placeholder' => 'Банківські реквізити:'),
                 'required' => false,
             ))
             ->add('address', TextType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Адрес:'),
+                'attr' => array('placeholder' => 'Адреса:'),
                 'required' => false,
             ))
             ->add('phone', TextType::class, array(
@@ -67,32 +67,32 @@ class RegisterPersonType extends AbstractType
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
-                'label' => 'Интересующие категории*:',
+                'label' => 'Категорії, що вас цікавлять*:',
+                'required' => false,
             ))
             ->add('showOtherCategories', CheckboxType::class, array(
-                //TODO: translations
-                'label' => 'Отображать благотворительные запросы из других категорий?',
+                'label' => 'Показувати благодійні запити з інших категорій?',
                 'required' => false,
             ))
             ->add('followCategories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
-                'label' => 'Получать письма новостей категорий:',
+                'label' => 'Отримувати листи від категорій:',
                 'required' => false,
             ))
             ->add('firstname', TextType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Имя*:'),
+                'attr' => array('placeholder' => 'Ім\'я користувача*:'),
             ))
             ->add('lastname', TextType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Фамилия*:'),
+                'attr' => array('placeholder' => 'Прізвище*:'),
             ))
             ->add('birthday', BirthdayType::class, array(
                     'widget' => 'single_text',
                     'input' => 'string',
-                    'label' => 'Дата рождения*:',
+                    'label' => 'Дата народження*:',
                 )
             )
         ;

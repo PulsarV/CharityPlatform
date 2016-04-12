@@ -30,7 +30,7 @@ class RegisterOrganizationType extends AbstractType
                         'attr' => array('placeholder' => 'Пароль*:')
                     ),
                     'second_options' => array('label' => false,
-                        'attr' => array('placeholder' => 'Повторить пароль*:')
+                        'attr' => array('placeholder' => 'Повторити пароль*:')
                     ),
                 )
             )
@@ -49,12 +49,12 @@ class RegisterOrganizationType extends AbstractType
             ))
             ->add('bankDetails', TextareaType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Банковские реквизиты:'),
+                'attr' => array('placeholder' => 'Банківські реквізити:'),
                 'required' => false,
             ))
             ->add('address', TextType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Адрес:'),
+                'attr' => array('placeholder' => 'Адреса:'),
                 'required' => false,
             ))
             ->add('phone', TextType::class, array(
@@ -66,31 +66,31 @@ class RegisterOrganizationType extends AbstractType
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
-                'label' => 'Интересующие категории*:',
+                'label' => 'Категорії, що вас цікавлять*:',
+                'required' => false,
             ))
             ->add('showOtherCategories', CheckboxType::class, array(
-                //TODO: translations
-                'label' => 'Отображать благотворительные запросы из других категорий?',
+                'label' => 'Показувати благодійні запити з інших категорій?',
                 'required' => false,
             ))
             ->add('followCategories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
-                'label' => 'Получать письма новостей категорий:',
+                'label' => 'Отримувати листи від категорій:',
                 'required' => false,
             ))
             ->add('organizationName', TextType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Название организации*:')
+                'attr' => array('placeholder' => 'Назва організації*:')
             ))
             ->add('organizationDocuments', TextareaType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Детали организации*:'),
+                'attr' => array('placeholder' => 'Деталі організації*:'),
             ))
             ->add('activityProfile', TextType::class, array(
                 'label' => false,
-                'attr' => array('placeholder' => 'Направление деятельности организации*:'),
+                'attr' => array('placeholder' => 'Направлення діяльності організації*:'),
             ))
             ->add('website', TextType::class, array(
                 'label' => false,

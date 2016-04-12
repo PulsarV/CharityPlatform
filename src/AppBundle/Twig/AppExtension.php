@@ -4,6 +4,7 @@ namespace AppBundle\Twig;
 
 use AppBundle\Services\MenuManager;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class AppExtension
@@ -14,68 +15,73 @@ class AppExtension extends \Twig_Extension
     protected $menuManager;
     protected $cabinetMenu;
     protected $request;
+    protected $token;
 
     /**
      * AppExtension constructor.
      * @param MenuManager $menuManager
      * @param RequestStack $requestStack
      */
-    public function __construct(MenuManager $menuManager, RequestStack $requestStack)
+    public function __construct(MenuManager $menuManager, RequestStack $requestStack, TokenStorage $token)
     {
         $this->menuManager = $menuManager;
         $this->request = $requestStack->getCurrentRequest();
+        $this->token = $token;
+        if (is_object($this->token->getToken())) {
+            $user = $this->token->getToken()->getUser();
 
-        $this->cabinetMenu = [
-            [
-                'parent' => [
-                    'name' => 'Профіль',
-                ],
-                'children' => [
-                    [
-                        'name' => 'Перегляд',
-                        'route' => 'index_page',
-                        'routeParams' => [
-
-                        ],
+            $this->cabinetMenu = [
+                [
+                    'parent' => [
+                        'name' => 'Профіль',
                     ],
-                    [
-                        'name' => 'Редагування',
-                        'route' => 'index_page',
-                        'routeParams' => [
+                    'children' => [
+                        [
+                            'name' => 'Перегляд',
+                            'route' => 'index_page',
+                            'routeParams' => [
 
+                            ],
                         ],
-                    ],
-                    [
-                        'name' => 'Зміна паролю',
-                        'route' => 'index_page',
-                        'routeParams' => [
-
+                        [
+                            'name' => 'Редагування',
+                            'route' => 'user_edit',
+                            'routeParams' => [
+                                'slug' => $user->getSlug()
+                            ],
                         ],
-                    ],
-                ],
-            ],
-            [
-                'parent' => [
-                    'name' => 'Запити на благодійність',
-                ],
-                'children' => [
-                    [
-                        'name' => 'Створити запит',
-                        'route' => 'charity_new',
-                        'routeParams' => [
+                        [
+                            'name' => 'Зміна паролю',
+                            'route' => 'index_page',
+                            'routeParams' => [
 
-                        ],
-                    ],
-                    [
-                        'name' => 'Перегляд запитів',
-                        'route' => 'charity_manager_index',
-                        'routeParams' => [
-
+                            ],
                         ],
                     ],
                 ],
-            ],
-        ];
+                [
+                    'parent' => [
+                        'name' => 'Запити на благодійність',
+                    ],
+                    'children' => [
+                        [
+                            'name' => 'Створити запит',
+                            'route' => 'charity_new',
+                            'routeParams' => [
+
+                            ],
+                        ],
+                        [
+                            'name' => 'Перегляд запитів',
+                            'route' => 'charity_manager_index',
+                            'routeParams' => [
+
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+        }
     }
 
     public function getFilters()

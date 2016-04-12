@@ -12,6 +12,7 @@
         <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" public="false">
             <argument type="service" id="app.menu_manager" />
             <argument type="service" id="request_stack" />
+            <argument type="service" id="security.token_storage" />
             <tag name="twig.extension" />
         </service>
 
@@ -52,7 +53,7 @@
             <argument type="service" id="doctrine"/>
         </service>
 
-        <service id="app.form.friend_message" class="AppBundle\Form\Cabinet\CharityType">
+        <service id="app.form.charity" class="AppBundle\Form\Cabinet\CharityType">
             <argument type="service" id="security.token_storage" />
             <tag name="form.type" />
         </service>

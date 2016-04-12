@@ -1,20 +1,18 @@
-{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+{% extends ':Base:base_with_left_sidebar.html.twig' %}
 {% form_theme editForm 'bootstrap_3_layout.html.twig' %}
 
-{% block body %}
+{% block content %}
 
-    {# TODO: customise btns#}
     {{ form_start(editForm) }}
-    {{ form_widget(editForm) }}
-    <br>
-    <input type="submit" value="Update User" class="btn btn-primary btn-form pull-right" />
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h4>Редагування запиту</h4></div>
+        <div class="panel-body">
+            {{ form_widget(editForm) }}
+        </div>
+        <div class="panel-footer">
+            <a href="{{ path("charity_manager_index") }}" class=" btn btn-info btn-form">Назад</a>
+            <input type="submit" value="Зберегти" class="btn btn-success btn-form pull-right" />
+        </div>
+    </div>
     {{ form_end(editForm) }}
-
-    <a href="{{ path("index_page") }}" class="btn btn-default btn-form pull-left">Back to charities</a>
-    <br><br>
-    {{ form_start(deleteForm) }}
-    {{ form_widget(deleteForm) }}
-    <input type="submit" value="Delete User" class="btn btn-danger btn-form pull-right" />
-    {{ form_end(deleteForm) }}
-
 {% endblock %}
