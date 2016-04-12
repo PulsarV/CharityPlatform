@@ -135,6 +135,11 @@ liip_imagine:
             filters:
                 thumbnail: { size: [36, 36], mode: outbound }
 
+        charity_photos:
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound }
+
 fos_elastica:
     clients:
         default: { host: localhost, port: 9200 }

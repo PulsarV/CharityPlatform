@@ -1,0 +1,17 @@
+<div class="money">
+    <div class=" col-lg-6">
+        <div class="panel panel-default text-center">
+            {% if charity.isActive == 0 %}
+                <div class="well" style="background-color: {{ backgroundColor is defined ? backgroundColor : '#ff9999' }};">
+                    Збір коштів завершено.
+                    {% include '@App/Common/Charity/progress.html.twig' %}
+                </div>
+            {% else %}
+                <div class="well" style="background-color: {{ backgroundColor is defined ? backgroundColor : '#00FA9A' }};">
+                    Збір коштів триває.
+                    {% include '@App/Common/Charity/progress.html.twig' %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

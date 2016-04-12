@@ -1,0 +1,24 @@
+{% extends ':Base:base_with_right_sidebar.html.twig' %}
+
+{% block content %}
+    <h1>Організація {{ profile.username}}</h1>
+    <p>
+        <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
+        Назва: {{ profile.organizationName }} <br>
+        Web сайт: <a href="{{ profile.website }}">{{ profile.website }}</a><br>
+        e-mail: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a><br>
+        Телефон: {{ profile.phone }}<br>
+        <small>Дата створення: {{ profile.createdAt|date("m-d-Y H:i:s a") }} </small>
+
+    </p>
+    Запити:
+    {% for charity in profile.charities %}
+        <p> {{ loop.index }}.
+        <a href="{{ path('charity_show', {'slug': charity.slug}) }}"> {{ charity.title }}</a>
+        </p>
+    {% else %}
+         <li>Немає жодного запиту.</li>
+    {% endfor %}
+
+{% endblock %}
+
