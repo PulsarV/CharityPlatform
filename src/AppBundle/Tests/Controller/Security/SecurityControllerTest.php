@@ -6,17 +6,6 @@ use AppBundle\Tests\TestBase;
 
 class SecurityControllerTest extends TestBase
 {
-//    public function testLogin()
-//    {
-//        $client = static::createClient();
-//        $crawler = $client->request('GET', '/login');
-//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//        $this->assertEquals('AppBundle\Controller\Security\SecurityController::loginAction', $client->getRequest()->attributes->get('_controller'));
-//        $text = $crawler->filter('h4')->first()->text();
-//        $this->assertEquals("Авторизація", $text);
-//        $this->assertEquals(1, $crawler->filter('h1')->count());
-//    }
-
     public function testRegistration()
     {
         $client = static::createClient();
@@ -26,7 +15,7 @@ class SecurityControllerTest extends TestBase
         $text = $crawler->filter('h4')->first()->text();
         $this->assertEquals("Реєстрація нового користувача", $text);
         $this->assertEquals(1, $crawler->filter('h1')->count());
-        $this->assertEquals(4, $crawler->filter('h4')->count());
+        $this->assertEquals(3, $crawler->filter('h4')->count());
     }
 
     public function testRegistrationComplete()
