@@ -1,11 +1,13 @@
 {% extends ':Base:base_with_left_sidebar.html.twig' %}
 {% form_theme editForm 'bootstrap_3_layout.html.twig' %}
 
+{% set title = 'Редагування користувача' %}
+
 {% block content %}
 
     {{ form_start(editForm) }}
     <div class="panel panel-primary">
-        <div class="panel-heading"><h4>Редагування запиту</h4></div>
+        <div class="panel-heading"><h4>Редагування користувача</h4></div>
         <div class="panel-body">
             {{ form_widget(editForm) }}
         </div>

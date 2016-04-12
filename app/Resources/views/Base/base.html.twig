@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Online платформа благодійності - {{ page_title() }}</title>
+    <title>Online платформа благодійності - {{ title|default('Перелік запитів') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/icomoon-social.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -20,7 +20,6 @@
     <link rel="shortcut icon" href="{{ asset('images/ico/favicon.ico') }}">
 </head>
 <body>
-
 {# begin menu #}
     {% block main_menu %}
         {% include ':Menu:main_menu.html.twig' %}
@@ -29,7 +28,7 @@
 
     {# begin submenu #}
     {% block sub_menu %}
-        {% include ':Menu:sub_menu_common.html.twig' %}
+        {% include ':Menu:sub_menu_common.html.twig' with {'pagetitle': title|default('Перелік запитів')} %}
     {% endblock %}
     {# end submenu #}
 

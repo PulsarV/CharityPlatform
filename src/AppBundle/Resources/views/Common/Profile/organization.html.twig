@@ -1,14 +1,16 @@
 {% extends ':Base:base_with_right_sidebar.html.twig' %}
 
+{% set title = 'Організації' %}
+
 {% block content %}
     <h1>Організації:</h1>
-    <table border="2px" class="table table-condensed">
+    <table border="2px" class="table table-condensed table-user">
         <tr class="success">
             <th>№</th>
             <th>Нікнейм</th>
             <th>Представник</th>
         </tr>
-        <tr class="info">
+        <tr>
 
             <td>
                 {% for organization in organizations %}

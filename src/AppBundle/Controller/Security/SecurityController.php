@@ -150,20 +150,6 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/profile/{slug}", name="show_profile_user")
-     * @Template()
-     * @return Response
-     */
-    public function showProfileAction()
-    {
-
-        return [
-
-        ];
-
-    }
-
-    /**
      * @Route("/activation/{code}", name="profile_activation")
      * @return Response
      */

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\Entity\User;
 use AppBundle\Services\MenuManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -27,20 +28,20 @@ class AppExtension extends \Twig_Extension
         $this->menuManager = $menuManager;
         $this->request = $requestStack->getCurrentRequest();
         $this->token = $token;
-        if (is_object($this->token->getToken())) {
+        if ($this->token->getToken() !== null && $this->token->getToken()->getUser() instanceof User) {
             $user = $this->token->getToken()->getUser();
 
             $this->cabinetMenu = [
                 [
                     'parent' => [
-                        'name' => 'Профіль',
+                        'name' => 'Мій Профіль',
                     ],
                     'children' => [
                         [
                             'name' => 'Перегляд',
-                            'route' => 'index_page',
+                            'route' => 'show_person_profile',
                             'routeParams' => [
-
+                                'slug' => $user->getSlug()
                             ],
                         ],
                         [
@@ -59,6 +60,30 @@ class AppExtension extends \Twig_Extension
                         ],
                     ],
                 ],
+                [
+                    'parent' => [
+                        'name' => 'Запити на благодійність',
+                    ],
+                    'children' => [
+                        [
+                            'name' => 'Створити запит',
+                            'route' => 'charity_new',
+                            'routeParams' => [
+
+                            ],
+                        ],
+                        [
+                            'name' => 'Перегляд запитів',
+                            'route' => 'charity_manager_index',
+                            'routeParams' => [
+
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+        } else {
+            $this->cabinetMenu = [
                 [
                     'parent' => [
                         'name' => 'Запити на благодійність',

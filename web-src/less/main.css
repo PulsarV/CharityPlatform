@@ -623,7 +623,7 @@ body > section.emerald {
 }
 #title h1 {
   margin: 0;
-  padding-top: 40px;
+  padding-top: 5px;
   font-size: 40px;
   font-weight: 300;
 }
@@ -1064,7 +1064,7 @@ ul.faq li > div h3 {
 }
 .emerald .lng-menu,
 .emerald .city-menu {
-  line-height: 60px;
+  line-height: 55px;
 }
 .emerald .city-menu button,
 .emerald .lng-menu button {
@@ -1371,14 +1371,34 @@ ul.cabinet-pagination > li:hover > a {
   float: right;
   margin: 0 30px;
 }
-.blog .table {
+.blog .table-user {
     font-size: 15px;
     text-align: center;
 }
-.blog .table a {
+.blog .table-user a {
     color: #ffffff;
 }
-.blog .table td li {
+.blog .table-user td li {
     margin: 5px 0;
     height: 28px;
+}
+.row p.description {
+    font-size: 15px;
+    margin: 15px 0;
+}
+.row p.description .title {
+    font-size: 20px;
+    color: #ffffff;
+    background: #337ab7;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-left: 5px;
+}
+.username {
+    font-size: 20px;
+    color: #2ecc71;
+    font-weight: bold;
+}
+.userinfo {
+    text-align: center;
 }
