@@ -487,21 +487,23 @@ class Charity
     {
         //TODO: add file limit
         /** @var UploadedFile $uploadedFile */
-        foreach($this->uploadedFiles as $uploadedFile) {
-            if ($uploadedFile !== null) {
-                $file = new CharityImage();
+        if(!empty($this->uploadedFiles)) {
+            foreach($this->uploadedFiles as $uploadedFile) {
+                if ($uploadedFile !== null) {
+                    $file = new CharityImage();
 
-                $path = sha1(uniqid(mt_rand(), true)).'.'.$uploadedFile->guessExtension();
-                $file->setPath($path);
-                $file->setSize($uploadedFile->getClientSize());
-                $file->setName($uploadedFile->getClientOriginalName());
+                    $path = sha1(uniqid(mt_rand(), true)).'.'.$uploadedFile->guessExtension();
+                    $file->setPath($path);
+                    $file->setSize($uploadedFile->getClientSize());
+                    $file->setName($uploadedFile->getClientOriginalName());
 
-                $uploadedFile->move($this->getPath(), $path);
+                    $uploadedFile->move($this->getPath(), $path);
 
-                $this->getCharityImages()->add($file);
-                $file->setCharity($this);
+                    $this->getCharityImages()->add($file);
+                    $file->setCharity($this);
 
-                unset($uploadedFile);
+                    unset($uploadedFile);
+                }
             }
         }
     }

@@ -3,6 +3,8 @@
 namespace AppBundle\Services;
 
 use AppBundle\Entity\Charity;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\User;
 use AppBundle\Form\Common\FindCharityType;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 use Symfony\Component\DependencyInjection\Container;
@@ -180,5 +182,15 @@ class CharityManager
         } else {
             $charity->setBanner($banner);
         }
+    }
+
+    public function addCharityComment(Charity $charity, Comment $comment, User $user)
+    {
+        if ($user !== null) {
+            $comment->setUser($user);
+        }
+        $comment->setCharity($charity);
+        $this->em->persist($comment);
+        $this->em->flush();
     }
 }

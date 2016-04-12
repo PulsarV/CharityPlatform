@@ -39,17 +39,22 @@
         </div>
 
         {% if app.request.attributes.get('_route') == 'charity_show' %}
-            <div id="comment-form">
-                <h3>Залишити коментар</h3>
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <textarea rows="8" class="form-control" placeholder="Залишіть свій коментар"></textarea>
-                        </div>
-                    </div>
+            {% if is_granted('ROLE_USER') %}
+                <div id="comment-form">
+                    <h3>Залишити коментар</h3>
+                    {{ form_start(comment_form) }}
+                    {{ form_widget(comment_form) }}
+                    <br>
                     <button type="submit" class="btn btn-danger btn-default">Зберегти коментар</button>
-                </form>
-            </div>
+                    {{ form_end(comment_form) }}
+                </div>
+            {% else %}
+                <div class="comments">
+                    <p  style="text-align: center">
+                        Щоб комментувати запити слід - <a href="{{ path('login')}}" class=" btn btn-primary">авторизуватися</a><br>
+                    </p>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>
