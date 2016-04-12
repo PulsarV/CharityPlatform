@@ -31,9 +31,9 @@ parameters:
     # Number of items on each page in cabinet
     app.cabinet_paginator_count_per_page: 15
 
-    vkontakte_app_id: ~
-    vkontakte_app_secret: ~
-    facebook_app_id: ~
-    facebook_app_secret: ~
-    google_app_id: ~
-    google_app_secret: ~
+    vkontakte_app_id: 5399895
+    vkontakte_app_secret: 7fFdVqlrdQ0pIun34I8b
+    facebook_app_id: 1020999824602547
+    facebook_app_secret: bcaa5454a5e1ca4839a1b164aa09bad9
+    google_app_id: 929543229226-v98krb32p67qabj2lfpfhhlhbk89ek58.apps.googleusercontent.com
+    google_app_secret: GCaFPCS_Z2WmZtRzDFR3zLDw
