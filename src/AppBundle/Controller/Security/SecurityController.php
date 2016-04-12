@@ -234,6 +234,18 @@ class SecurityController extends Controller
     }
 
     /**
+     * @Route("/recovering/{code}", name="profile_recovering")
+     * @return Response
+     */
+    public function recoveringAction($code)
+    {
+        $userManager = $this->get('app.user_manager');
+        $redirect = $userManager->checkRecoverCode($code);
+
+        return $this->redirectToRoute($redirect);
+    }
+
+    /**
      * @Route("/activation-success", name="recover_success")
      * @Template()
      * @return Response
@@ -244,7 +256,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/activation-fail", name="activation_fail")
+     * @Route("/activation-fail", name="recover_fail")
      * @Template()
      * @return Response
      */
