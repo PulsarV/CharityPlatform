@@ -23,7 +23,13 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page, $this->container->getParameter('app.cabinet_paginator_count_per_page'));
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated(
+            'none',
+            'none',
+            'd',
+            $page,
+            $this->container->getParameter('app.cabinet_paginator_count_per_page')
+        );
 
         return [
             'pager' => $pager,
@@ -80,6 +86,7 @@ class CharityController extends Controller
 
     /**
      * @Route("/charities/{slug}/delete", name="charity_delete")
+     * @Method({"GET", "DELETE"})
      * @Template()
      * @param $slug
      * @param Request $request
@@ -100,26 +107,34 @@ class CharityController extends Controller
                 'Unable to find Charity..'
             );
         }
-
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(CharityType::class, $charity);
-
-        if ($request->getMethod() === 'POST') {
-
+        $form = $this->createDeleteArticleForm($charity);
+        if($request->getMethod() == 'DELETE') {
             $form->handleRequest($request);
-
             if ($form->isValid()) {
                 $em->remove($charity);
                 $em->flush();
-
-                return $this->redirectToRoute('charity_index');
+                return $this->redirectToRoute('charity_manager_index');
             }
         }
 
+
         return [
-            'form' => $form->createView(),
+            'delete_form' => $form->createView(),
             'charity' => $charity,
         ];
+    }
+
+    /**
+     * @param Charity $charity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createDeleteArticleForm(Charity $charity)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('charity_delete', array('slug' => $charity->getSlug())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
     }
 
     /**

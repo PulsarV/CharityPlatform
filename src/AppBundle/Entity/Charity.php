@@ -120,9 +120,9 @@ class Charity
 
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
@@ -132,7 +132,6 @@ class Charity
     private $tags;
 
     /**
-     //TODO: add file type validation
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\CharityImage", mappedBy="charity", cascade={"persist"}, orphanRemoval=true)
      */
     private $charityImages;
