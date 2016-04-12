@@ -1,17 +1,15 @@
 language: php
 php:
   - 5.5
-
 services:
   - mysql
   - elasticsearch
-
 before_script:
   - sleep 10
   - composer self-update
   - composer install
   - mysql -e 'create database charity;'
-  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  - cp app/config/parameters_travis.yml app/config/parameters.yml
   - app/console cache:warmup --env=test --quiet
 script:
   - phpunit -c app
