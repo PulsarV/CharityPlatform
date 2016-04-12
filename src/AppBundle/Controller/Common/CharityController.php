@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Common;
 
 use AppBundle\Form\Common\FindCharityModel;
 use AppBundle\Form\Common\FindCharityType;
+use AppBundle\Entity\Charity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -163,5 +164,40 @@ class CharityController extends Controller
     public function contactAction()
     {
         return [ ];
+    }
+
+
+    /**
+     * @Route("/persons", name="persons")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function personAction()
+    {
+        $em =$this->getDoctrine()->getManager();
+        $persons = $em
+            ->getRepository('AppBundle:Person')
+            ->findAll();
+
+        return [
+            'persons' => $persons,
+        ];
+    }
+
+    /**
+     * @Route("/organizations", name="organizations")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function organizationAction()
+    {
+        $em =$this->getDoctrine()->getManager();
+        $organizations = $em
+            ->getRepository('AppBundle:Organization')
+            ->findAll();
+
+        return [
+            'organizations' => $organizations,
+        ];
     }
 }

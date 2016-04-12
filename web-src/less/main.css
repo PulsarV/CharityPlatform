@@ -652,6 +652,7 @@ body > section.emerald {
   -moz-box-shadow: none;
   box-shadow: none;
   border: 0;
+  margin-bottom: 0;
 }
 ul.breadcrumb {
   /*margin-top: 10px;*/
@@ -1369,4 +1370,15 @@ ul.cabinet-pagination > li:hover > a {
 .btn-form-right {
   float: right;
   margin: 0 30px;
+}
+.blog .table {
+    font-size: 15px;
+    text-align: center;
+}
+.blog .table a {
+    color: #ffffff;
+}
+.blog .table td li {
+    margin: 5px 0;
+    height: 28px;
 }

@@ -1,0 +1,38 @@
+{% extends ':Base:base_with_right_sidebar.html.twig' %}
+
+{% block content %}
+<h1>Користувач:</h1>
+    <table border="2px" class="table table-condensed">
+        <tr class="success">
+            <th>№</th>
+            <th>Нікнейм</th>
+            <th>Ім’я</th>
+        </tr>
+        <tr class="info">
+
+            <td>
+                {% for person in persons %}
+                    <li>{{ loop.index }}</li>
+                {% endfor %}
+            </td>
+
+            <td>
+                {% for person in persons %}
+                    <li><a href="{{ path('show_person_profile', {'slug': person.slug}) }}" class="btn btn-xs btn-info">{{ person.username }}</a></li>
+                {% else %}
+                    <li>Тут пусто, станьте першим</li>
+                {% endfor %}
+            </td>
+
+            <td>
+                {% for person in persons %}
+                    <li>{{ person.firstname }} {{ person.lastname }}</li>
+                {% else %}
+                    <li>Тут пусто, станьте першим</li>
+                {% endfor %}
+            </td>
+
+        </tr>
+    </table>
+{% endblock %}
+
