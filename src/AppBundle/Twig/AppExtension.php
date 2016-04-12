@@ -39,9 +39,9 @@ class AppExtension extends \Twig_Extension
                     'children' => [
                         [
                             'name' => 'Перегляд',
-                            'route' => 'show_person_profile',
+                            'route' => 'check_profile',
                             'routeParams' => [
-                                'slug' => $user->getSlug()
+
                             ],
                         ],
                         [

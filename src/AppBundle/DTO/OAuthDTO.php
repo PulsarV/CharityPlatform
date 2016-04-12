@@ -32,7 +32,10 @@ class OAuthDTO
         } else {
             $this->person->setFacebookId($response->getUsername());
             if (empty($data['birthday'])) {
-                throw new \Exception('You can\'t autorize without your birthday information');
+                throw new \Exception(
+                    'You can\'t autorize without your birthday information.'.
+                    ' Add it in your information at the facebook.com site'
+                );
             }
             $bdate = $data['birthday'];
             $bdate = \DateTime::createFromFormat('m/d/Y', $bdate);

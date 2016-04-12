@@ -79,6 +79,7 @@ class CharityManager
      */
     public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
+        $qb = null;
         if ($filterName == '') {
             new \Exception('Щось пішло не так');
         }
@@ -108,6 +109,9 @@ class CharityManager
             default:
                 new \Exception('Щось пішло не так');
                 break;
+        }
+        if ($qb === null) {
+            return null;
         }
         $adapter = new DoctrineORMAdapter($qb);
         $pagerfanta = new Pagerfanta($adapter);

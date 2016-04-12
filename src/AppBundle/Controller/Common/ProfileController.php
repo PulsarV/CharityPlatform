@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\User;
 
 /**
  * @Route("/cabinet")
@@ -86,5 +87,26 @@ class ProfileController extends Controller
         return [
             'organizations' => $organizations,
         ];
+    }
+
+    /**
+     * @Route("/check-profile", name="check_profile")
+     * @Method({"GET"})
+     */
+    public function checkProfileAction()
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($user->getEntityDiscr() == 'person') {
+            return $this->redirectToRoute(
+                'show_person_profile',
+                array('slug' => $user->getSlug())
+            );
+        } elseif ($user->getEntityDiscr() == 'organization') {
+            return $this->redirectToRoute(
+                'show_organization_profile',
+                array('slug' => $user->getSlug())
+            );
+        }
     }
 }

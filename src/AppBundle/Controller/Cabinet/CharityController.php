@@ -23,8 +23,14 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $accesType = 'none';
+        } else {
+            $accesType = $this->get('security.token_storage')->getToken()->getUser()->getSlug();
+        }
+        var_dump($accesType);
         $pager = $this->get('app.charity_manager')->getCharityListPaginated(
-            'none',
+            $accesType,
             'none',
             'd',
             $page,
