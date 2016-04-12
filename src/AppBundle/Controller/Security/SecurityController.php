@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Security;
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
 use AppBundle\Form\Security\LoginModel;
+use AppBundle\Form\Security\RecoverPasswordType;
 use AppBundle\Form\Security\RegisterOrganizationType;
 use AppBundle\Form\Security\LoginType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -77,6 +78,7 @@ class SecurityController extends Controller
 
     /**
      * @Route("/register-person", name="registration_person")
+     * @Method({"GET", "POST"})
      * @Template()
      * @param Request $request
      * @return Response
@@ -114,6 +116,7 @@ class SecurityController extends Controller
 
     /**
      * @Route("/register-organization", name="registration_organization")
+     * @Method({"GET", "POST"})
      * @Template()
      * @param Request $request
      * @return Response
@@ -177,6 +180,75 @@ class SecurityController extends Controller
      * @return Response
      */
     public function activationFailAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/recover", name="recover_password")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @return Response
+     */
+    public function recoverPasswordAction(Request $request)
+    {
+        $form = $this->createForm(RecoverPasswordType::class);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $email = $form->get('email')->getData();
+                $userManager = $this->get('app.user_manager');
+                $result = $userManager->recoverPassword($email);
+
+                if($result) {
+                    return [
+                        'error' => $result,
+                        'form' => $form->createView(),
+                    ];
+                } else {
+                    return $this->redirectToRoute(
+                        'recover_complete'
+                    );
+                }
+            }
+        }
+        return [
+            'error' => null,
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/complete-recover", name="recover_complete")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function recoverCompleteAction(Request $request)
+    {
+        return [
+
+        ];
+    }
+
+    /**
+     * @Route("/activation-success", name="recover_success")
+     * @Template()
+     * @return Response
+     */
+    public function recoverSuccessAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/activation-fail", name="activation_fail")
+     * @Template()
+     * @return Response
+     */
+    public function recoverFailAction()
     {
         return [];
     }

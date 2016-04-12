@@ -2,14 +2,10 @@
 
 namespace AppBundle\Services;
 
-use AppBundle\Entity\Organization;
-use AppBundle\Entity\Person;
 use AppBundle\Entity\User;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserManager
 {
@@ -18,6 +14,7 @@ class UserManager
     protected $em;
     protected $uploadableManager;
     protected $mailSender;
+    protected $encoder;
 
     /**
      * UserManager constructor.
@@ -26,13 +23,20 @@ class UserManager
     public function __construct(
         EntityManager $em,
         UploadableManager $uploadableManager,
-        EmailSender $mailSender
+        EmailSender $mailSender,
+        UserPasswordEncoder $encoder
     ) {
         $this->em = $em;
         $this->uploadableManager = $uploadableManager;
         $this->mailSender = $mailSender;
+        $this->encoder = $encoder;
     }
 
+    /**
+     * @param User $user
+     * @param string $avatar
+     * @param array $files
+     */
     public function setAvatar(
         User $user,
         $avatar = self::STANDARTAVATAR,
@@ -45,6 +49,9 @@ class UserManager
         }
     }
 
+    /**
+     * @param User $user
+     */
     public function sendRegistrationCode(User $user)
     {
         $code = $this->setTmpCode($user);
@@ -56,16 +63,16 @@ class UserManager
             array(
                 'code' => $code
             )
-
         );
     }
 
+    /**
+     * @param $code
+     * @return string
+     */
     public function checkActivationCode($code)
     {
-        $user = $this->em->getRepository('AppBundle:Person')->findOneBy(['temporaryPassword' => $code]);
-        if (!$user) {
-            $user = $this->em->getRepository('AppBundle:Organization')->findOneBy(['temporaryPassword' => $code]);
-        }
+        $user = $this->em->getRepository('AppBundle:User')->findOneBy(['temporaryPassword' => $code]);
 
         if ($user) {
             $user->setIsActive(true);
@@ -78,11 +85,71 @@ class UserManager
         }
     }
 
+    /**
+     * @param User $user
+     * @return mixed
+     */
     protected function setTmpCode(User $user)
     {
         $user->setTemporaryPassword(md5(uniqid($user->getUsername(), true)));
         $this->em->flush();
 
         return $user->getTemporaryPassword();
+    }
+
+    public function recoverPassword($email)
+    {
+        $user = $this->em->getRepository('AppBundle:User')->findOneBy(['email' => $email]);
+        if (!$user) {
+            return 'User is not registered';
+        } elseif ($user->getTemporaryPassword() !== null && $user->getIsActive() == false) {
+            return 'User is not activated';
+        } elseif (
+            $user->getFacebookId() !== null ||
+            $user->getVkontakteId() !== null ||
+            $user->getGoogleId() !== null
+        ) {
+            return 'Users from social networks doesn\'t have passwords';
+        } else {
+            $code = $this->setTmpCode($user);
+            $this->mailSender->send(
+                $this->mailSender->getSender(),
+                $user->getEmail(),
+                'Recover password in Online CharityPlatform',
+                'AppBundle:Emails:recover.html.twig',
+                array(
+                    'code' => $code
+                )
+            );
+        }
+    }
+
+    /**
+     * @param $code
+     * @return string
+     */
+    public function checkRecoverCode($code)
+    {
+        $user = $this->em->getRepository('AppBundle:User')->findOneBy(['temporaryPassword' => $code]);
+
+        if ($user) {
+            $password = uniqid($user->getSlug(), true);
+            $user->setPassword($this->encoder->encodePassword($user, $password));
+            $user->setTemporaryPassword(null);
+            $this->em->flush();
+            $this->mailSender->send(
+                $this->mailSender->getSender(),
+                $user->getEmail(),
+                'Activate account in Online CharityPlatform',
+                'AppBundle:Emails:new-password.html.twig',
+                array(
+                    'code' => $code
+                )
+            );
+
+            return 'recover_success';
+        } else {
+            return 'recover_fail';
+        }
     }
 }

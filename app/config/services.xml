@@ -20,6 +20,7 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="stof_doctrine_extensions.uploadable.manager" />
             <argument type="service" id="app.mail_sender" />
+            <argument type="service" id="security.password_encoder" />
         </service>
 
         <service id="app.menu_manager" class="AppBundle\Services\MenuManager">

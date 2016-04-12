@@ -1,0 +1,14 @@
+{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+
+{% set title = 'Відновлення паролю не успішне' %}
+
+{% block content %}
+    {% embed ':Panel:back_panel.html.twig'%}
+        {% block panel_title %}Відновлення паролю не було виконано успішно{% endblock %}
+        {% block panel_body %}
+            <p>Переконайтеся в правельності використаного посилання для активації.</p>
+            <p>Або зверніться за допомогою за <a href="{{ path('contact_page') }}">контактами</a>.</p>
+        {% endblock %}
+        {% block back_button %}На головну{% endblock %}
+    {% endembed %}
+{% endblock %}

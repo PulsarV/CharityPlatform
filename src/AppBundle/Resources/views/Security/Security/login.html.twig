@@ -27,7 +27,7 @@
                 {{ form_widget(login_form.password, {"attr": {"placeholder": "Пароль"}}) }}
                 <div class="form-group form-inline">
                     {{ form_widget(login_form.remember_me, {"attr": {"class": "checkbox"}, "label": " Запам'ятати мене"}) }}
-                    <a class="pull-right checkbox forgot-password" href="#">Нагадати пароль</a>
+                    <a class="pull-right checkbox forgot-password" href="{{ path("recover_password") }}">Нагадати пароль</a>
                 </div>
             {% endblock %}
             {% block back_button_url %}{{ path('registration') }}{% endblock %}
