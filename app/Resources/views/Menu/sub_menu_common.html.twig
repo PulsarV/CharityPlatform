@@ -17,18 +17,6 @@
                         </ul>
                     </span>
                 </div>
-                <div class="city-menu">
-                    <span class="dropdown">
-                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Ваш регіон: {{ current_city() }}</button>
-                        <ul class="dropdown-menu">
-                            {% for city in available_cities() %}
-                                {% if city != current_city() %}
-                                    <li><a href="{{ path('config_show', {'param': 'city', 'value': city}) }}">{{ city }}</a></li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </span>
-                </div>
             </div>
             <div class="container col-sm-4">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
