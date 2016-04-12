@@ -35,6 +35,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      paginator_length: %app.paginator_length%
+      cabinet_paginator_length: %app.cabinet_paginator_length%
 
 # Doctrine Configuration
 doctrine:
@@ -104,3 +107,117 @@ stof_doctrine_extensions:
             timestampable: true
             softdeleteable: true
             uploadable: true
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+    driver: imagick
+    filter_sets:
+        cache: ~
+        charity_image:
+            quality: 100
+            filters:
+                thumbnail: { size: [750, 300], mode: outbound }
+
+        charity_image_small:
+             quality: 100
+             filters:
+                thumbnail: { size: [75, 75], mode: outbound }
+
+        user_avatar:
+            quality: 100
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
+
+        user_avatar_small:
+            quality: 100
+            filters:
+                thumbnail: { size: [36, 36], mode: outbound }
+
+        charity_photos:
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound }
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            client: default
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            app_analyzer:
+                                type: custom
+                                tokenizer: standard
+                                filter: [standard, asciifolding, lowercase, snowball, worddelimiter, app_ngram]
+                            app_search_analyzer:
+                                type: custom
+                                tokenizer: standard
+                                filter: [standard, asciifolding, lowercase, snowball, worddelimiter, app_ngram]
+                        filter:
+                            snowball:
+                                type: snowball
+                                language: English
+                            app_ngram:
+                                type: "nGram"
+                                side: front
+                                min_gram: 3
+                                max_gram: 20
+                            worddelimiter :
+                                 type: word_delimiter
+            types:
+                charity:
+                    mappings:
+                        title: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        content: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        category:
+                            type: "object"
+                            properties:
+                                title: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        user:
+                            type: "object"
+                            properties:
+                                username: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                        tags:
+                            type: "object"
+                            properties:
+                                tagName: { analyzer: app_search_analyzer, analyzer: app_analyzer, filter: app_ngram, type: string }
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\Charity
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+hwi_oauth:
+    firewall_names: [secured_area]
+
+    resource_owners:
+        vkontakte:
+            type: vkontakte
+            client_id: "%vkontakte_app_id%"
+            client_secret: "%vkontakte_app_secret%"
+            scope: "email, bdate"
+            options:
+                fields: "bdate"
+        facebook:
+            type: facebook
+            client_id: "%facebook_app_id%"
+            client_secret: "%facebook_app_secret%"
+            scope: "email, public_profile, user_birthday"
+            options:
+                display: popup
+            infos_url: "https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,birthday"
+            paths:
+                email: email
+        google:
+            type: google
+            client_id: "%google_app_id%"
+            client_secret: "%google_app_secret%"
+            scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+
+

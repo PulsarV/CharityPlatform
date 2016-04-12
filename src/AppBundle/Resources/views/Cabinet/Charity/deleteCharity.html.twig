@@ -1,21 +1,30 @@
 {% extends ':Base:base_with_left_sidebar.html.twig' %}
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block content %}
- <h2>Видалити запит:</h2>
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <a href="" class=" btn btn-info btn-form">Back</a>
-        <input type="submit" value="Видалити" class="btn btn-success btn-form pull-right" />
-    {{ form_end(form) }}
+    <div class="col-sm-push-2 col-sm-8">
+    <div class="panel panel-primary submit-form">
+        <div class="panel-heading"><h4>Підтвердження видалення</h4></div>
+        <div class="panel-body">
+            <h3>Ви дійсно бажаєте видалити запит</h3>
+            <h4>{{ charity.title }}?</h4>
+        </div>
+        <div class="panel-footer">
+            <a href="{{ path('charity_manager_index') }}" class=" btn btn-info btn-form">Назад</a>
+            <input type="submit" value="Видалити" class="btn btn-danger btn-form pull-right" />
+        </div>
+    </div>
+    </div>
 {% endblock %}
 
-{% block additional_javascripts %}
-    {#<script src="{{ asset('js/tinymce.min.js') }}"></script>#}
-    <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-    <script>
-        tinymce.init({
-        selector: 'textarea'
-        });
-    </script>
-{% endblock %}
+
+
+{#{% extends ':Base:base_charity_editor.html.twig' %}#}
+
+{#{% block content %}#}
+ {#<h2>Видалити запит:</h2>#}
+    {#{{ form_start(form) }}#}
+        {#{{ form_widget(form) }}#}
+        {#<a href="" class=" btn btn-info btn-form">Back</a>#}
+        {#<input type="submit" value="Видалити" class="btn btn-success btn-form pull-right" />#}
+    {#{{ form_end(form) }}#}
+{#{% endblock %}#}

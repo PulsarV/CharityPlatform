@@ -1,14 +1,9 @@
 <!-- Search -->
+
 <div class="widget search">
-    <form role="form">
-        <div class="input-group">
-            <input type="text" class="form-control" autocomplete="off" placeholder="Пошук">
-                        <span class="input-group-btn">
-                            <button class="btn btn-info" type="button" data-toggle="tooltip" data-placement="right" title="Розширений пошук"><i class="fa fa-search-plus"></i></button>
-                            <button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="right" title="Пошук"><i class="fa fa-search"></i></button>
-                        </span>
-        </div>
-    </form>
+    {% block find_charity %}
+        {{ render(controller('AppBundle:Common/Charity:findCharitiesForm')) }}
+    {% endblock find_charity %}
 </div><!-- /Search -->
 
 <div class="widget top-requests">
@@ -16,7 +11,7 @@
     {% for important_charity in important_charities() %}
         <div class="media">
             <div class="pull-left">
-                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+                <img src="{{ asset('uploads/charities/' ~ important_charity.banner)|imagine_filter('charity_image_small') }}"/>
             </div>
             <div class="media-body">
                 <span class="media-heading"><a href="{{ path('charity_show', {'slug': important_charity.slug}) }}">{{ important_charity.title }}</a></span>
@@ -32,7 +27,7 @@
     {% for active_charity in active_charities() %}
         <div class="media">
             <div class="pull-left">
-                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+                <img src="{{ asset('uploads/charities/' ~ active_charity.banner)|imagine_filter('charity_image_small') }}"/>
             </div>
             <div class="media-body">
                 <span class="media-heading"><a href="{{ path('charity_show', {'slug': active_charity.slug}) }}">{{ active_charity.title }}</a></span>
@@ -48,7 +43,7 @@
     {% for completed_charity in completed_charities() %}
         <div class="media">
             <div class="pull-left">
-                <img src="{{ asset('images/test/thumb1.jpg') }}" alt="">
+                <img src="{{ asset('uploads/charities/' ~ completed_charity.banner)|imagine_filter('charity_image_small') }}"/>
             </div>
             <div class="media-body">
                 <span class="media-heading"><a href="{{ path('charity_show', {'slug': completed_charity.slug}) }}">{{ completed_charity.title }}</a></span>

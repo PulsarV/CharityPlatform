@@ -3,18 +3,79 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Services\MenuManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * Class AppExtension
+ * @package AppBundle\Twig
+ */
 class AppExtension extends \Twig_Extension
 {
     protected $menuManager;
+    protected $cabinetMenu;
+    protected $request;
 
     /**
      * AppExtension constructor.
-     * @param $menuManager
+     * @param MenuManager $menuManager
+     * @param RequestStack $requestStack
      */
-    public function __construct(MenuManager $menuManager)
+    public function __construct(MenuManager $menuManager, RequestStack $requestStack)
     {
         $this->menuManager = $menuManager;
+        $this->request = $requestStack->getCurrentRequest();
+
+        $this->cabinetMenu = [
+            [
+                'parent' => [
+                    'name' => 'Профіль',
+                ],
+                'children' => [
+                    [
+                        'name' => 'Перегляд',
+                        'route' => 'index_page',
+                        'routeParams' => [
+
+                        ],
+                    ],
+                    [
+                        'name' => 'Редагування',
+                        'route' => 'index_page',
+                        'routeParams' => [
+
+                        ],
+                    ],
+                    [
+                        'name' => 'Зміна паролю',
+                        'route' => 'index_page',
+                        'routeParams' => [
+
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'parent' => [
+                    'name' => 'Запити на благодійність',
+                ],
+                'children' => [
+                    [
+                        'name' => 'Створити запит',
+                        'route' => 'charity_new',
+                        'routeParams' => [
+
+                        ],
+                    ],
+                    [
+                        'name' => 'Перегляд запитів',
+                        'route' => 'charity_manager_index',
+                        'routeParams' => [
+
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function getFilters()
@@ -27,7 +88,6 @@ class AppExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('page_title', [$this, 'getPageTitle']),
             new \Twig_SimpleFunction('all_categories', [$this, 'getAllCategories']),
-            new \Twig_SimpleFunction('bread_crumbs', [$this, 'getBreadCrumbs']),
             new \Twig_SimpleFunction('available_languages', [$this, 'getAvailableLanguages']),
             new \Twig_SimpleFunction('current_language', [$this, 'getCurrentLanguage']),
             new \Twig_SimpleFunction('available_cities', [$this, 'getAvailableCities']),
@@ -36,6 +96,9 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFunction('active_charities', [$this, 'getActiveCharities']),
             new \Twig_SimpleFunction('completed_charities', [$this, 'getCompletedCharities']),
             new \Twig_SimpleFunction('tag_cloud_elements', [$this, 'getTagCloudElements']),
+            new \Twig_SimpleFunction('cabinet_menu_elements', [$this, 'getCabinetMenuElements']),
+            new \Twig_SimpleFunction('active_parent_cabinet_menu_element_name', [$this, 'getActiveParentCabinetMenuElementName']),
+            new \Twig_SimpleFunction('active_child_cabinet_menu_element_name', [$this, 'getActiveChildCabinetMenuElementName']),
         ];
     }
 
@@ -47,11 +110,6 @@ class AppExtension extends \Twig_Extension
     public function getAllCategories()
     {
         return $this->menuManager->getAllCategories();
-    }
-
-    public function getBreadCrumbs()
-    {
-        return $this->menuManager->getBreadCrumbs();
     }
 
     public function getAvailableLanguages()
@@ -92,6 +150,41 @@ class AppExtension extends \Twig_Extension
     public function getTagCloudElements()
     {
         return $this->menuManager->getTagCloudElements();
+    }
+
+    public function getCabinetMenuElements()
+    {
+        return $this->cabinetMenu;
+    }
+
+    public function getActiveParentCabinetMenuElementName()
+    {
+        $currentRoute = $this->request->get('_route');
+
+        foreach ($this->cabinetMenu as $menuSection) {
+            foreach ($menuSection['children'] as $childElement) {
+                if ($currentRoute === $childElement['route']) {
+                    return $menuSection['parent']['name'];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function getActiveChildCabinetMenuElementName()
+    {
+        $currentRoute = $this->request->get('_route');
+
+        foreach ($this->cabinetMenu as $menuSection) {
+            foreach ($menuSection['children'] as $childElement) {
+                if ($currentRoute === $childElement['route']) {
+                    return $childElement['name'];
+                }
+            }
+        }
+
+        return null;
     }
 
     public function getName()

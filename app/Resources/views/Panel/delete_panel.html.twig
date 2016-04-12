@@ -1,0 +1,6 @@
+{% extends ':Panel:base_panel.html.twig' %}
+
+{% block panel_footer %}
+    {{ parent() }}
+    {% spaceless %}<input type="submit" value="{%- block submit_button -%}Видалити{%- endblock -%}" class="btn btn-danger btn-form pull-right" />{% endspaceless %}
+{% endblock %}

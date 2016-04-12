@@ -2,13 +2,13 @@
 
 {% block content %}
 <h1>Користувач:</h1>
-       <table border="2px">
-        <tr>
+    <table border="2px" class="table table-condensed">
+        <tr class="success">
             <th>№</th>
             <th>Нікнейм</th>
             <th>Ім’я</th>
         </tr>
-        <tr>
+        <tr class="info">
 
             <td>
                 {% for person in persons %}
@@ -18,15 +18,17 @@
 
             <td>
                 {% for person in persons %}
-                    <li><a href="{{ path('show_person_profile', {'slug': person.slug}) }}">{{ person.username }}</a></li>
+                    <li><a href="{{ path('show_person_profile', {'slug': person.slug}) }}" class="btn btn-xs btn-info">{{ person.username }}</a></li>
                 {% else %}
-                    <li>Тут пусто, станьте першим)</li>
+                    <li>Тут пусто, станьте першим</li>
                 {% endfor %}
             </td>
 
             <td>
                 {% for person in persons %}
                     <li>{{ person.firstname }} {{ person.lastname }}</li>
+                {% else %}
+                    <li>Тут пусто, станьте першим</li>
                 {% endfor %}
             </td>
 

@@ -1,0 +1,55 @@
+<img class="img-responsive img-blog" src="{{ asset('uploads/charities/' ~ charity.banner)|imagine_filter('charity_image') }}" alt=""/>
+<div class="blog-content">
+    <h3>{{ charity.title }}</h3>
+    {% include ':Charity:charity_header.html.twig' %}
+    {{ charity.content | raw }}
+    <hr>
+    {% include '@App/Common/Charity/status.html.twig' %}
+    <iframe width="520" height="415"
+            src="http://www.youtube.com/embed/XGSy3_Czz8k">
+    </iframe>
+
+    <div class="photos">
+        {% for charityImage in charity.charityImages %}
+            <img src="{{ asset('uploads/charities/' ~ charityImage.path)|imagine_filter('charity_photos') }}"/>
+        {% endfor %}
+    </div>
+    Банківський рахунок:<br>
+    {{ charity.user.bankDetails }}<br>
+    {% include ':Charity:charity_footer.html.twig' %}
+    <div id="comments">
+        <div id="comments-list">
+            <h3>Коментарів: {{ charity.comments|length }}</h3>
+            {% for comment in charity.comments %}
+                <div class="media">
+                    <div class="pull-left">
+                        <img class="avatar img-circle" src="{{ asset('uploads/users/' ~ comment.user.avatarFileName)|imagine_filter('user_avatar') }}" alt="">
+                    </div>
+                    <div class="media-body">
+                        <div class="well">
+                            <div class="media-heading">
+                                <strong>{{ comment.user.username }}</strong>&nbsp;
+                                <small>{{ comment.createdAt|date("d M, Y") }}</small>
+                            </div>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if app.request.attributes.get('_route') == 'charity_show' %}
+            <div id="comment-form">
+                <h3>Залишити коментар</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea rows="8" class="form-control" placeholder="Залишіть свій коментар"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-default">Зберегти коментар</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,74 +1,22 @@
-AppBundle\Entity\Tag:
-  tag{1..10}:
-    tagName(unique): <word()>
-    charities: '2x @charity*'
-
-AppBundle\Entity\Comment:
-  comment(template):
-    content: <paragraph(3)>
-    rating: <numberBetween(0, 10)>
-    charity: '@charity*'
-  comment{1..5} (extends comment):
-    user: '@organization*'
-  comment{6..10} (extends comment):
-    user: '@person*'
-
-AppBundle\Entity\CharityImage:
-  chimage{1..10}:
-    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480)))>
-    path: '@chimage<current()>->name'
-    size: <numberBetween(300, 1000)>
-    charity: '@charity*'
-
-AppBundle\Entity\Charity:
-  charity(template):
-    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300)))>
-    title: <sentence(6, true)>
-    content: <paragraph(100)>
-    primaryUser: null
-    category: '@category*'
-    ratingCount: <numberBetween(0, 10)>
-    viewCount: <numberBetween(5, 50)>
-    needMoney: <numberBetween(1000, 30000)>
-    collectedMoney: <numberBetween(500, 1000)>
-    video: <url()>
-    comments: '2x @comment*'
-    charityImages: '2x @chimage*'
-    isActive: <boolean()>
-    tags: '2x @tag*'
-  charity{1..20} (extends charity):
-    user: '@person*'
-  charity{21..40} (extends charity):
-    user: '@organization*'
-
 AppBundle\Entity\Category:
-  category(template):
-    title(unique): <sentence(2, true)>
-    charities: '2x @charity*'
+  category{1..20}:
+    title(unique): <(rtrim($fake('sentence'), '.'))>
     importance: <numberBetween(0, 10)>
-  category{1..2} (extends category):
-    user: '2x @person*'
-    followedByUsers: '2x @organization*'
-  category{3..4} (extends category):
-    user: '2x @organization*'
-    followedByUsers: '2x @person*'
+    user: "<numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*"
+    followedByUsers: "<numberBetween(0, 20)>x @<randomElement(array('person', 'organization'))>*"
 
 AppBundle\Entity\Organization:
-  organization{1..10}:
+  organization{1..20}:
     username(unique): <firstName()>
-    password: <password()>
+    password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
-    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 640, 480)))>
-    role: <word()>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100, 'business')))>
+    role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
     bankDetails: <paragraph(10)>
     address: <address()>
     phone: <phoneNumber()>
-    categories: '2x @category*'
     showOtherCategories: <boolean()>
-    followCategories: '2x @category*'
-    charities: '2x @charity*'
     primaryCharities: null
-    comments: '2x @comment*'
     isActive: <boolean()>
     cautionCount: <numberBetween(0, 20)>
     organizationName: <catchPhrase()>
@@ -77,23 +25,53 @@ AppBundle\Entity\Organization:
     website: <url()>
 
 AppBundle\Entity\Person:
-  person{1..10}:
+  person{1..20}:
     username(unique): <firstName()>
-    password: <password()>
+    password: $2y$13$eNuPQQ1JB23ZuKQFCKuuZeOyQyNqCB.ktW1UJ27ZbfeloRHo8wEBS
     email(unique): <email()>
-    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 640, 480)))>
-    role: <word()>
+    avatarFileName: <(str_replace('<{app.dir}>'.'web/uploads/users/', '', $fake('image',null, '<{app.dir}>web/uploads/users', 100, 100)))>
+    role: <randomElement(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])>
     bankDetails: <paragraph(10)>
     address: <address()>
     phone: <phoneNumber()>
-    categories: '2x @category*'
     showOtherCategories: <boolean()>
-    followCategories: '2x @category*'
-    charities: '2x @charity*'
     primaryCharities: null
-    comments: '2x @comment*'
     isActive: <boolean()>
     cautionCount: <numberBetween(0, 20)>
     firstname: <firstName()>
     lastname: <lastName()>
     birthday: <date('Y-m-d', '2000')>
+
+AppBundle\Entity\Charity:
+  charity{1..80}:
+    banner(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 750, 300, 'people')))>
+    title: <(rtrim($fake('sentence'), '.'))>
+    content: <paragraph(100)>
+    primaryUser: null
+    category: '@category*'
+    ratingCount: <numberBetween(0, 10)>
+    viewCount: <numberBetween(5, 50)>
+    needMoney: <numberBetween(1000, 30000)>
+    collectedMoney: <numberBetween(500, 1000)>
+    video: <url()>
+    isActive: <boolean()>
+    user: "@<randomElement(array('person', 'organization'))>*"
+
+AppBundle\Entity\CharityImage:
+  chimage{1..120}:
+    name(unique): <(str_replace('<{app.dir}>'.'web/uploads/charities/', '', $fake('image',null, '<{app.dir}>web/uploads/charities', 640, 480, 'people')))>
+    path: '@chimage<current()>->name'
+    size: <numberBetween(300, 1000)>
+    charity: '@charity*'
+
+AppBundle\Entity\Tag:
+  tag{1..80}:
+    tagName(unique): <word()>
+    charities: "<numberBetween(1, 20)>x @charity*"
+
+AppBundle\Entity\Comment:
+  comment{1..240}:
+    content: <paragraph(3)>
+    rating: <numberBetween(0, 10)>
+    charity: '@charity*'
+    user: "@<randomElement(array('person', 'organization'))>*"

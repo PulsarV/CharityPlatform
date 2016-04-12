@@ -4,17 +4,36 @@
 parameters:
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     CharityPlatform
+    database_name_test:     CharityPlatform_test
     database_user:     root
     database_password: ~
     # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
+    # database_path: "%kernel.root_dir%/../../src/AppBundle/Tests/DB/data.db3"
 
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
+    mailer_transport:  gmail
+    mailer_host:       smtp.gmail.com
+    mailer_port:       465
+    mailer_encryption: ssl
     mailer_user:       ~
     mailer_password:   ~
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     app.dir: "%kernel.root_dir%/../"
+
+    # Number of elements in paginator line on index page
+    app.paginator_length: 5
+    # Number of charities on each page
+    app.paginator_count_per_page: 5
+    # Number of elements in paginator line on index page in cabinet
+    app.cabinet_paginator_length: 5
+    # Number of items on each page in cabinet
+    app.cabinet_paginator_count_per_page: 15
+
+    vkontakte_app_id: ~
+    vkontakte_app_secret: ~
+    facebook_app_id: ~
+    facebook_app_secret: ~
+    google_app_id: ~
+    google_app_secret: ~

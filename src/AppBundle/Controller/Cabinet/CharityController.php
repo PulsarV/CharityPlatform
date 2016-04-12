@@ -8,16 +8,47 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CharityController extends Controller
 {
     /**
-     * @Route("/charity-new", name="charity_new")
+     * @Route("/charity-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_manager_index")
+     * @Method("GET")
      * @Template()
-     * @param Request $request
+     */
+    public function indexCharityAction($page)
+    {
+        $pager = $this->get('app.charity_manager')->getCharityListPaginated('none', 'none', 'd', $page, $this->container->getParameter('app.cabinet_paginator_count_per_page'));
+
+        return [
+            'pager' => $pager,
+        ];
+    }
+
+    /**
+     * @Route("/charity-manager/{slug}", name="charity_manager_show")
+     * @Method({"GET"})
+     * @Template()
+     * @param $slug
+     * @return array
+     */
+    public function showCharityAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
+
+        return [
+            'charity' => $charity,
+        ];
+    }
+
+    /**
+     * @Route("/charity-new", name="charity_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $requestspreadsheets/d/1WoNdBtsxIcT9WfL2bOyn2ICu0i9MSIt-KZtF_nyripg/edit#gid=0
      * @return array|RedirectResponse
      */
     public function newCharityAction(Request $request)
@@ -32,11 +63,7 @@ class CharityController extends Controller
 
             if ($form->isValid()) {
                 $em->persist($charity);
-                //TODO: add default logo if banner === null
-                if ($charity->getBanner() !== null) {
-                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                    $uploadableManager->markEntityToUpload($charity, $charity->getBanner());
-                }
+                $this->get('app.charity_manager')->setBanner($charity);
                 $em->flush();
 
                 return $this->redirectToRoute('charity_index');
@@ -118,7 +145,11 @@ class CharityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CharityType::class, $charity);
 
-        if ($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {        if (!$charity) {
+            throw $this->createNotFoundException(
+                'Unable to find Charity..'
+            );
+        }
 
             $form->handleRequest($request);
 

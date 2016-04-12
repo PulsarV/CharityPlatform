@@ -3,25 +3,29 @@
 
 {% block content %}
     {{ form_start(form) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.firstname) }}
-        {{ form_row(form.lastname) }}
-        {{ form_row(form.email) }}
-        {% for plainPassword in form.plainPassword %}
-            {{ form_label(plainPassword, null) }}
-            {{ form_widget(plainPassword) }}
-        {% endfor %}
-        {{ form_row(form.avatarFileName) }}
-        {{ form_row(form.role) }}
-        {{ form_row(form.bankDetails) }}
-        {{ form_row(form.address) }}
-        {{ form_row(form.phone) }}
-        {{ form_row(form.categories) }}
-        {{ form_row(form.showOtherCategories) }}
-        {{ form_row(form.followCategories) }}
-        {{ form_row(form.birthday) }}
-        <a href="" class=" btn btn-info btn-form">Back</a>
-        <button type="submit" class="btn btn-success btn-form pull-right">Регистрация</button>
+        {% embed '::Panel/save_panel.html.twig'%}
+            {% block panel_title %}Реєстрація нового користувача (Персона){% endblock %}
+            {% block panel_body %}
+                {{ form_row(form.username) }}
+                {{ form_row(form.email) }}
+                {% for plainPassword in form.plainPassword %}
+                    {{ form_label(plainPassword, null) }}
+                    {{ form_widget(plainPassword) }}
+                {% endfor %}
+                {{ form_row(form.firstname) }}
+                {{ form_row(form.lastname) }}
+                {{ form_row(form.birthday) }}
+                {{ form_row(form.avatarFileName) }}
+                {{ form_row(form.bankDetails) }}
+                {{ form_row(form.address) }}
+                {{ form_row(form.phone) }}
+                {{ form_row(form.categories) }}
+                {{ form_row(form.showOtherCategories) }}
+                {{ form_row(form.followCategories) }}
+            {% endblock %}
+            {#<a href="{{ path('login') }}" class=" btn btn-info btn-form">Назад</a>#}
+            {% block submit_button %}Регистрация{% endblock %}
+        {% endembed %}
     {{ form_end(form) }}
 {% endblock %}
 

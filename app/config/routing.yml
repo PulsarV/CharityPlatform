@@ -1,3 +1,29 @@
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /login-social
+
+facebook_login:
+    path: /login-social/check-facebook
+
+google_login:
+    path: /login-social/check-google
+
+vkontakte_login:
+    path: /login-social/check-vkontakte
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout

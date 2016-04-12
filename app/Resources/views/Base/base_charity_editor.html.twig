@@ -1,0 +1,22 @@
+{% extends ':Base:base_with_left_sidebar.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block additional_javascripts %}
+    <script src='{{ asset('tinymce/tinymce.min.js') }}'></script>
+    <script>
+        tinymce.init({
+            mode: 'exact',
+            elements: 'charity_content',
+//            content_css: 'css/app.css',
+            elementpath: false,
+            height : 200,
+            menubar: false,
+            statusbar: false,
+            toolbar: [
+                'undo redo | styleselect | bold italic underline strikethrough superscript subscript code | alignleft aligncenter alignright'
+            ],
+            convert_fonts_to_spans : false
+
+        });
+    </script>
+{% endblock %}
