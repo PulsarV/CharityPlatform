@@ -121,7 +121,7 @@ liip_imagine:
                 thumbnail: { size: [750, 300], mode: outbound }
 
         charity_image_small:
-             quality: 70
+             quality: 100
              filters:
                 thumbnail: { size: [75, 75], mode: outbound }
 
@@ -129,6 +129,16 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [100, 100], mode: outbound }
+
+        user_avatar_small:
+            quality: 100
+            filters:
+                thumbnail: { size: [36, 36], mode: outbound }
+
+        charity_photos:
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound }
 
 fos_elastica:
     clients:
@@ -182,3 +192,32 @@ fos_elastica:
                         provider: ~
                         listener: ~
                         finder: ~
+
+hwi_oauth:
+    firewall_names: [secured_area]
+
+    resource_owners:
+        vkontakte:
+            type: vkontakte
+            client_id: "%vkontakte_app_id%"
+            client_secret: "%vkontakte_app_secret%"
+            scope: "email, bdate"
+            options:
+                fields: "bdate"
+        facebook:
+            type: facebook
+            client_id: "%facebook_app_id%"
+            client_secret: "%facebook_app_secret%"
+            scope: "email, public_profile, user_birthday"
+            options:
+                display: popup
+            infos_url: "https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,birthday"
+            paths:
+                email: email
+        google:
+            type: google
+            client_id: "%google_app_id%"
+            client_secret: "%google_app_secret%"
+            scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+
+

@@ -1,0 +1,14 @@
+{% extends ':Base:base_wo_sidebar_centered.html.twig' %}
+
+{% set title = 'Активація нового користувача' %}
+
+{% block content %}
+    {% embed ':Panel:back_panel.html.twig'%}
+        {% block panel_title %}Активація нового користувача{% endblock %}
+        {% block panel_body %}
+            <p>На вказану при реєстрацію адресу e-mail було відправлено лист, в якому вказано неохідну для завершення реєстрації інформацію.</p>
+            <p>Будь-ласка перевірте свою поштову скриньку.</p>
+        {% endblock %}
+        {% block back_button %}На головну{% endblock %}
+    {% endembed %}
+{% endblock %}

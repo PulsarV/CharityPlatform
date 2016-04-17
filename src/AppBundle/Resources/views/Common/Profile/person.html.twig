@@ -1,0 +1,40 @@
+{% extends ':Base:base_with_right_sidebar.html.twig' %}
+
+{% set title = 'Користувачі' %}
+
+{% block content %}
+<h1>Користувачі:</h1>
+    <table border="2px" class="table table-condensed table-user">
+        <tr class="success">
+            <th>№</th>
+            <th>Нікнейм</th>
+            <th>Ім’я</th>
+        </tr>
+        <tr>
+
+            <td>
+                {% for person in persons %}
+                    <li>{{ loop.index }}</li>
+                {% endfor %}
+            </td>
+
+            <td>
+                {% for person in persons %}
+                    <li><a href="{{ path('show_person_profile', {'slug': person.slug}) }}" class="btn btn-xs btn-info">{{ person.username }}</a></li>
+                {% else %}
+                    <li>Тут пусто, станьте першим</li>
+                {% endfor %}
+            </td>
+
+            <td>
+                {% for person in persons %}
+                    <li>{{ person.firstname }} {{ person.lastname }}</li>
+                {% else %}
+                    <li>Тут пусто, станьте першим</li>
+                {% endfor %}
+            </td>
+
+        </tr>
+    </table>
+{% endblock %}
+

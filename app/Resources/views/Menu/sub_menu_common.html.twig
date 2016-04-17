@@ -2,81 +2,43 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h1>{{ page_title() }}</h1>
-                <ul class="breadcrumb">
-                    {% for bread_crumb in bread_crumbs() %}
-                        {% if loop.index < bread_crumbs()|length %}
-                            <li><a href="#">{{ bread_crumb }}</a></li>
-                        {% else %}
-                            <li class="active">{{ bread_crumb }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                <h1>
+                    {{ pagetitle }}
+                </h1>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 lng-city-zone">
                 <div class="lng-menu">
-                    <span class="menu-title">Вибрана мова інтерфейсу:</span>
-                        <span class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ current_language() }}</a>
-                            <ul class="dropdown-menu">
-                                {% for language in available_languages() %}
-                                    {% if language != current_language() %}
-                                        <li><a href="{{ path('config_show', {'param': 'lng', 'value': language}) }}">{{ language }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>
-                </div>
-                <div class="city-menu">
-                    <span class="menu-title">Ваше місто:</span>
-                        <span class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ current_city() }}</a>
-                            <ul class="dropdown-menu">
-                                {% for city in available_cities() %}
-                                    {% if city != current_city() %}
-                                        <li><a href="{{ path('config_show', {'param': 'city', 'value': city}) }}">{{ city }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>
+                    <span class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Мова інтерфейсу: {{ current_language() }}</button>
+                        <ul class="dropdown-menu">
+                            {% for language in available_languages() %}
+                                {% if language != current_language() %}
+                                    <li><a href="{{ path('config_show', {'param': 'lng', 'value': language}) }}">{{ language }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </span>
                 </div>
             </div>
             <div class="container col-sm-4">
-                <div class="row">
-                    <form role="form">
-                        <fieldset class="login-form">
-                            <div class="form-group col-sm-5">
-                                <input type="text" id="username" name="username" placeholder="Користувач / E-Mail" class="form-control input-sm">
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {{ render(controller('AppBundle:Security/Security:embeddedLoginForm')) }}
+                {% else %}
+                    <div class="row">
+                        <div class="col-sm-offset-2 col-sm-10 profile-zone">
+                            {% if app.user.avatarFileName is defined %}
+                                <img class="avatar img-circle" src="{{ asset('uploads/users/' ~ app.user.avatarFileName)|imagine_filter('user_avatar_small') }}" alt="">
+                            {% endif %}
+                            <span class="user-name">{{ app.user.username }}</span>
+                            <div>
+                                <a role="button" class="btn btn-success btn-sm" href="{{ path('check_profile') }}">Особистий кабінет</a><br>
                             </div>
-                            <div class="form-group col-sm-5">
-                                <input type="password" id="password" name="password" placeholder="Пароль" class="form-control input-sm">
+                            <div>
+                                <a role="button" class="btn btn-warning btn-sm" href="{{ path('logout') }}">Вихід</a>
                             </div>
-                            <div class="form-group col-sm-2">
-                                <button class="btn btn-success btn-sm btn-block">Ввійти</button>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-inline"><input type="checkbox" class="checkbox"> Запам'ятати мене</label>&nbsp;&nbsp;&nbsp;
-                                <a class="" href="#">Нагадати пароль</a>
-                                <button type="button" class="btn btn-success btn-sm pull-right">Реєстрація</button>
-                            </div>
-                            <div class="form-group">
-                                <label>Ввійдіть за допомогою:</label>&nbsp;&nbsp;
-                                <a class="btn btn-social-icon btn-twitter btn-sm">
-                                    <span class="fa fa-twitter"></span>
-                                </a>
-                                <a class="btn btn-social-icon btn-facebook btn-sm">
-                                    <span class="fa fa-facebook"></span>
-                                </a>
-                                <a class="btn btn-social-icon btn-vk btn-sm">
-                                    <span class="fa fa-vk"></span>
-                                </a>
-                                <a class="btn btn-social-icon btn-odnoklassniki btn-sm">
-                                    <span class="fa fa-odnoklassniki"></span>
-                                </a>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

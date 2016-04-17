@@ -1,20 +1,23 @@
 <?php
-namespace AppBundle\Helper;
+
+namespace AppBundle\Services;
 
 class EmailSender
 {
     private $mailer;
     private $twig;
+    private $mailSender;
 
     public function __construct($host, $port, $encryption, $login, $password, $twig)
     {
         $this->twig = $twig;
+        $this->mailSender = $login;
         $this->connect($host, $port, $encryption, $login, $password);
     }
 
     public function connect($host, $port, $encryption, $login, $password)
     {
-        if (! $this->mailer) {
+        if (!$this->mailer) {
             $smtp = \Swift_SmtpTransport::newInstance($host, $port, $encryption)
                 ->setUsername($login)
                 ->setPassword($password);
@@ -46,5 +49,9 @@ class EmailSender
         ;
 
         return $this->mailer->send($message);
+    }
+
+    public function getSender(){
+        return $this->mailSender;
     }
 }

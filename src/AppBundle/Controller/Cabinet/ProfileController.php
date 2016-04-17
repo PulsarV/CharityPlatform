@@ -12,10 +12,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/cabinet/users", name="cabinet_profile")
+ */
 class ProfileController extends Controller
 {
     /**
-     * @Route("/users/{slug}/delete", name="user_delete")
+     * @Route("/{slug}/delete", name="user_delete")
      * @Method("DELETE")
      *
      * @param Request $request
@@ -63,7 +66,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/users/{slug}/edit", name="user_edit")
+     * @Route("/{slug}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      * @Template()
      * @param $slug
@@ -73,6 +76,7 @@ class ProfileController extends Controller
     public function editUserAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
         $user = $em
             ->getRepository('AppBundle:User')
             ->findOneBy(
@@ -97,12 +101,7 @@ class ProfileController extends Controller
 
             if ($editForm->isValid()) {
                 $em->persist($user);
-                if ($files['avatarFileName'] !== null) {
-                    $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                    $uploadableManager->markEntityToUpload($user, $user->getAvatarFileName());
-                } else {
-                    $user->setAvatarFileName($avatar);
-                }
+                $this->get('app.user_manager')->setAvatar($user, $avatar, $files);
                 $em->flush();
 
                 //TODO: edit redirect to show_user_profile or etc

@@ -1,5 +1,7 @@
 {% extends ':Base:base_with_left_sidebar.html.twig' %}
 
+{% set title = 'Підтвердження видалення' %}
+
 {% block content %}
     <div class="col-sm-push-2 col-sm-8">
     <div class="panel panel-primary submit-form">
@@ -9,22 +11,12 @@
             <h4>{{ charity.title }}?</h4>
         </div>
         <div class="panel-footer">
-            <a href="{{ path('charity_manager_index') }}" class=" btn btn-info btn-form">Назад</a>
-            <input type="submit" value="Видалити" class="btn btn-danger btn-form pull-right" />
+            {{ form_start(delete_form) }}
+                {{ form_widget(delete_form) }}
+                <a href="{{ path('charity_manager_index') }}" class=" btn btn-info btn-form">Назад</a>
+                <input type="submit" value="Видалити" class="btn btn-danger btn-form pull-right" />
+            {{ form_end(delete_form) }}
         </div>
     </div>
     </div>
 {% endblock %}
-
-
-
-{#{% extends ':Base:base_charity_editor.html.twig' %}#}
-
-{#{% block content %}#}
- {#<h2>Видалити запит:</h2>#}
-    {#{{ form_start(form) }}#}
-        {#{{ form_widget(form) }}#}
-        {#<a href="" class=" btn btn-info btn-form">Back</a>#}
-        {#<input type="submit" value="Видалити" class="btn btn-success btn-form pull-right" />#}
-    {#{{ form_end(form) }}#}
-{#{% endblock %}#}

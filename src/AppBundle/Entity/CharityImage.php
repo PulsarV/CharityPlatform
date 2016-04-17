@@ -55,6 +55,7 @@ class CharityImage
 
     /**
      * @var UploadedFile
+     * @Assert\Image()
      */
     private $file;
 

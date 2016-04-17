@@ -1,7 +1,7 @@
 {% extends ':Base:base_with_left_sidebar.html.twig' %}
 
 {% block content %}
-    {% if pager is defined %}
+    {% if pager is not null %}
         <div class="panel panel-primary">
             <div class="panel-heading"><h4>Перелік створених вами запитів на благодійність</h4></div>
             <div class="panel-body">

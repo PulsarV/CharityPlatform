@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class PersonRepository extends EntityRepository
 {
+    public function loadUserBySocialId($id)
+    {
+        $dql = "SELECT u
+                FROM 'AppBundle:User' u
+                WHERE u.googleId = :id
+                OR u.vkontakteId = :id
+                OR u.facebookId = :id";
+
+        return $this->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter('id', $id)
+            ->getOneOrNullResult();
+    }
+
 }

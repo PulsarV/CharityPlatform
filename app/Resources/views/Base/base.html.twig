@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Online платформа благодійності - {{ page_title() }}</title>
+    <title>Online платформа благодійності - {{ title|default('Перелік запитів') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/icomoon-social.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -13,18 +12,14 @@
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-social.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/contact.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="{{ asset('js/html5shiv.js') }}"></script>
     <script src="{{ asset('js/respond.min.js') }}"></script>
     <![endif]-->
     <link rel="shortcut icon" href="{{ asset('images/ico/favicon.ico') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('images/ico/apple-touch-icon-144-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/ico/apple-touch-icon-114-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/ico/apple-touch-icon-72-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/ico/apple-touch-icon-57-precomposed.png') }}">
 </head>
 <body>
-
 {# begin menu #}
     {% block main_menu %}
         {% include ':Menu:main_menu.html.twig' %}
@@ -33,7 +28,7 @@
 
     {# begin submenu #}
     {% block sub_menu %}
-        {% include ':Menu:sub_menu_common.html.twig' %}
+        {% include ':Menu:sub_menu_common.html.twig' with {'pagetitle': title|default('Перелік запитів')} %}
     {% endblock %}
     {# end submenu #}
 

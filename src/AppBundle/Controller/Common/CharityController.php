@@ -2,8 +2,11 @@
 
 namespace AppBundle\Controller\Common;
 
+use AppBundle\Entity\Comment;
+use AppBundle\Form\Common\CommentType;
 use AppBundle\Form\Common\FindCharityModel;
 use AppBundle\Form\Common\FindCharityType;
+use AppBundle\Entity\Charity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -79,18 +82,34 @@ class CharityController extends Controller
 
     /**
      * @Route("/charities/{slug}", name="charity_show")
-     * @Method({"GET"})
+     * @Method({"GET", "POST"})
      * @Template()
      * @param $slug
      * @return array
      */
-    public function showCharityAction($slug)
+    public function showCharityAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
         $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $user = $this->getUser();
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $charityManager = $this->get('app.charity_manager');
+                $charityManager->addCharityComment($charity, $comment, $user);
+
+                return $this->redirectToRoute('charity_show', array('slug' => $charity->getSlug()));
+            }
+        }
 
         return [
             'charity' => $charity,
+            'comment_form' => $form->createView(),
+            'user' => $user
         ];
     }
 
@@ -120,10 +139,6 @@ class CharityController extends Controller
                     [
                         'criteria' => $criteria,
                         'searchQuery' => $form->get('searchQuery')->getData(),
-
-// maybe next line will be used for escaping
-//                        'searchQuery' => filter_var($form->get('searchQuery')->getData(), FILTER_SANITIZE_STRING),
-
                         'page' => 1,
                     ],
                     302
@@ -157,5 +172,15 @@ class CharityController extends Controller
         return [
             'pager' => $pager,
         ];
+    }
+
+    /**
+     * @Route("/contact", name="contact_page")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function contactAction()
+    {
+        return [ ];
     }
 }

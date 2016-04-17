@@ -1,0 +1,27 @@
+{% extends ':Base:base_with_left_sidebar.html.twig' %}
+
+{% set title = 'Користувач' %}
+
+{% block content %}
+    <div class="userinfo">
+        <h1>Користувач {{ profile.username}}</h1>
+        <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
+        <br>
+        Ім'я/Прізвище: <span class="username">{{ profile.firstname}} {{ profile.lastname }}</span> <br>
+        Адреса: {{ profile.address }}<br>
+        e-mail: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a><br>
+        Телефон: {{ profile.phone }}<br>
+        <small>Дата створення: {{ profile.createdAt|date("m-d-Y H:i:s a") }}</small>
+        <br>
+        Запити:
+        {% for charity in profile.charities %}
+            <p class="description">
+                <a href="{{ path('charity_show', {'slug': charity.slug }) }}" class="title">{{ loop.index }}. {{ charity.title }}</a>
+            </p>
+        {% else %}
+            <li>Немає жодного запиту.</li>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

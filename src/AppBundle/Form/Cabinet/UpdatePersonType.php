@@ -2,15 +2,13 @@
 
 namespace AppBundle\Form\Cabinet;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -20,15 +18,15 @@ class UpdatePersonType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, array(
-                'label' => 'Имя*:',
+                'label' => 'Ім\'я користувача*:',
             ))
             ->add('lastname', TextType::class, array(
-                'label' => 'Фамилия*:',
+                'label' => 'Прізвище*:',
             ))
             ->add('birthday', BirthdayType::class, array(
                     'widget' => 'single_text',
                     'input' => 'string',
-                    'label' => 'Дата рождения*:',
+                    'label' => 'Дата народження*:',
                 )
             )
             ->add('avatarFileName', FileType::class, array(
@@ -37,36 +35,34 @@ class UpdatePersonType extends AbstractType
                 'mapped' => true,
                 'label' => 'Аватар:'
             ))
-            //TODO: delete role after adding security
-            ->add('role', TextType::class)
             ->add('bankDetails', TextareaType::class, array(
-                'label' => 'Банковские реквизиты:',
+                'label' => 'Банковські реквізити:',
                 'required' => false,
             ))
             ->add('address', TextType::class, array(
-                'label' => 'Адрес:',
+                'label' => 'Адреса:',
                 'required' => false,
             ))
             ->add('phone', TextType::class, array(
                 'label' => 'Телефон:',
                 'required' => false,
             ))
-            ->add('categories', 'entity', array(
+            ->add('categories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
-                'label' => 'Интересующие категории*:',
-            ))
-            ->add('showOtherCategories', CheckboxType::class, array(
-                //TODO: translations
-                'label' => 'Отображать благотворительные запросы из других категорий?',
+                'label' => 'Категорії, що вас цікавлять*:',
                 'required' => false,
             ))
-            ->add('followCategories', 'entity', array(
+            ->add('showOtherCategories', CheckboxType::class, array(
+                'label' => 'Показувати благодійні запити з інших категорій?',
+                'required' => false,
+            ))
+            ->add('followCategories', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => 'true',
-                'label' => 'Получать письма новостей категорий:',
+                'label' => 'Отримувати листи від категорій:',
                 'required' => false,
             ))
         ;

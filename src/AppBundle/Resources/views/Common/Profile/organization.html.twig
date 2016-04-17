@@ -1,0 +1,39 @@
+{% extends ':Base:base_with_right_sidebar.html.twig' %}
+
+{% set title = 'Організації' %}
+
+{% block content %}
+    <h1>Організації:</h1>
+    <table border="2px" class="table table-condensed table-user">
+        <tr class="success">
+            <th>№</th>
+            <th>Нікнейм</th>
+            <th>Представник</th>
+        </tr>
+        <tr>
+
+            <td>
+                {% for organization in organizations %}
+                    <li>{{ loop.index }}</li>
+                {% endfor %}
+            </td>
+
+            <td>
+                {% for organization in organizations %}
+                    <li><a href="{{ path('show_organization_profile', {'slug': organization.slug}) }}" class="btn btn-xs btn-info">{{ organization.organizationName }}</a></li>
+                {% else %}
+                    <li>Немає організацій</li>
+                {% endfor %}
+            </td>
+            <td>
+                {% for organization in organizations %}
+                    <li>{{ organization.username }}</li>
+                {% else %}
+                    <li>Немає організацій</li>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}
+

@@ -12,7 +12,15 @@
         <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" public="false">
             <argument type="service" id="app.menu_manager" />
             <argument type="service" id="request_stack" />
+            <argument type="service" id="security.token_storage" />
             <tag name="twig.extension" />
+        </service>
+
+        <service id="app.user_manager" class="AppBundle\Services\UserManager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="stof_doctrine_extensions.uploadable.manager" />
+            <argument type="service" id="app.mail_sender" />
+            <argument type="service" id="security.password_encoder" />
         </service>
 
         <service id="app.menu_manager" class="AppBundle\Services\MenuManager">
@@ -20,19 +28,35 @@
         </service>
 
         <service id="app.charity_manager" class="AppBundle\Services\CharityManager">
-            <argument type="service" id="service_container" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="fos_elastica.finder.app.charity" />
             <argument type="service" id="app.menu_manager" />
+            <argument type="service" id="stof_doctrine_extensions.uploadable.manager" />
+            <argument>%app.paginator_count_per_page%</argument>
         </service>
 
-        <service id="app.mail_sender" class="AppBundle\Helper\EmailSender">
+        <service id="app.mail_sender" class="AppBundle\Services\EmailSender">
             <argument>%mailer_host%</argument>
             <argument>%mailer_port%</argument>
             <argument>%mailer_encryption%</argument>
             <argument>%mailer_user%</argument>
             <argument>%mailer_password%</argument>
             <argument type="service" id="templating" />
+        </service>
+
+        <service id="hwi_oauth.user.provider.entity"
+                class="HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider">
+        </service>
+
+        <service id="ib_user.oauth_user_provider"
+                 class="AppBundle\Services\OAuthProvider">
+            <argument type="service" id="session"/>
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="app.form.charity" class="AppBundle\Form\Cabinet\CharityType">
+            <argument type="service" id="security.token_storage" />
+            <tag name="form.type" />
         </service>
     </services>
 

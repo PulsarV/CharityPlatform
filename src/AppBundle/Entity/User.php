@@ -6,6 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,16 +18,26 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"person" = "Person", "organization" = "Organization"})
- * @UniqueEntity("username")
- * @UniqueEntity("email")
+ * @UniqueEntity(
+ *     fields={"username", "facebookId", "vkontakteId", "googleId"},
+ *     groups={"registration"}
+ * )
+ * @UniqueEntity(
+ *     fields={"email", "facebookId", "vkontakteId", "googleId"},
+ *     groups={"registration"}
+ * )
  * @Gedmo\Uploadable(
- *      pathMethod="getPath",
- *      appendNumber=true,
- *      filenameGenerator="SHA1",
- *      allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
+ *     pathMethod="getPath",
+ *     appendNumber=true,
+ *     filenameGenerator="SHA1",
+ *     allowedTypes="image/jpeg,image/jpg,image/png,image/x-png,image/gif"
  * )
  */
-abstract class User implements  UserInterface, \Serializable
+abstract class User extends OAuthUser implements
+    UserInterface,
+    \Serializable,
+    AdvancedUserInterface,
+    EquatableInterface
 {
     use TimestampableEntity;
 
@@ -36,16 +49,20 @@ abstract class User implements  UserInterface, \Serializable
     protected $id;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 16,
-     *      minMessage = "Username can not be less than {{ limit }}!",
-     *      maxMessage = "Username can not be more than {{ limit }}!"
+     * @Assert\NotBlank(
+     *     groups={"registration"},
+     *     message = "Username can not be blank"
      * )
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\Length(
+     *     groups={"registration"},
+     *     min = 3,
+     *     max = 16,
+     *     minMessage = "Username can not be less than {{ limit }} chars",
+     *     maxMessage = "Username can not be more than {{ limit }} chars"
+     * )
+     * @ORM\Column(type="string", length=50)
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -53,15 +70,36 @@ abstract class User implements  UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
-     * @Assert\Length(max = 4096)
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $temporaryPassword;
+
+    /**
+     * @Assert\NotBlank(
+     *     groups={"registration"},
+     *     message = "Password can not be blank"
+     * )
+     * @Assert\Length(
+     *     groups={"registration"},
+     *     min = 8,
+     *     max = 32,
+     *     minMessage = "Password can not be less than {{ limit }} chars",
+     *     maxMessage = "Password can not be more than {{ limit }} chars"
+     * )
      */
     private $plainPassword;
 
     /**
-     * @Assert\NotBlank(groups={"registration"})
-     * @Assert\Email()
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank(
+     *     groups={"registration"},
+     *     message = "Email can not be blank"
+     * )
+     * @Assert\Email(
+     *     groups={"registration"},
+     *     message = "The email '{{ value }}' is not a valid email",
+     *     checkMX = true
+     * )
+     * @ORM\Column(type="string", length=129)
      */
     private $email;
 
@@ -75,7 +113,10 @@ abstract class User implements  UserInterface, \Serializable
     public $avatarFileName;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @ORM\Column(type="string", length=60)
      */
     private $role;
@@ -92,12 +133,15 @@ abstract class User implements  UserInterface, \Serializable
 
 
     /**
-     * @Assert\Type(type="string")
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @Assert\Length(
      *      min = 10,
      *      max = 20,
-     *      minMessage = "Phone number can not be less than {{ limit }}!",
-     *      maxMessage = "Phone number can not be more than {{ limit }}!"
+     *      minMessage = "Phone number can not be less than {{ limit }}",
+     *      maxMessage = "Phone number can not be more than {{ limit }}"
      * )
      * @ORM\Column(type="string", length=20, nullable=true)
      */
@@ -108,11 +152,10 @@ abstract class User implements  UserInterface, \Serializable
      */
     private $categories;
 
-
     /**
      * @Assert\Type(
      *     type="bool",
-     *     message="The value {{ value }} is not a valid {{ type }}."
+     *     message="The value {{ value }} is not a valid {{ type }}"
      * )
      * @ORM\Column(type="boolean")
      */
@@ -140,21 +183,50 @@ abstract class User implements  UserInterface, \Serializable
 
 
     /**
-     * @Assert\Type(type="bool")
+     * @Assert\Type(
+     *     type="bool",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @ORM\Column(type="boolean")
      */
     private $isActive;
 
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @Assert\NotBlank(
+     *     message = "cautionCount can not be blank"
+     * )
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}"
+     * )
      * @ORM\Column(type="integer")
      */
     private $cautionCount;
 
     /**
-     * @Gedmo\Slug(fields={"username"})
+     * @var string
+     *
+     * @ORM\Column(name="facebook_id", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $facebookId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vkontakte_id", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $vkontakteId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="google_id", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $googleId;
+
+    /**
+     * @Gedmo\Slug(fields={"username", "id"})
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;
@@ -173,6 +245,8 @@ abstract class User implements  UserInterface, \Serializable
         $this->primaryCharities = new ArrayCollection();
         $this->isActive = false;
         $this->cautionCount = 0;
+        $this->showOtherCategories = false;
+        $this->role = 'ROLE_USER';
     }
 
     /**
@@ -221,6 +295,22 @@ abstract class User implements  UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTemporaryPassword()
+    {
+        return $this->temporaryPassword;
+    }
+
+    /**
+     * @param mixed $temporaryPassword
+     */
+    public function setTemporaryPassword($temporaryPassword)
+    {
+        $this->temporaryPassword = $temporaryPassword;
     }
 
     /**
@@ -535,6 +625,54 @@ abstract class User implements  UserInterface, \Serializable
         $this->entityDiscr = $entityDiscr;
     }
 
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * @param string $facebookId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVkontakteId()
+    {
+        return $this->vkontakteId;
+    }
+
+    /**
+     * @param string $vkontakteId
+     */
+    public function setVkontakteId($vkontakteId)
+    {
+        $this->vkontakteId = $vkontakteId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param string $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
     public function getPath()
     {
         return __DIR__ . '/../../../web/uploads/users/';
@@ -542,7 +680,9 @@ abstract class User implements  UserInterface, \Serializable
 
     public function getRoles()
     {
-        return null;
+        return [
+            $this->getRole()
+        ];
     }
 
     public function getSalt()
@@ -570,5 +710,34 @@ abstract class User implements  UserInterface, \Serializable
             $this->username,
             $this->password
             ) = unserialize($serialized);
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if ((int)$this->getId() === $user->getId()) {
+            return true;
+        }
+
+        return false;
     }
 }

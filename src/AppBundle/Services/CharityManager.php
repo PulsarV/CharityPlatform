@@ -2,34 +2,49 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\Charity;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\User;
 use AppBundle\Form\Common\FindCharityType;
+use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 class CharityManager
 {
-    protected $container;
+    const STANDARTBANNER = 'standart_banner.gif';
+
     protected $em;
     protected $finder;
     protected $menuManager;
+    protected $uploadableManager;
+    protected $findedCharitiesOnPage;
+
 
     /**
      * CharityManager constructor.
-     * @param Container $container
      * @param ObjectManager $em
      * @param TransformedFinder $finder
      * @param MenuManager $menuManager
+     * @param $findedCharitiesOnPage
      */
-    public function __construct(Container $container, ObjectManager $em, TransformedFinder $finder, MenuManager $menuManager)
-    {
-        $this->container = $container;
+    public function __construct(
+        ObjectManager $em,
+        TransformedFinder $finder,
+        MenuManager $menuManager,
+        UploadableManager $uploadableManager,
+        $findedCharitiesOnPage
+    ) {
         $this->em = $em;
         $this->finder = $finder;
         $this->menuManager = $menuManager;
+        $this->uploadableManager = $uploadableManager;
+        $this->findedCharitiesOnPage = $findedCharitiesOnPage;
     }
 
     /**
@@ -64,6 +79,7 @@ class CharityManager
      */
     public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
+        $qb = null;
         if ($filterName == '') {
             new \Exception('Щось пішло не так');
         }
@@ -79,20 +95,23 @@ class CharityManager
         }
         switch($filterName) {
             case 'none':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharities($sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesQuery($sortMode);
                 break;
             case 'user':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUser($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByUserQuery($filterValue, $sortMode);
                 break;
             case 'category':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategory($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByCategoryQuery($filterValue, $sortMode);
                 break;
             case 'tag':
-                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTag($filterValue, $sortMode);
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTagQuery($filterValue, $sortMode);
                 break;
             default:
                 new \Exception('Щось пішло не так');
                 break;
+        }
+        if ($qb === null) {
+            return null;
         }
         $adapter = new DoctrineORMAdapter($qb);
         $pagerfanta = new Pagerfanta($adapter);
@@ -121,7 +140,7 @@ class CharityManager
         $elasticaQuery->setParam('fields', $fieldsArray);
 
         $pagerfanta = $this->finder->findPaginated($elasticaQuery);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('app.paginator_count_per_page'));
+        $pagerfanta->setMaxPerPage($this->findedCharitiesOnPage);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
@@ -150,5 +169,32 @@ class CharityManager
         }
 
         return implode('-', $criteriaArray);
+    }
+
+    /**
+     * @param Charity $charity
+     * @param string $banner
+     * @param array $files
+     */
+    public function setBanner(
+        Charity $charity,
+        $banner = self::STANDARTBANNER,
+        array $files = array('banner' => null)
+    ) {
+        if ($files['banner'] !== null || $charity->getBanner() !== null) {
+            $this->uploadableManager->markEntityToUpload($charity, $charity->getBanner());
+        } else {
+            $charity->setBanner($banner);
+        }
+    }
+
+    public function addCharityComment(Charity $charity, Comment $comment, User $user)
+    {
+        if ($user !== null) {
+            $comment->setUser($user);
+        }
+        $comment->setCharity($charity);
+        $this->em->persist($comment);
+        $this->em->flush();
     }
 }

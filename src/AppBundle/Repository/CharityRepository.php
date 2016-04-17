@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CharityRepository extends EntityRepository
 {
-    public function findAllCharities($sortmode)
+    public function findAllCharitiesQuery($sortmode)
     {
         $dql = "SELECT c
                 FROM AppBundle:Charity c
@@ -22,7 +22,7 @@ class CharityRepository extends EntityRepository
             ->createQuery($dql);
     }
 
-    public function findAllCharitiesByUser($slug, $sortmode)
+    public function findAllCharitiesByUserQuery($slug, $sortmode)
     {
         $dql = "SELECT c, u
                 FROM AppBundle:Charity c
@@ -35,7 +35,7 @@ class CharityRepository extends EntityRepository
             ->setParameter('slug', $slug);
     }
 
-    public function findAllCharitiesByCategory($slug, $sortmode)
+    public function findAllCharitiesByCategoryQuery($slug, $sortmode)
     {
         $dql = "SELECT c, ct
                 FROM AppBundle:Charity c
@@ -48,7 +48,7 @@ class CharityRepository extends EntityRepository
             ->setParameter('slug', $slug);
     }
 
-    public function findAllCharitiesByTag($slug, $sortmode)
+    public function findAllCharitiesByTagQuery($slug, $sortmode)
     {
         $dql = "SELECT c, t
                 FROM AppBundle:Charity c
@@ -92,7 +92,7 @@ class CharityRepository extends EntityRepository
         $dql = "SELECT c
                 FROM AppBundle:Charity c
                 WHERE c.isActive = false
-                ORDER BY c.createdAt DESC";
+                ORDER BY c.updatedAt DESC";
         return $this->getEntityManager()
             ->createQuery($dql)
             ->setFirstResult(1)

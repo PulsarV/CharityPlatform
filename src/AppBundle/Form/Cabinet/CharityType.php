@@ -3,6 +3,8 @@
 namespace AppBundle\Form\Cabinet;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Charity;
+use AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -10,10 +12,20 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CharityType extends AbstractType
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -56,12 +68,6 @@ class CharityType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('user', EntityType::class, [
-                'label' => 'Автор',
-                'class' => 'AppBundle\Entity\User',
-                'choice_label' => 'username',
-                'required' => true,
-            ])
             ->add('uploadedFiles', FileType::class, [
                 'label' => 'Зображення',
                 'multiple' => true,
@@ -69,6 +75,24 @@ class CharityType extends AbstractType
                 'required' => false,
                 'mapped' => true
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var Charity $charity */
+            $charity = $event->getData();
+            $form = $event->getForm();
+            $user = $this->tokenStorage->getToken()->getUser();
+            if($user->getRole() == 'ROLE_ADMIN') {
+                $form->add('user', EntityType::class, [
+                    'label' => 'Автор',
+                    'class' => 'AppBundle\Entity\User',
+                    'choice_label' => 'username',
+                    'required' => true,
+                ]);
+            } elseif ($user->getRole() == 'ROLE_USER') {
+                $charity->setUser($user);
+                $user->addCharity($charity);
+            }
+        });
     }
 
     /**

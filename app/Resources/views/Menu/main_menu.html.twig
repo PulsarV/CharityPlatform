@@ -16,10 +16,12 @@
                         {% endfor %}
                     </ul>
                 </li>
-                <li><a href="#">Користувачі</a></li>
-                <li><a href="#">Організації</a></li>
-                <li><a href="#">Контакти</a></li>
+                <li><a href="{{ path('persons') }}">Користувачі</a></li>
+                <li><a href="{{ path('organizations') }}">Організації</a></li>
+                <li><a href="{{ path('contact_page') }}">Контакти</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li><a href="{{ path('charity_new') }}"><b>Створити запит</b></a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
