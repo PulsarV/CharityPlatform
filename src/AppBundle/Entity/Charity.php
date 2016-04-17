@@ -93,6 +93,9 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     * )
      * @ORM\Column(type="integer")
      */
     private $needMoney;
@@ -100,6 +103,9 @@ class Charity
     /**
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $collectedMoney;
