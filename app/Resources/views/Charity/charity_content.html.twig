@@ -5,9 +5,11 @@
     {{ charity.content | raw }}
     <hr>
     {% include '@App/Common/Charity/status.html.twig' %}
-    <iframe width="520" height="415"
-            src="http://www.youtube.com/embed/XGSy3_Czz8k">
-    </iframe>
+    {% if charity.video is not null %}
+        <iframe width="520" height="415"
+                src="{{ charity.video }}">
+        </iframe>
+    {% endif %}
 
     <div class="photos">
         {% for charityImage in charity.charityImages %}

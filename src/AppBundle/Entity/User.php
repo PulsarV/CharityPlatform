@@ -122,7 +122,8 @@ abstract class User extends OAuthUser implements
     private $role;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text")
      */
     private $bankDetails;
 
