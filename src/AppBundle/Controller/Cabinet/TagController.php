@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Cabinet;
 
 use AppBundle\Entity\Charity;
+use AppBundle\Entity\Tag;
 use AppBundle\Form\Cabinet\CharityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,26 +13,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/cabinet", name="cabinet_charity")
+ * @Route("/admin", name="cabinet_tag")
  */
-class CharityController extends Controller
+class TagController extends Controller
 {
     /**
-     * @Route("/charity-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_manager_index")
+     * @Route("/tag-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="tag_manager_index")
      * @Method("GET")
      * @Template()
      */
-    public function indexCharityAction($page)
+    public function indexTagAction($page)
     {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            $accesType = 'none';
-        } else {
-            $accesType = $this->get('security.token_storage')->getToken()->getUser()->getSlug();
-        }
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated(
-            $accesType,
-            'none',
-            'd',
+        $pager = $this->get('app.tag_manager')->getTagListPaginated(
             $page,
             $this->container->getParameter('app.cabinet_paginator_count_per_page')
         );
@@ -42,45 +35,27 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charity-manager/{slug}", name="charity_manager_show")
-     * @Method({"GET"})
-     * @Template()
-     * @param $slug
-     * @return array
-     */
-    public function showCharityAction($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
-
-        return [
-            'charity' => $charity,
-        ];
-    }
-
-    /**
-     * @Route("/charity-new", name="charity_new")
+     * @Route("/tag-new", name="tag_new")
      * @Method({"GET", "POST"})
      * @Template()
      * @param Request $request
      * @return array|RedirectResponse
      */
-    public function newCharityAction(Request $request)
+    public function newTagAction(Request $request)
     {
-        $charity = new Charity();
+        $tag = new Tag();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(CharityType::class, $charity);
+        $form = $this->createForm(TagType::class, $tag);
 
         if ($request->getMethod() === 'POST') {
 
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em->persist($charity);
-                $this->get('app.charity_manager')->setBanner($charity);
+                $em->persist($tag);
                 $em->flush();
 
-                return $this->redirectToRoute('charity_index');
+                return $this->redirectToRoute('tag_manager_index');
             }
         }
 
@@ -90,91 +65,88 @@ class CharityController extends Controller
     }
 
     /**
-     * @Route("/charities/{slug}/delete", name="charity_delete")
+     * @Route("/tags/{slug}/delete", name="tag_delete")
      * @Method({"GET", "DELETE"})
      * @Template()
      * @param $slug
      * @param Request $request
      * @return array|RedirectResponse
      */
-    public function deleteCharityAction($slug, Request $request)
+    public function deleteTagAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $charity = $em
-            ->getRepository('AppBundle:Charity')
+        $tag = $em
+            ->getRepository('AppBundle:Tag')
             ->findOneBy(
                 [
                     'slug' => $slug,
                 ]);
 
-        if (!$charity) {
+        if (!$tag) {
             throw $this->createNotFoundException(
-                'Unable to find Charity..'
+                'Unable to find Tag..'
             );
         }
-        $form = $this->createDeleteCharityForm($charity);
+        $form = $this->createDeleteTagForm($tag);
         if($request->getMethod() == 'DELETE') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em->remove($charity);
+                $em->remove($tag);
                 $em->flush();
-                return $this->redirectToRoute('charity_manager_index');
+                return $this->redirectToRoute('tag_manager_index');
             }
         }
 
 
         return [
             'delete_form' => $form->createView(),
-            'charity' => $charity,
+            'tag' => $tag,
         ];
     }
 
     /**
-     * @param Charity $charity
+     * @param Tag $tag
      * @return \Symfony\Component\Form\Form
      */
-    private function createDeleteCharityForm(Charity $charity)
+    private function createDeleteTagForm(Tag $tag)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('charity_delete', array('slug' => $charity->getSlug())))
+            ->setAction($this->generateUrl('charity_delete', array('slug' => $tag->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
             ;
     }
 
     /**
-     * @Route("/charities/{slug}/edit", name="charity_edit")
+     * @Route("/tags/{slug}/edit", name="tag_edit")
      * @Template()
      * @param $slug
      * @param Request $request
      * @return array|RedirectResponse
      */
-    public function editCharityAction($slug, Request $request)
+    public function editTagAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $charity = $em
-            ->getRepository('AppBundle:Charity')
+        $tag = $em
+            ->getRepository('AppBundle:Tag')
             ->findOneBy(
                 [
                     'slug' => $slug,
                 ]);
 
-        if (!$charity) {
+        if (!$tag) {
             throw $this->createNotFoundException(
-                'Unable to find Charity..'
+                'Unable to find Tag..'
             );
         }
-        $banner = $charity->getBanner();
 
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(CharityType::class, $charity);
+        $form = $this->createForm(TagType::class, $tag);
 
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $files = $request->files->get('charity');
-                $this->get('app.charity_manager')->setBanner($charity, $banner, $files);
                 $em->flush();
 
                 return $this->redirectToRoute('charity_index');
@@ -183,7 +155,7 @@ class CharityController extends Controller
 
         return [
             'form' => $form->createView(),
-            'charity' => $charity,
+            'tag' => $tag,
         ];
     }
 }

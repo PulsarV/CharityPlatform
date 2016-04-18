@@ -59,6 +59,16 @@
             <argument type="service" id="security.token_storage" />
             <tag name="form.type" />
         </service>
+
+        <service id="app.tag_manager" class="AppBundle\Services\TagManager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%app.paginator_count_per_page%</argument>
+        </service>
+
+        <service id="app.category_manager" class="AppBundle\Services\CategoryManager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%app.paginator_count_per_page%</argument>
+        </service>
     </services>
 
 </container>

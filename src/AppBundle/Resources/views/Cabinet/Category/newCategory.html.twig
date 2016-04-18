@@ -1,0 +1,19 @@
+{% extends ':Base:base_charity_editor.html.twig' %}
+
+{% set title = 'Створення запиту' %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h4>Створення запиту</h4></div>
+            <div class="panel-body">
+                {{ form_widget(form) }}
+            </div>
+            <div class="panel-footer">
+                <a href="" class=" btn btn-info btn-form">Назад</a>
+                <input type="submit" value="Створити" class="btn btn-success btn-form pull-right" />
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+

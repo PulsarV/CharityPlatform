@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/cabinet", name="cabinet_charity")
+ * @Route("/admin", name="cabinet_charity")
  */
-class CharityController extends Controller
+class CategoryController extends Controller
 {
     /**
      * @Route("/charity-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_manager_index")
@@ -23,13 +23,8 @@ class CharityController extends Controller
      */
     public function indexCharityAction($page)
     {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            $accesType = 'none';
-        } else {
-            $accesType = $this->get('security.token_storage')->getToken()->getUser()->getSlug();
-        }
         $pager = $this->get('app.charity_manager')->getCharityListPaginated(
-            $accesType,
+            'none',
             'none',
             'd',
             $page,
@@ -38,23 +33,6 @@ class CharityController extends Controller
 
         return [
             'pager' => $pager,
-        ];
-    }
-
-    /**
-     * @Route("/charity-manager/{slug}", name="charity_manager_show")
-     * @Method({"GET"})
-     * @Template()
-     * @param $slug
-     * @return array
-     */
-    public function showCharityAction($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
-
-        return [
-            'charity' => $charity,
         ];
     }
 
@@ -112,7 +90,7 @@ class CharityController extends Controller
                 'Unable to find Charity..'
             );
         }
-        $form = $this->createDeleteCharityForm($charity);
+        $form = $this->createDeleteArticleForm($charity);
         if($request->getMethod() == 'DELETE') {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -133,7 +111,7 @@ class CharityController extends Controller
      * @param Charity $charity
      * @return \Symfony\Component\Form\Form
      */
-    private function createDeleteCharityForm(Charity $charity)
+    private function createDeleteArticleForm(Charity $charity)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('charity_delete', array('slug' => $charity->getSlug())))
