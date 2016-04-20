@@ -36,7 +36,7 @@ class TagManager
      */
     public function getTagListPaginated($page, $itemsPerPage)
     {
-        $qb = $this->em->getRepository('AppBundle:Tag')->findAllTags();
+        $qb = $this->em->getRepository('AppBundle:Tag')->findAllTagsQuery();
 
         if ($qb === null) {
             return null;

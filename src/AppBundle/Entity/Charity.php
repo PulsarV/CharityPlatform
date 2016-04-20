@@ -94,7 +94,7 @@ class Charity
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      * @Assert\Range(
-     *      min = 0,
+     *      min = 200
      * )
      * @ORM\Column(type="integer")
      */

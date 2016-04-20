@@ -1,19 +1,21 @@
 {% extends ':Base:base_with_left_sidebar.html.twig' %}
 
+{% set title = 'Перелік тегів' %}
+
 {% block content %}
     {% if pager is not null %}
         <div class="panel panel-primary">
-            <div class="panel-heading"><h4>Перелік створених вами запитів на благодійність</h4></div>
+            <div class="panel-heading"><h4>Перелік тегів</h4></div>
             <div class="panel-body">
                 <table class="table table-striped table-hover">
                     <tbody>
-                        {% for charity in pager.currentPageResults %}
+                        {% for tag in pager.currentPageResults %}
                             <tr>
-                                <td><a href="{{ path('charity_manager_show', {'slug': charity.slug}) }}">{{ charity.title }}</a></td>
+                                <td><a href="{{ path('charity_index_filtered', {'page': 1, 'filter': 'tag', 'slug': tag.slug, 'sortmode': 'd'}) }}">{{ tag.tagName }}</a></td>
                                 <td class="col-sm-1">
                                     <span class=" pull-right">
-                                        <a href="{{ path('charity_edit', {'slug': charity.slug}) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-                                        <a href="{{ path('charity_delete', {'slug': charity.slug}) }}"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ path('tag_edit', {'slug': tag.slug}) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                        <a href="{{ path('tag_delete', {'slug': tag.slug}) }}"><i class="fa fa-trash"></i></a>
                                     </span>
                                 </td>
                             </tr>

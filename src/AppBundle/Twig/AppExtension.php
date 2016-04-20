@@ -97,15 +97,29 @@ class AppExtension extends \Twig_Extension
                         ],
                         'children' => [
                             [
-                                'name' => 'Створити запит',
-                                'route' => 'charity_new',
+                                'name' => 'Новий тег',
+                                'route' => 'tag_new',
                                 'routeParams' => [
 
                                 ],
                             ],
                             [
-                                'name' => 'Перегляд запитів',
-                                'route' => 'charity_manager_index',
+                                'name' => 'Усі теги',
+                                'route' => 'tag_manager_index',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Нова категорія',
+                                'route' => 'category_new',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Усі категорії',
+                                'route' => 'category_manager_index',
                                 'routeParams' => [
 
                                 ],

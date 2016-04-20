@@ -1,16 +1,16 @@
 {% extends ':Base:base_charity_editor.html.twig' %}
 
-{% set title = 'Редагування запиту' %}
+{% set title = 'Редагування категорії' %}
 
 {% block content %}
     {{ form_start(form) }}
         <div class="panel panel-primary">
-            <div class="panel-heading"><h4>Редагування запиту</h4></div>
+            <div class="panel-heading"><h4>Редагування категорії</h4></div>
             <div class="panel-body">
                {{ form_widget(form) }}
             </div>
             <div class="panel-footer">
-                <a href="{{ path("charity_manager_index") }}" class=" btn btn-info btn-form">Назад</a>
+                <a href="{{ path("category_manager_index") }}" class=" btn btn-info btn-form">Назад</a>
                 <input type="submit" value="Зберегти" class="btn btn-success btn-form pull-right" />
             </div>
         </div>

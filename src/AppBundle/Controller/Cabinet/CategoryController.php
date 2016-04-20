@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller\Cabinet;
 
-use AppBundle\Entity\Charity;
-use AppBundle\Form\Cabinet\CharityType;
+use AppBundle\Entity\Category;
+use AppBundle\Form\Cabinet\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -17,16 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/charity-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="charity_manager_index")
+     * @Route("/category-manager/{page}", requirements={"page": "\d+"}, defaults={"page": 1}, name="category_manager_index")
      * @Method("GET")
      * @Template()
      */
-    public function indexCharityAction($page)
+    public function indexCategoryAction($page)
     {
-        $pager = $this->get('app.charity_manager')->getCharityListPaginated(
-            'none',
-            'none',
-            'd',
+        $pager = $this->get('app.category_manager')->getCharityListPaginated(
             $page,
             $this->container->getParameter('app.cabinet_paginator_count_per_page')
         );
@@ -37,28 +34,27 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/charity-new", name="charity_new")
+     * @Route("/category-new", name="category_new")
      * @Method({"GET", "POST"})
      * @Template()
      * @param Request $request
      * @return array|RedirectResponse
      */
-    public function newCharityAction(Request $request)
+    public function newCategoryAction(Request $request)
     {
-        $charity = new Charity();
+        $category = new Category();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(CharityType::class, $charity);
+        $form = $this->createForm(CategoryType::class, $category);
 
         if ($request->getMethod() === 'POST') {
 
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em->persist($charity);
-                $this->get('app.charity_manager')->setBanner($charity);
+                $em->persist($category);
                 $em->flush();
 
-                return $this->redirectToRoute('charity_index');
+                return $this->redirectToRoute('category_manager_index');
             }
         }
 
@@ -68,100 +64,97 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/charities/{slug}/delete", name="charity_delete")
+     * @Route("/categories/{slug}/delete", name="category_delete")
      * @Method({"GET", "DELETE"})
      * @Template()
      * @param $slug
      * @param Request $request
      * @return array|RedirectResponse
      */
-    public function deleteCharityAction($slug, Request $request)
+    public function deleteCategoryAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $charity = $em
-            ->getRepository('AppBundle:Charity')
+        $category = $em
+            ->getRepository('AppBundle:Category')
             ->findOneBy(
                 [
                     'slug' => $slug,
                 ]);
 
-        if (!$charity) {
+        if (!$category) {
             throw $this->createNotFoundException(
-                'Unable to find Charity..'
+                'Unable to find Category..'
             );
         }
-        $form = $this->createDeleteArticleForm($charity);
+        $form = $this->createDeleteCategoryForm($category);
         if($request->getMethod() == 'DELETE') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em->remove($charity);
+                $em->remove($category);
                 $em->flush();
-                return $this->redirectToRoute('charity_manager_index');
+                return $this->redirectToRoute('category_manager_index');
             }
         }
 
 
         return [
             'delete_form' => $form->createView(),
-            'charity' => $charity,
+            'category' => $category,
         ];
     }
 
     /**
-     * @param Charity $charity
+     * @param Category $category
      * @return \Symfony\Component\Form\Form
      */
-    private function createDeleteArticleForm(Charity $charity)
+    private function createDeleteCategoryForm(Category $category)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('charity_delete', array('slug' => $charity->getSlug())))
+            ->setAction($this->generateUrl('category_delete', array('slug' => $category->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
             ;
     }
 
     /**
-     * @Route("/charities/{slug}/edit", name="charity_edit")
+     * @Route("/categories/{slug}/edit", name="category_edit")
      * @Template()
      * @param $slug
      * @param Request $request
      * @return array|RedirectResponse
      */
-    public function editCharityAction($slug, Request $request)
+    public function editCategoryAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $charity = $em
-            ->getRepository('AppBundle:Charity')
+        $category = $em
+            ->getRepository('AppBundle:Category')
             ->findOneBy(
                 [
                     'slug' => $slug,
                 ]);
 
-        if (!$charity) {
+        if (!$category) {
             throw $this->createNotFoundException(
-                'Unable to find Charity..'
+                'Unable to find Category..'
             );
         }
-        $banner = $charity->getBanner();
 
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(CharityType::class, $charity);
+        $form = $this->createForm(CategoryType::class, $category);
 
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $files = $request->files->get('charity');
-                $this->get('app.charity_manager')->setBanner($charity, $banner, $files);
                 $em->flush();
 
-                return $this->redirectToRoute('charity_index');
+                return $this->redirectToRoute('category_manager_index');
             }
         }
 
         return [
             'form' => $form->createView(),
-            'charity' => $charity,
+            'category' => $category,
         ];
     }
 }

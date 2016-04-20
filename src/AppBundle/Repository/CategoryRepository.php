@@ -22,4 +22,14 @@ class CategoryRepository extends EntityRepository
             ->createQuery($dql)
             ->getResult();
     }
+
+    public function findAllCategoriesQuery()
+    {
+        $dql = "SELECT c
+                FROM AppBundle:Category c
+                ORDER BY c.title ASC";
+
+        return $this->getEntityManager()
+            ->createQuery($dql);
+    }
 }

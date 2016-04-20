@@ -2,9 +2,8 @@
 
 namespace AppBundle\Controller\Cabinet;
 
-use AppBundle\Entity\Charity;
 use AppBundle\Entity\Tag;
-use AppBundle\Form\Cabinet\CharityType;
+use AppBundle\Form\Cabinet\TagType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -111,7 +110,7 @@ class TagController extends Controller
     private function createDeleteTagForm(Tag $tag)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('charity_delete', array('slug' => $tag->getSlug())))
+            ->setAction($this->generateUrl('tag_delete', array('slug' => $tag->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
             ;
@@ -149,7 +148,7 @@ class TagController extends Controller
             if ($form->isValid()) {
                 $em->flush();
 
-                return $this->redirectToRoute('charity_index');
+                return $this->redirectToRoute('tag_manager_index');
             }
         }
 

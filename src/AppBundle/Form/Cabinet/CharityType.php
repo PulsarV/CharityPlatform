@@ -35,15 +35,15 @@ class CharityType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'attr' => array('autofocus' => true),
-                'label' => 'Заголовок',
+                'label' => 'Заголовок*',
                 'required' => true,
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Текст',
+                'label' => 'Текст*',
                 'required' => true,
             ])
             ->add('category', EntityType::class, [
-                'label' => 'Категорія',
+                'label' => 'Категорія*',
                 'class' => Category::class,
                 'choice_label' => 'title',
                 'required' => true,
@@ -55,11 +55,12 @@ class CharityType extends AbstractType
                 'mapped' => true,
             ])
             ->add('needMoney', IntegerType::class, [
-                'label' => 'Потрібно коштів',
+                'label' => 'Потрібно коштів*',
                 'required' => true,
             ])
             ->add('video', TextType::class, [
                 'label' => 'Відео',
+                'required' => false,
             ])
             ->add('tags', EntityType::class, [
                 'label' => 'Ключові слова',
@@ -83,7 +84,7 @@ class CharityType extends AbstractType
             $user = $this->tokenStorage->getToken()->getUser();
             if($user->getRole() == 'ROLE_ADMIN') {
                 $form->add('user', EntityType::class, [
-                    'label' => 'Автор',
+                    'label' => 'Автор*',
                     'class' => 'AppBundle\Entity\User',
                     'choice_label' => 'username',
                     'required' => true,
@@ -96,7 +97,7 @@ class CharityType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

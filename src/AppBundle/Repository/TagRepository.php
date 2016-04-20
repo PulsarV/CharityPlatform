@@ -17,16 +17,18 @@ class TagRepository extends EntityRepository
         $dql = "SELECT t
                 FROM AppBundle:Tag t
                 ORDER BY SIZE(t.charities) DESC";
+
         return $this->getEntityManager()
             ->createQuery($dql)
             ->getResult();
     }
 
-    public function findAllTags()
+    public function findAllTagsQuery()
     {
         $dql = "SELECT t
                 FROM AppBundle:Tag t
                 ORDER BY t.tagName ASC";
+
         return $this->getEntityManager()
             ->createQuery($dql);
     }
