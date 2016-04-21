@@ -4,6 +4,8 @@ namespace AppBundle\Controller\Security;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
+use AppBundle\Form\Security\ChangePasswordModel;
+use AppBundle\Form\Security\ChangePasswordType;
 use AppBundle\Form\Security\LoginModel;
 use AppBundle\Form\Security\RecoverPasswordType;
 use AppBundle\Form\Security\RegisterOrganizationType;
@@ -246,7 +248,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/activation-success", name="recover_success")
+     * @Route("/recover-success", name="recover_success")
      * @Template()
      * @return Response
      */
@@ -256,11 +258,63 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/activation-fail", name="recover_fail")
+     * @Route("/recover-fail", name="recover_fail")
      * @Template()
      * @return Response
      */
     public function recoverFailAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/change-passwd", name="change_password")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @return Response
+     */
+    public function changePasswordAction(Request $request)
+    {
+        $changePasswordModel = new ChangePasswordModel();
+        $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $password = $form->get('newPassword')->getData();
+                $userManager = $this->get('app.user_manager');
+                $result = $userManager->changePassword($password);
+
+
+                return $this->redirectToRoute(
+                    $result
+                );
+            }
+        }
+        return [
+            'error' => null,
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/change-passwd-success", name="change-passwd_success")
+     * @Template()
+     * @return Response
+     */
+    public function changePasswdSuccessAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/change-passwd-fail", name="change-passwd_fail")
+     * @Template()
+     * @return Response
+     */
+    public function changePasswdFailAction()
     {
         return [];
     }

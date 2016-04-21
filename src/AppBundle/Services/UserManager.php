@@ -122,6 +122,8 @@ class UserManager
                 )
             );
         }
+
+        return null;
     }
 
     /**
@@ -144,6 +146,35 @@ class UserManager
                 'AppBundle:Emails:new-password.html.twig',
                 array(
                     'code' => $code
+                )
+            );
+
+            return 'recover_success';
+        } else {
+            return 'recover_fail';
+        }
+    }
+
+    /**
+     * @param $code
+     * @return string
+     */
+    public function changePassword($password)
+    {
+        $user = $this->em->getRepository('AppBundle:User')->findOneBy(['temporaryPassword' => $password]);
+
+        if ($user) {
+            $password = uniqid($user->getSlug(), true);
+            $user->setPassword($this->encoder->encodePassword($user, $password));
+            $user->setTemporaryPassword(null);
+            $this->em->flush();
+            $this->mailSender->send(
+                $this->mailSender->getSender(),
+                $user->getEmail(),
+                'Activate account in Online CharityPlatform',
+                'AppBundle:Emails:new-password.html.twig',
+                array(
+                    'code' => $password
                 )
             );
 

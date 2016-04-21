@@ -1,11 +1,12 @@
 {% extends ':Base:base_wo_sidebar_centered.html.twig' %}
 
-{% set title = 'Відновлення паролю успішне' %}
+{% set title = 'Зміна паролю успішна' %}
 
 {% block content %}
     {% embed ':Panel:back_panel.html.twig'%}
-        {% block panel_title %}Відновлення паролю було виконано успішно{% endblock %}
+        {% block panel_title %}Зміна паролю була виконана успішно{% endblock %}
         {% block panel_body %}
+            <p>На вказану при реєстрації адресу e-mail було відправлено лист, в якому вказано Ваш новий пароль для вашої ж безпеки.</p>
             <p>Використайте новий пароль для <a href="{{ path('login') }}">логіну</a>.</p>
         {% endblock %}
         {% block back_button %}На головну{% endblock %}
