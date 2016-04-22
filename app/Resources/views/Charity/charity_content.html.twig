@@ -17,7 +17,7 @@
         {% endfor %}
     </div>
     Банківський рахунок:<br>
-    {{ charity.user.bankDetails }}<br>
+    {{ charity.user.bankDetails }}<br><br>
 
     {% if app.request.attributes.get('_route') == 'charity_show' and charity.isActive != false %}
         {{ form_start(donation_form) }}
@@ -35,6 +35,7 @@
         </div>
         {{ form_end(donation_form) }}
     {% endif %}
+    <br><br>
     {% include ':Charity:charity_footer.html.twig' %}
     <div id="comments">
         <div id="comments-list">

@@ -45,6 +45,7 @@ class AddAdminCommand extends ContainerAwareCommand
             }
             return $answer;
         });
+        $bankQuestion = new Question('Bank details: ');
 
         $username = $helper->ask($input, $output, $usernameQuestion);
         $firstname = $helper->ask($input, $output, $firstnameQuestion);
@@ -57,6 +58,7 @@ class AddAdminCommand extends ContainerAwareCommand
         }
         $role = $helper->ask($input, $output, $roleQuestion);
         $birth = $helper->ask($input, $output, $birthQuestion);
+        $bank = $helper->ask($input, $output, $bankQuestion);
 
         if (
             $em->getRepository("AppBundle:Person")->findOneBy(["username" => $username]) ||
@@ -82,6 +84,7 @@ class AddAdminCommand extends ContainerAwareCommand
             }
             $admin->setIsActive(true);
             $admin->setBirthday($birth);
+            $admin->setBankDetails($bank);
 
             $em->persist($admin);
             $em->flush();
