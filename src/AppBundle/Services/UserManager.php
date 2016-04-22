@@ -135,7 +135,8 @@ class UserManager
         $user = $this->em->getRepository('AppBundle:User')->findOneBy(['temporaryPassword' => $code]);
 
         if ($user) {
-            $password = uniqid($user->getSlug(), true);
+            $password = md5(uniqid($user->getSlug(), true));
+            $password = substr($password, 0, 12);
             $user->setPassword($this->encoder->encodePassword($user, $password));
             $user->setTemporaryPassword(null);
             $this->em->flush();
@@ -145,7 +146,7 @@ class UserManager
                 'Recover password in Online CharityPlatform - new password',
                 'AppBundle:Emails:recovered-new-password.html.twig',
                 array(
-                    'code' => $code
+                    'password' => $password
                 )
             );
 
@@ -177,7 +178,7 @@ class UserManager
             'Change password in Online CharityPlatform - new password',
             'AppBundle:Emails:changed-new-password.html.twig',
             array(
-                'code' => $password
+                'password' => $password
             )
         );
 

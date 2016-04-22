@@ -317,14 +317,4 @@ class SecurityController extends Controller
     {
         return [];
     }
-
-    /**
-     * @Route("/change-passwd-fail", name="change-passwd_fail")
-     * @Template()
-     * @return Response
-     */
-    public function changePasswdFailAction()
-    {
-        return [];
-    }
 }

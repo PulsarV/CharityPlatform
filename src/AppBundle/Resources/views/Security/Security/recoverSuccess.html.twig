@@ -6,6 +6,7 @@
     {% embed ':Panel:back_panel.html.twig'%}
         {% block panel_title %}Відновлення паролю було виконано успішно{% endblock %}
         {% block panel_body %}
+            <p>На вказану при реєстрації адресу e-mail було відправлено лист, в якому вказано Ваш новий пароль.</p>
             <p>Використайте новий пароль для <a href="{{ path('login') }}">логіну</a>.</p>
         {% endblock %}
         {% block back_button %}На головну{% endblock %}
