@@ -26,7 +26,7 @@ class Tag
     /**
      * @Assert\NotBlank()
      * @Assert\Regex(
-     *     pattern = "/^[a-zA-Z0-9]+$",
+     *     pattern = "/^[a-zA-Z0-9]+$/",
      *     message="Tag can contain only numbers and letters."
      * )
      * @Assert\Length(

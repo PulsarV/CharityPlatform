@@ -5,15 +5,12 @@ namespace AppBundle\Services;
 use AppBundle\Entity\Charity;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\User;
-use AppBundle\Form\Common\FindCharityType;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
-use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
 
 class CharityManager
 {
@@ -31,6 +28,7 @@ class CharityManager
      * @param ObjectManager $em
      * @param TransformedFinder $finder
      * @param MenuManager $menuManager
+     * @param UploadableManager $uploadableManager
      * @param $findedCharitiesOnPage
      */
     public function __construct(
@@ -80,19 +78,12 @@ class CharityManager
     public function getCharityListPaginated($filterName, $filterValue, $sortMode, $page, $itemsPerPage)
     {
         $qb = null;
-        if ($filterName == '') {
-            new \Exception('Щось пішло не так');
-        }
-        if ($filterValue == '') {
-            new \Exception('Щось пішло не так');
-        }
         if ($sortMode == 'a') {
             $sortMode = 'ASC';
         } else if ($sortMode == 'd') {
             $sortMode = 'DESC';
-        } else {
-            new \Exception('Щось пішло не так');
         }
+
         switch($filterName) {
             case 'none':
                 $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesQuery($sortMode);
@@ -107,7 +98,7 @@ class CharityManager
                 $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesByTagQuery($filterValue, $sortMode);
                 break;
             default:
-                new \Exception('Щось пішло не так');
+                $qb = $this->em->getRepository('AppBundle:Charity')->findAllCharitiesQuery($sortMode);
                 break;
         }
         if ($qb === null) {

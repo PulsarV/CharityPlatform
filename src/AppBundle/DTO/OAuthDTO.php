@@ -12,6 +12,7 @@ class OAuthDTO
     public function __construct(UserResponseInterface $response)
     {
         $this->person = new Person();
+        $defaultData = new \DateTime('1970-01-01');
 
         $this->person->setFirstname($response->getFirstName());
         $this->person->setLastname($response->getLastName());
@@ -24,22 +25,21 @@ class OAuthDTO
         if (isset($data['response'])) {
             $this->person->setVkontakteId($response->getUsername());
             if (empty($data['response']['0']['bdate'])) {
-                throw new \Exception('You can\'t autorize without your birthday information');
+                $this->person->setBirthday($defaultData);
+            } else {
+                $bdate = $data['response']['0']['bdate'];
+                $bdate = \DateTime::createFromFormat('j.n.Y', $bdate);
+                $this->person->setBirthday($bdate->format('Y-m-d'));
             }
-            $bdate = $data['response']['0']['bdate'];
-            $bdate = \DateTime::createFromFormat('j.n.Y', $bdate);
-            $this->person->setBirthday($bdate->format('Y-m-d'));
         } else {
             $this->person->setFacebookId($response->getUsername());
             if (empty($data['birthday'])) {
-                throw new \Exception(
-                    'You can\'t autorize without your birthday information.'.
-                    ' Add it in your information at the facebook.com site'
-                );
+                $this->person->setBirthday($defaultData);
+            } else {
+                $bdate = $data['birthday'];
+                $bdate = \DateTime::createFromFormat('m/d/Y', $bdate);
+                $this->person->setBirthday($bdate->format('Y-m-d'));
             }
-            $bdate = $data['birthday'];
-            $bdate = \DateTime::createFromFormat('m/d/Y', $bdate);
-            $this->person->setBirthday($bdate->format('Y-m-d'));
         }
     }
 

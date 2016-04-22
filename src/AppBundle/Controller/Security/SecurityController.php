@@ -4,11 +4,15 @@ namespace AppBundle\Controller\Security;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
+use AppBundle\Entity\User;
+use AppBundle\Form\Security\ChangePasswordModel;
+use AppBundle\Form\Security\ChangePasswordType;
 use AppBundle\Form\Security\LoginModel;
 use AppBundle\Form\Security\RecoverPasswordType;
 use AppBundle\Form\Security\RegisterOrganizationType;
 use AppBundle\Form\Security\LoginType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -246,7 +250,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/activation-success", name="recover_success")
+     * @Route("/recover-success", name="recover_success")
      * @Template()
      * @return Response
      */
@@ -256,12 +260,87 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/activation-fail", name="recover_fail")
+     * @Route("/recover-fail", name="recover_fail")
      * @Template()
      * @return Response
      */
     public function recoverFailAction()
     {
         return [];
+    }
+
+    /**
+     * @Route("/change-passwd", name="change_password")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @return Response
+     */
+    public function changePasswordAction(Request $request)
+    {
+        $changePasswordModel = new ChangePasswordModel();
+        $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $password = $form->get('newPassword')->getData();
+                $userManager = $this->get('app.user_manager');
+                $result = $userManager->changePassword(
+                    $this->getUser(),
+                    $password
+                );
+
+                if ($result) {
+                    return [
+                        'error' => $result,
+                        'form' => $form->createView(),
+                    ];
+                } else {
+                    return $this->redirectToRoute(
+                        'change-passwd_success'
+                    );
+                }
+            }
+        }
+        return [
+            'error' => null,
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/change-passwd-success", name="change-passwd_success")
+     * @Template()
+     * @return Response
+     */
+    public function changePasswdSuccessAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/users/{slug}/block", name="block_user")
+     * @ParamConverter(
+     *      "user",
+     *      class="AppBundle:User",
+     *      options={"mapping": {"slug": "slug"}}
+     * )
+     */
+    public function blockUserAction(User $user)
+    {
+        $user->setIsActive(!$user->getIsActive());
+        $this->getDoctrine()->getManager()->flush();
+
+        if ($user->getEntityDiscr() == 'person') {
+            return $this->redirectToRoute('show_person_profile', array(
+                'slug' => $user->getSlug()
+            ));
+        } elseif ($user->getEntityDiscr() == 'organization') {
+            return $this->redirectToRoute('show_organization_profile', array(
+                'slug' => $user->getSlug()
+            ));
+        }
     }
 }

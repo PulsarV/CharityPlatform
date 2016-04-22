@@ -7,6 +7,18 @@
         <h1>Користувач {{ profile.username}}</h1>
         <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
         <br>
+        {% if is_granted('ROLE_MODERATOR') %}
+            {% if profile.isActive %}
+                Активний користувач
+                <br>
+                <a href="{{ path('block_user', {'slug': profile.slug}) }}" class="btn btn-form btn-danger">Блокувати</a>
+            {% else %}
+                Заблокований користувач
+                <br>
+                <a href="{{ path('block_user', {'slug': profile.slug}) }}" class="btn btn-form btn-warning">Активувати</a>
+            {% endif %}
+        {% endif %}
+        <br>
         Ім'я/Прізвище: <span class="username">{{ profile.firstname}} {{ profile.lastname }}</span> <br>
         Адреса: {{ profile.address }}<br>
         e-mail: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a><br>

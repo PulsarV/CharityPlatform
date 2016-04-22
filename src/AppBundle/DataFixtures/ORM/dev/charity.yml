@@ -53,7 +53,7 @@ AppBundle\Entity\Charity:
     viewCount: <numberBetween(5, 50)>
     needMoney: <numberBetween(1000, 30000)>
     collectedMoney: <numberBetween(500, 1000)>
-    video: <url()>
+    video: 'http://www.youtube.com/embed/XGSy3_Czz8k'
     isActive: <boolean()>
     user: "@<randomElement(array('person', 'organization'))>*"
 

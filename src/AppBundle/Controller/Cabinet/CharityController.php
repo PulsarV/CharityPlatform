@@ -28,7 +28,6 @@ class CharityController extends Controller
         } else {
             $accesType = $this->get('security.token_storage')->getToken()->getUser()->getSlug();
         }
-        var_dump($accesType);
         $pager = $this->get('app.charity_manager')->getCharityListPaginated(
             $accesType,
             'none',
@@ -63,7 +62,7 @@ class CharityController extends Controller
      * @Route("/charity-new", name="charity_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @param Request $requestspreadsheets/d/1WoNdBtsxIcT9WfL2bOyn2ICu0i9MSIt-KZtF_nyripg/edit#gid=0
+     * @param Request $request
      * @return array|RedirectResponse
      */
     public function newCharityAction(Request $request)
@@ -113,7 +112,7 @@ class CharityController extends Controller
                 'Unable to find Charity..'
             );
         }
-        $form = $this->createDeleteArticleForm($charity);
+        $form = $this->createDeleteCharityForm($charity);
         if($request->getMethod() == 'DELETE') {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -134,7 +133,7 @@ class CharityController extends Controller
      * @param Charity $charity
      * @return \Symfony\Component\Form\Form
      */
-    private function createDeleteArticleForm(Charity $charity)
+    private function createDeleteCharityForm(Charity $charity)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('charity_delete', array('slug' => $charity->getSlug())))

@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use AppBundle\Services\MenuManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class AppExtension
@@ -17,71 +18,170 @@ class AppExtension extends \Twig_Extension
     protected $cabinetMenu;
     protected $request;
     protected $token;
+    protected $authorizationChecker;
 
     /**
      * AppExtension constructor.
      * @param MenuManager $menuManager
      * @param RequestStack $requestStack
      */
-    public function __construct(MenuManager $menuManager, RequestStack $requestStack, TokenStorage $token)
-    {
+    public function __construct(
+        MenuManager $menuManager,
+        RequestStack $requestStack,
+        TokenStorage $token,
+        AuthorizationCheckerInterface $authorizationChecker
+    ) {
         $this->menuManager = $menuManager;
         $this->request = $requestStack->getCurrentRequest();
         $this->token = $token;
+        $this->authorizationChecker = $authorizationChecker;
+
         if ($this->token->getToken() !== null && $this->token->getToken()->getUser() instanceof User) {
+            /** User $user */
             $user = $this->token->getToken()->getUser();
 
-            $this->cabinetMenu = [
-                [
-                    'parent' => [
-                        'name' => 'Мій Профіль',
-                    ],
-                    'children' => [
-                        [
-                            'name' => 'Перегляд',
-                            'route' => 'check_profile',
-                            'routeParams' => [
-
-                            ],
+            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                $this->cabinetMenu = [
+                    [
+                        'parent' => [
+                            'name' => 'Мій Профіль',
                         ],
-                        [
-                            'name' => 'Редагування',
-                            'route' => 'user_edit',
-                            'routeParams' => [
-                                'slug' => $user->getSlug()
-                            ],
-                        ],
-                        [
-                            'name' => 'Зміна паролю',
-                            'route' => 'index_page',
-                            'routeParams' => [
+                        'children' => [
+                            [
+                                'name' => 'Перегляд',
+                                'route' => 'check_profile',
+                                'routeParams' => [
 
+                                ],
                             ],
-                        ],
-                    ],
-                ],
-                [
-                    'parent' => [
-                        'name' => 'Запити на благодійність',
-                    ],
-                    'children' => [
-                        [
-                            'name' => 'Створити запит',
-                            'route' => 'charity_new',
-                            'routeParams' => [
-
+                            [
+                                'name' => 'Редагування',
+                                'route' => 'user_edit',
+                                'routeParams' => [
+                                    'slug' => $user->getSlug()
+                                ],
                             ],
-                        ],
-                        [
-                            'name' => 'Перегляд запитів',
-                            'route' => 'charity_manager_index',
-                            'routeParams' => [
+                            [
+                                'name' => 'Зміна паролю',
+                                'route' => 'change_password',
+                                'routeParams' => [
 
+                                ],
                             ],
                         ],
                     ],
-                ],
-            ];
+                    [
+                        'parent' => [
+                            'name' => 'Запити на благодійність',
+                        ],
+                        'children' => [
+                            [
+                                'name' => 'Створити запит',
+                                'route' => 'charity_new',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Перегляд запитів',
+                                'route' => 'charity_manager_index',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'parent' => [
+                            'name' => 'Адміністрування',
+                        ],
+                        'children' => [
+                            [
+                                'name' => 'Новий тег',
+                                'route' => 'tag_new',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Усі теги',
+                                'route' => 'tag_manager_index',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Нова категорія',
+                                'route' => 'category_new',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Усі категорії',
+                                'route' => 'category_manager_index',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                        ],
+                    ],
+                ];
+            } elseif ($this->authorizationChecker->isGranted('ROLE_USER')) {
+                $this->cabinetMenu = [
+                    [
+                        'parent' => [
+                            'name' => 'Мій Профіль',
+                        ],
+                        'children' => [
+                            [
+                                'name' => 'Перегляд',
+                                'route' => 'check_profile',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Редагування',
+                                'route' => 'user_edit',
+                                'routeParams' => [
+                                    'slug' => $user->getSlug()
+                                ],
+                            ],
+                            [
+                                'name' => 'Зміна паролю',
+                                'route' => 'change_password',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'parent' => [
+                            'name' => 'Запити на благодійність',
+                        ],
+                        'children' => [
+                            [
+                                'name' => 'Створити запит',
+                                'route' => 'charity_new',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                            [
+                                'name' => 'Перегляд запитів',
+                                'route' => 'charity_manager_index',
+                                'routeParams' => [
+
+                                ],
+                            ],
+                        ],
+                    ],
+                ];
+            }
+
+
         } else {
             $this->cabinetMenu = [
                 [

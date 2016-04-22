@@ -109,19 +109,21 @@ class UserManager
             $user->getVkontakteId() !== null ||
             $user->getGoogleId() !== null
         ) {
-            return 'Users from social networks doesn\'t have passwords';
+            return 'Users from social networks don\'t have passwords';
         } else {
             $code = $this->setTmpCode($user);
             $this->mailSender->send(
                 $this->mailSender->getSender(),
                 $user->getEmail(),
-                'Recover password in Online CharityPlatform',
+                'Recover password in Online CharityPlatform - recover code',
                 'AppBundle:Emails:recover.html.twig',
                 array(
                     'code' => $code
                 )
             );
         }
+
+        return null;
     }
 
     /**
@@ -133,17 +135,18 @@ class UserManager
         $user = $this->em->getRepository('AppBundle:User')->findOneBy(['temporaryPassword' => $code]);
 
         if ($user) {
-            $password = uniqid($user->getSlug(), true);
+            $password = md5(uniqid($user->getSlug(), true));
+            $password = substr($password, 0, 12);
             $user->setPassword($this->encoder->encodePassword($user, $password));
             $user->setTemporaryPassword(null);
             $this->em->flush();
             $this->mailSender->send(
                 $this->mailSender->getSender(),
                 $user->getEmail(),
-                'Activate account in Online CharityPlatform',
-                'AppBundle:Emails:new-password.html.twig',
+                'Recover password in Online CharityPlatform - new password',
+                'AppBundle:Emails:recovered-new-password.html.twig',
                 array(
-                    'code' => $code
+                    'password' => $password
                 )
             );
 
@@ -151,5 +154,34 @@ class UserManager
         } else {
             return 'recover_fail';
         }
+    }
+
+    /**
+     * @param $code
+     * @return string
+     */
+    public function changePassword(User $user, $password)
+    {
+        if (
+            $user->getFacebookId() !== null ||
+            $user->getVkontakteId() !== null ||
+            $user->getGoogleId() !== null
+        ) {
+            return 'Users from social networks don\'t have passwords';
+        }
+
+        $user->setPassword($this->encoder->encodePassword($user, $password));
+        $this->em->flush();
+        $this->mailSender->send(
+            $this->mailSender->getSender(),
+            $user->getEmail(),
+            'Change password in Online CharityPlatform - new password',
+            'AppBundle:Emails:changed-new-password.html.twig',
+            array(
+                'password' => $password
+            )
+        );
+
+        return null;
     }
 }
