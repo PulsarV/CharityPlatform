@@ -72,6 +72,7 @@ class Charity
     private $primaryUser;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="charities", cascade={"persist"})
      */
     private $category;

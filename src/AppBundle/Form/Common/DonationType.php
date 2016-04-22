@@ -3,11 +3,11 @@
 namespace AppBundle\Form\Common;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class CommentType extends AbstractType
+class DonationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,7 +16,9 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', TextareaType::class, array('attr' => array('class' => 'form-control')))
+            ->add('donation', IntegerType::class, [
+                'label' => false,
+            ])
         ;
     }
 
@@ -26,7 +28,7 @@ class CommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Comment',
+            'data_class' => 'AppBundle\Form\Common\DonationModel',
         ));
     }
 }

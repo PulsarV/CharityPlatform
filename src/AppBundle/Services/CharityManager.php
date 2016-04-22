@@ -179,6 +179,11 @@ class CharityManager
         }
     }
 
+    /**
+     * @param Charity $charity
+     * @param Comment $comment
+     * @param User $user
+     */
     public function addCharityComment(Charity $charity, Comment $comment, User $user)
     {
         if ($user !== null) {
@@ -186,6 +191,20 @@ class CharityManager
         }
         $comment->setCharity($charity);
         $this->em->persist($comment);
+        $this->em->flush();
+    }
+
+    /**
+     * @param Charity $charity
+     * @param Form $form
+     */
+    public function addDonation(Charity $charity, Form $form)
+    {
+        $donation = $form->get('donation')->getData();
+        $charity->setCollectedMoney($charity->getCollectedMoney() + $donation);
+        if ($charity->getCollectedMoney() >= $charity->getNeedMoney()) {
+            $charity->setIsActive(false);
+        }
         $this->em->flush();
     }
 }

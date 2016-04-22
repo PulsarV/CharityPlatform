@@ -1402,3 +1402,28 @@ ul.cabinet-pagination > li:hover > a {
 .userinfo {
     text-align: center;
 }
+
+.donation-panel {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.donation-panel .panel-heading,
+.donation-panel .panel-body{
+  text-align: center;
+}
+
+.donation-panel .panel-body input{
+  margin: 0;
+}
+
+.donation-panel .panel-footer {
+  padding: 0;
+  text-align: center;
+  background: #ffffff;
+}
+
+.donation-panel .btn {
+  margin: 25px 45px;
+  float: none !important;
+}

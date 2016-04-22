@@ -4,6 +4,8 @@ namespace AppBundle\Controller\Common;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Form\Common\CommentType;
+use AppBundle\Form\Common\DonationModel;
+use AppBundle\Form\Common\DonationType;
 use AppBundle\Form\Common\FindCharityModel;
 use AppBundle\Form\Common\FindCharityType;
 use AppBundle\Entity\Charity;
@@ -93,22 +95,36 @@ class CharityController extends Controller
         $charity = $em->getRepository('AppBundle:Charity')->findOneBy(['slug' => $slug]);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
+        $donationModel = new DonationModel();
+        $donationForm = $this->createForm(DonationType::class, $donationModel);
         $user = $this->getUser();
 
         if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+            if ($request->request->has('comment')) {
+                $form->handleRequest($request);
 
-            if ($form->isValid()) {
+                if ($form->isValid()) {
+                    $charityManager = $this->get('app.charity_manager');
+                    $charityManager->addCharityComment($charity, $comment, $user);
+
+                    return $this->redirectToRoute('charity_show', array('slug' => $charity->getSlug()));
+                }
+            }
+
+            if ($request->request->has('donation')) {
+                $donationForm->handleRequest($request);
                 $charityManager = $this->get('app.charity_manager');
-                $charityManager->addCharityComment($charity, $comment, $user);
+                $charityManager->addDonation($charity, $donationForm);
 
                 return $this->redirectToRoute('charity_show', array('slug' => $charity->getSlug()));
             }
+
         }
 
         return [
             'charity' => $charity,
             'comment_form' => $form->createView(),
+            'donation_form' => $donationForm->createView(),
             'user' => $user
         ];
     }

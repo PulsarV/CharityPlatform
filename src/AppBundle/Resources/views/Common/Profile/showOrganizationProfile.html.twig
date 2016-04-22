@@ -7,7 +7,7 @@
         <h1>Організація {{ profile.username}}</h1>
         <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
         <br>
-        {% if is_granted('ROLE_MODERATOR') %}
+        {% if is_granted('ROLE_MODERATOR') and profile.role != 'ROLE_ADMIN' and profile.role != 'ROLE_MODERATOR' %}
             {% if profile.isActive %}
                 <a href="{{ path('block_user', {'slug': profile.slug}) }}" class="btn btn-form btn-danger">Блокувати</a>
             {% else %}

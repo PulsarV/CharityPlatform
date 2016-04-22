@@ -18,6 +18,23 @@
     </div>
     Банківський рахунок:<br>
     {{ charity.user.bankDetails }}<br>
+
+    {% if app.request.attributes.get('_route') == 'charity_show' and charity.isActive != false %}
+        {{ form_start(donation_form) }}
+        <div class="panel panel-primary base-panel donation-panel">
+            <div class="panel-heading">
+                <h4>Зробити пожертвування</h4>
+            </div>
+            <div class="panel-body">
+                {{ form_widget(donation_form) }}
+                {{ form_errors(donation_form) }}
+            </div>
+            <div class="panel-footer">
+                <input type="submit" value="Пожертвувати" class="btn btn-success btn-form" />
+            </div>
+        </div>
+        {{ form_end(donation_form) }}
+    {% endif %}
     {% include ':Charity:charity_footer.html.twig' %}
     <div id="comments">
         <div id="comments-list">

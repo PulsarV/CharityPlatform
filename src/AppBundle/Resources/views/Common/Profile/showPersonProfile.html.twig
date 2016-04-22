@@ -7,7 +7,7 @@
         <h1>Користувач {{ profile.username}}</h1>
         <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
         <br>
-        {% if is_granted('ROLE_MODERATOR') %}
+        {% if is_granted('ROLE_MODERATOR') and profile.role != 'ROLE_ADMIN' and profile.role != 'ROLE_MODERATOR' %}
             {% if profile.isActive %}
                 Активний користувач
                 <br>
