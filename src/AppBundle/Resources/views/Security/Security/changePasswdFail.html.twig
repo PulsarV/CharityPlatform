@@ -1,10 +1,14 @@
 {% extends ':Base:base_wo_sidebar_centered.html.twig' %}
 
+{% set title = 'Зміна паролю не успішна' %}
+
 {% block content %}
-
+    {% embed ':Panel:back_panel.html.twig'%}
+        {% block panel_title %}Зміна паролю не була виконана успішно{% endblock %}
+        {% block panel_body %}
+            <p>Спробуйте пізніше.</p>
+            <p>Або зверніться за допомогою за <a href="{{ path('contact_page') }}">контактами</a>.</p>
+        {% endblock %}
+        {% block back_button %}На головну{% endblock %}
+    {% endembed %}
 {% endblock %}
-
-{% block body %}
-
-{% endblock %}
-

@@ -6,20 +6,53 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ChangePasswordModel
 {
+    //TODO: add to translations
     /**
      * @SecurityAssert\UserPassword(
-     *     message = "Wrong value for your current password"
+     *     message = "Не правельно введений поточний пароль."
      * )
      */
-    protected $oldPassword;
+    private $oldPassword;
 
     /**
      * @Assert\Length(
      *     min = 8,
      *     max = 32,
-     *     minMessage = "Password can not be less than {{ limit }} chars",
-     *     maxMessage = "Password can not be more than {{ limit }} chars"
+     *     minMessage = "Пароль не може бути меньшим ніж {{ limit }} знаків.",
+     *     maxMessage = "Пароль не може бути більшим ніж {{ limit }} знаків"
      * )
      */
-    protected $newPassword;
+    private $newPassword;
+
+    /**
+     * @return mixed
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param mixed $oldPassword
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * @param mixed $newPassword
+     */
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
+    }
 }

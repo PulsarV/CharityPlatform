@@ -63,7 +63,7 @@ class AppExtension extends \Twig_Extension
                             ],
                             [
                                 'name' => 'Зміна паролю',
-                                'route' => 'index_page',
+                                'route' => 'change_password',
                                 'routeParams' => [
 
                                 ],
@@ -150,7 +150,7 @@ class AppExtension extends \Twig_Extension
                             ],
                             [
                                 'name' => 'Зміна паролю',
-                                'route' => 'index_page',
+                                'route' => 'change_password',
                                 'routeParams' => [
 
                                 ],

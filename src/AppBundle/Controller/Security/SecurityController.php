@@ -285,12 +285,21 @@ class SecurityController extends Controller
             if ($form->isValid()) {
                 $password = $form->get('newPassword')->getData();
                 $userManager = $this->get('app.user_manager');
-                $result = $userManager->changePassword($password);
-
-
-                return $this->redirectToRoute(
-                    $result
+                $result = $userManager->changePassword(
+                    $this->getUser(),
+                    $password
                 );
+
+                if ($result) {
+                    return [
+                        'error' => $result,
+                        'form' => $form->createView(),
+                    ];
+                } else {
+                    return $this->redirectToRoute(
+                        'change-passwd_success'
+                    );
+                }
             }
         }
         return [
