@@ -7,6 +7,14 @@
         <h1>Організація {{ profile.username}}</h1>
         <img  src="{{ asset('uploads/users/' ~ profile.avatarFileName) }}" width="20%" alt="" />
         <br>
+        {% if is_granted('ROLE_MODERATOR') %}
+            {% if profile.isActive %}
+                <a href="{{ path('block_user', {'slug': profile.slug}) }}" class="btn btn-form btn-danger">Блокувати</a>
+            {% else %}
+                <a href="{{ path('block_user', {'slug': profile.slug}) }}" class="btn btn-form btn-warning">Активувати</a>
+            {% endif %}
+        {% endif %}
+        <br>
         Назва організації: <span class="username">{{ profile.organizationName }}</span><br>
         Web сайт: <a href="{{ profile.website }}">{{ profile.website }}</a><br>
         e-mail: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a><br>

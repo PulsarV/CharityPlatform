@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Security;
 
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\Person;
+use AppBundle\Entity\User;
 use AppBundle\Form\Security\ChangePasswordModel;
 use AppBundle\Form\Security\ChangePasswordType;
 use AppBundle\Form\Security\LoginModel;
@@ -11,6 +12,7 @@ use AppBundle\Form\Security\RecoverPasswordType;
 use AppBundle\Form\Security\RegisterOrganizationType;
 use AppBundle\Form\Security\LoginType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -316,5 +318,29 @@ class SecurityController extends Controller
     public function changePasswdSuccessAction()
     {
         return [];
+    }
+
+    /**
+     * @Route("/users/{slug}/block", name="block_user")
+     * @ParamConverter(
+     *      "user",
+     *      class="AppBundle:User",
+     *      options={"mapping": {"slug": "slug"}}
+     * )
+     */
+    public function blockUserAction(User $user)
+    {
+        $user->setIsActive(!$user->getIsActive());
+        $this->getDoctrine()->getManager()->flush();
+
+        if ($user->getEntityDiscr() == 'person') {
+            return $this->redirectToRoute('show_person_profile', array(
+                'slug' => $user->getSlug()
+            ));
+        } elseif ($user->getEntityDiscr() == 'organization') {
+            return $this->redirectToRoute('show_organization_profile', array(
+                'slug' => $user->getSlug()
+            ));
+        }
     }
 }
